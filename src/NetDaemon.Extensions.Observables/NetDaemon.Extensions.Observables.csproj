@@ -13,6 +13,7 @@
     <PackageTags>NetDaemon;NetDaemon Extensions;Entity Extensions;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;Boolean;Boolean Logic;Boolean State;Boolean Observable;C#;.NET;DotNet;Extension Methods</PackageTags>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageId>DevJasper.NetDaemon.Extensions.Observables</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +29,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetDaemon.HassModel" Version="24.43.0" />
-    <PackageReference Include="Reactive.Boolean" Version="0.2.0" />
+    <PackageReference Include="Reactive.Boolean" Version="0.2.1" />
   </ItemGroup>
 
 </Project>
