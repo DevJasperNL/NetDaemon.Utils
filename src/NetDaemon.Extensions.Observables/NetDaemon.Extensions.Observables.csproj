@@ -4,7 +4,27 @@
     <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>NetDaemon.Extensions.Observables</Title>
+    <Version>0.1.0</Version>
+    <Authors>Jasper Lammers</Authors>
+    <Company>DevJasper</Company>
+    <Description>Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.</Description>
+    <RepositoryUrl>https://github.com/DevJasperNL/NetDaemon.Extensions.Observables</RepositoryUrl>
+    <PackageTags>NetDaemon;NetDaemon Extensions;Entity Extensions;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;Boolean;Boolean Logic;Boolean State;Boolean Observable;C#;.NET;DotNet;Extension Methods</PackageTags>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NetDaemon.HassModel" Version="24.43.0" />
