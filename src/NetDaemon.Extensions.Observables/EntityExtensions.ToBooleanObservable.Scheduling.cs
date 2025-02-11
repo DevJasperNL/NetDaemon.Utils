@@ -121,18 +121,29 @@ namespace NetDaemon.Extensions.Observables
         /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
         /// <param name="scheduler"></param>
         public static IObservable<bool> WhenTrueFor(this Entity entity, TimeSpan timeSpan,
-            IScheduler scheduler)
+            IScheduler scheduler) => entity.WhenTrueFor(timeSpan, scheduler, () => DateTime.UtcNow);
+
+        internal static IObservable<bool> WhenTrueFor(this Entity entity, TimeSpan timeSpan,
+            IScheduler scheduler, Func<DateTime> utcNowProvider)
         {
             ArgumentNullException.ThrowIfNull(entity);
             ArgumentNullException.ThrowIfNull(scheduler);
 
             return Observable.Defer(() =>
-                Observable.Return(entity.IsOn() &&
-                                  entity.EntityState != null &&
-                                  entity.EntityState.LastChanged.HasValue &&
-                                  entity.EntityState.LastChanged.Value.ToUniversalTime() <= DateTime.UtcNow - timeSpan)
-                    .Concat(
-                        entity.ToBooleanObservable().WhenTrueFor(timeSpan, scheduler).Skip(1)));
+            {
+                var utcNow = utcNowProvider();
+                var lastChangedUtc = entity.EntityState?.LastChanged?.ToUniversalTime();
+                if (!entity.IsOn() || lastChangedUtc == null)
+                {
+                    return entity.ToBooleanObservable().WhenTrueFor(timeSpan, scheduler);
+                }
+
+                var moment = utcNow - timeSpan;
+                var remainingTimeSpan = lastChangedUtc.Value - moment;
+                return remainingTimeSpan.Ticks <= 0 ? 
+                    entity.ToBooleanObservable().WhenTrueFor(timeSpan, scheduler).Skip(1).Prepend(true) : 
+                    entity.ToBooleanObservable().WhenTrueFor(remainingTimeSpan, scheduler);
+            });
         }
 
         /// <summary>
@@ -146,18 +157,30 @@ namespace NetDaemon.Extensions.Observables
         /// <param name="predicate"></param>
         /// <param name="scheduler"></param>
         public static IObservable<bool> WhenTrueFor(this Entity entity,
-            TimeSpan timeSpan, Func<EntityState, bool> predicate, IScheduler scheduler)
+            TimeSpan timeSpan, Func<EntityState, bool> predicate, IScheduler scheduler) =>
+            entity.WhenTrueFor(timeSpan, predicate, scheduler, () => DateTime.UtcNow);
+
+        internal static IObservable<bool> WhenTrueFor(this Entity entity,
+            TimeSpan timeSpan, Func<EntityState, bool> predicate, IScheduler scheduler, Func<DateTime> utcNowProvider)
         {
             ArgumentNullException.ThrowIfNull(entity);
             ArgumentNullException.ThrowIfNull(scheduler);
 
             return Observable.Defer(() =>
-                Observable.Return(entity.EntityState != null &&
-                                  predicate(entity.EntityState) &&
-                                  entity.EntityState.LastChanged.HasValue &&
-                                  entity.EntityState.LastChanged.Value.ToUniversalTime() <= DateTime.UtcNow - timeSpan)
-                    .Concat(
-                        entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler).Skip(1)));
+            {
+                var utcNow = utcNowProvider();
+                var lastChangedUtc = entity.EntityState?.LastChanged?.ToUniversalTime();
+                if (entity.EntityState == null || !predicate(entity.EntityState) || lastChangedUtc == null)
+                {
+                    return entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler);
+                }
+
+                var moment = utcNow - timeSpan;
+                var remainingTimeSpan = lastChangedUtc.Value - moment;
+                return remainingTimeSpan.Ticks <= 0 ?
+                    entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler).Skip(1).Prepend(true) :
+                    entity.ToBooleanObservable(predicate).WhenTrueFor(remainingTimeSpan, scheduler);
+            });
         }
 
         /// <summary>
@@ -178,6 +201,17 @@ namespace NetDaemon.Extensions.Observables
                 IScheduler scheduler)
             where TEntity : Entity<TEntity, TEntityState, TAttributes>
             where TEntityState : EntityState<TAttributes>
+            where TAttributes : class => entity.WhenTrueFor(timeSpan, predicate, scheduler, () => DateTime.UtcNow);
+
+        internal static IObservable<bool>
+            WhenTrueFor<TEntity, TEntityState, TAttributes>(
+                this Entity<TEntity, TEntityState, TAttributes> entity,
+                TimeSpan timeSpan,
+                Func<TEntityState, bool> predicate,
+                IScheduler scheduler,
+                Func<DateTime> utcNowProvider)
+            where TEntity : Entity<TEntity, TEntityState, TAttributes>
+            where TEntityState : EntityState<TAttributes>
             where TAttributes : class
         {
             ArgumentNullException.ThrowIfNull(entity);
@@ -185,12 +219,20 @@ namespace NetDaemon.Extensions.Observables
             ArgumentNullException.ThrowIfNull(predicate);
 
             return Observable.Defer(() =>
-                Observable.Return(entity.EntityState != null &&
-                                  predicate(entity.EntityState) &&
-                                  entity.EntityState.LastChanged.HasValue &&
-                                  entity.EntityState.LastChanged.Value.ToUniversalTime() <= DateTime.UtcNow - timeSpan)
-                    .Concat(
-                        entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler).Skip(1)));
+            {
+                var utcNow = utcNowProvider();
+                var lastChangedUtc = entity.EntityState?.LastChanged?.ToUniversalTime();
+                if (entity.EntityState == null || !predicate(entity.EntityState) || lastChangedUtc == null)
+                {
+                    return entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler);
+                }
+
+                var moment = utcNow - timeSpan;
+                var remainingTimeSpan = lastChangedUtc.Value - moment;
+                return remainingTimeSpan.Ticks <= 0 ?
+                    entity.ToBooleanObservable(predicate).WhenTrueFor(timeSpan, scheduler).Skip(1).Prepend(true) :
+                    entity.ToBooleanObservable(predicate).WhenTrueFor(remainingTimeSpan, scheduler);
+            });
         }
 
         /// <summary>
@@ -247,7 +289,7 @@ namespace NetDaemon.Extensions.Observables
                                   entity.EntityState.LastChanged.HasValue &&
                                   entity.EntityState.LastChanged.Value.ToUniversalTime() >= DateTime.UtcNow - timeSpan)
                     .Concat(
-                        entity.ToBooleanObservable().LimitTrueDuration(timeSpan, scheduler).Skip(1)));
+                        entity.ToBooleanObservable(predicate).LimitTrueDuration(timeSpan, scheduler).Skip(1)));
         }
 
         /// <summary>
@@ -274,7 +316,7 @@ namespace NetDaemon.Extensions.Observables
                                   entity.EntityState.LastChanged.HasValue &&
                                   entity.EntityState.LastChanged.Value.ToUniversalTime() >= DateTime.UtcNow - timeSpan)
                     .Concat(
-                        entity.ToBooleanObservable().LimitTrueDuration(timeSpan, scheduler).Skip(1)));
+                        entity.ToBooleanObservable(predicate).LimitTrueDuration(timeSpan, scheduler).Skip(1)));
         }
     }
 }

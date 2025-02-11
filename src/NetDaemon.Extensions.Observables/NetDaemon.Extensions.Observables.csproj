@@ -32,4 +32,7 @@
     <PackageReference Include="Reactive.Boolean" Version="0.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NetDaemon.Extensions.Observables.Tests" />
+  </ItemGroup>
 </Project>
