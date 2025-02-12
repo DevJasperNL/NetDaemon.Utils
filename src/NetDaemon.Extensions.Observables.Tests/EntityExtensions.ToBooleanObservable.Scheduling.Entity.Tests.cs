@@ -2,9 +2,7 @@ using Microsoft.Reactive.Testing;
 using Moq;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using System.Reactive.Concurrency;
 using System.Reactive.Subjects;
-using System.Threading.Tasks;
 
 namespace NetDaemon.Extensions.Observables.Tests
 {
@@ -154,7 +152,6 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void WhenTrueFor_Predicate_SubscribeAfterTimeSpanPasses_True()
         {
             // Arrange
-            ChangeEntityState(Off, _lastChanged);
             var observable = _testEntity.WhenTrueFor(
                 TimeSpan.FromTicks(1), 
                 s => s.IsOff(), 
@@ -196,7 +193,7 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void LimitTrueDuration_LastChangedShorterAgoThanTimeSpan_True()
         {
             // Arrange
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), _scheduler);
+            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromTicks(1), _scheduler, _lastChanged.ToUniversalTime);
 
             // Act
             bool? result = null;
@@ -210,8 +207,10 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void LimitTrueDuration_LastChangedLongerAgoThanTimeSpan_False()
         {
             // Arrange
-            ChangeEntityState(On, _lastChanged - TimeSpan.FromMinutes(2));
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), _scheduler);
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromTicks(1), 
+                _scheduler, 
+                () => _lastChanged.ToUniversalTime() + TimeSpan.FromTicks(1));
 
             // Act
             bool? result = null;
@@ -225,14 +224,34 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void LimitTrueDuration_SubscribeAfterTimeSpanPasses_False()
         {
             // Arrange
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), _scheduler);
+            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromTicks(1), _scheduler, _lastChanged.ToUniversalTime);
 
             // Act
             bool? result = null;
-            ChangeEntityState(On, _lastChanged - TimeSpan.FromMinutes(2));
+            ChangeEntityState(On, _lastChanged - TimeSpan.FromTicks(1));
             observable.Subscribe(b => result = b);
 
             // Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void LimitTrueDuration_LastChangedHalfwayOfTimeSpan_FalseAfterRemainingTime()
+        {
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromTicks(4), 
+                _scheduler, 
+                () => _lastChanged.ToUniversalTime() + TimeSpan.FromTicks(2));
+
+            bool? result = null;
+            observable.Subscribe(b => result = b);
+
+            Assert.AreEqual(true, result);
+
+            _scheduler.AdvanceBy(1);
+            Assert.AreEqual(true, result);
+
+            _scheduler.AdvanceBy(1);
             Assert.AreEqual(false, result);
         }
 
@@ -241,7 +260,11 @@ namespace NetDaemon.Extensions.Observables.Tests
         {
             // Arrange
             ChangeEntityState(Off, _lastChanged);
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), s => s.IsOff(), _scheduler);
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromMinutes(1), 
+                s => s.IsOff(), 
+                _scheduler,
+                _lastChanged.ToUniversalTime);
 
             // Act
             bool? result = null;
@@ -255,8 +278,12 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void LimitTrueDuration_Predicate_LastChangedLongerAgoThanTimeSpan_False()
         {
             // Arrange
-            ChangeEntityState(Off, _lastChanged - TimeSpan.FromMinutes(2));
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), s => s.IsOff(), _scheduler);
+            ChangeEntityState(Off, _lastChanged);
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromTicks(1), 
+                s => s.IsOff(), 
+                _scheduler,
+                () => _lastChanged.ToUniversalTime() + TimeSpan.FromTicks(1));
 
             // Act
             bool? result = null;
@@ -270,14 +297,40 @@ namespace NetDaemon.Extensions.Observables.Tests
         public void LimitTrueDuration_Predicate_SubscribeAfterTimeSpanPasses_False()
         {
             // Arrange
-            var observable = _testEntity.LimitTrueDuration(TimeSpan.FromMinutes(1), s => s.IsOff(), _scheduler);
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromTicks(1), 
+                s => s.IsOff(), 
+                _scheduler,
+                _lastChanged.ToUniversalTime);
 
             // Act
             bool? result = null;
-            ChangeEntityState(Off, _lastChanged - TimeSpan.FromMinutes(2));
+            ChangeEntityState(Off, _lastChanged - TimeSpan.FromTicks(1));
             observable.Subscribe(b => result = b);
 
             // Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void LimitTrueDuration_Predicate_LastChangedHalfwayOfTimeSpan_FalseAfterRemainingTime()
+        {
+            ChangeEntityState(Off, _lastChanged);
+            var observable = _testEntity.LimitTrueDuration(
+                TimeSpan.FromTicks(4),
+                s => s.IsOff(),
+                _scheduler,
+                () => _lastChanged.ToUniversalTime() + TimeSpan.FromTicks(2));
+
+            bool? result = null;
+            observable.Subscribe(b => result = b);
+
+            Assert.AreEqual(true, result);
+
+            _scheduler.AdvanceBy(1);
+            Assert.AreEqual(true, result);
+
+            _scheduler.AdvanceBy(1);
             Assert.AreEqual(false, result);
         }
     }
