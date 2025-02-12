@@ -7,7 +7,7 @@ namespace NetDaemon.Extensions.Observables
     public static partial class EntityExtensions
     {
         /// <summary>
-        /// Returns an observable that delays the first close (false) that is emitted after an open (true) by <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
+        /// Returns an observable that delays the first closed (false) that is emitted after an open (true) by <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Resulting observable is distinct.
         /// </summary>
         public static IObservable<bool>

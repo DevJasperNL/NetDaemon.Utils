@@ -7,7 +7,7 @@ namespace NetDaemon.Extensions.Observables
         /// <summary>
         /// Subscribes actions to be executed when the observable emits true (open) or false (closed).
         /// </summary>
-        public static IDisposable SubscribeOpenClosed(this IObservable<bool> observable, Action openAction, Action closeAction) => observable.SubscribeTrueFalse(openAction, closeAction);
+        public static IDisposable SubscribeOpenClosed(this IObservable<bool> observable, Action openAction, Action closedAction) => observable.SubscribeTrueFalse(openAction, closedAction);
 
         /// <summary>
         /// Subscribes an action to be executed when the observable emits true (open).
@@ -17,7 +17,7 @@ namespace NetDaemon.Extensions.Observables
         /// <summary>
         /// Subscribes an action to be executed when the observable emits true (closed).
         /// </summary>
-        public static IDisposable SubscribeClosed(this IObservable<bool> observable, Action closeAction) => observable.SubscribeFalse(closeAction);
+        public static IDisposable SubscribeClosed(this IObservable<bool> observable, Action closedAction) => observable.SubscribeFalse(closedAction);
 
         /// <summary>
         /// Subscribes actions to be executed when the observable emits true (on) or false (off).

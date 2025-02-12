@@ -9,8 +9,8 @@ namespace NetDaemon.Extensions.Observables
         /// Subscribes actions to be executed on the open or closed state of an entity.
         /// Initial state is also taken into account, meaning an action might execute immediately if the entity is currently open or closed.
         /// </summary>
-        public static IDisposable SubscribeOpenClosed(this Entity entity, Action openAction, Action closeAction)
-            => entity.ToBooleanObservable().SubscribeOpenClosed(openAction, closeAction);
+        public static IDisposable SubscribeOpenClosed(this Entity entity, Action openAction, Action closedAction)
+            => entity.ToBooleanObservable().SubscribeOpenClosed(openAction, closedAction);
 
         /// <summary>
         /// Subscribes actions to be executed on the open state of an entity.
@@ -23,8 +23,8 @@ namespace NetDaemon.Extensions.Observables
         /// Subscribes actions to be executed on the closed state of an entity.
         /// Initial state is also taken into account, meaning the action might execute immediately if the entity is currently closed.
         /// </summary>
-        public static IDisposable SubscribeClosed(this Entity entity, Action closeAction)
-            => entity.ToBooleanObservable().SubscribeClosed(closeAction);
+        public static IDisposable SubscribeClosed(this Entity entity, Action closedAction)
+            => entity.ToBooleanObservable().SubscribeClosed(closedAction);
 
         /// <summary>
         /// Subscribes actions to be executed on the on or off state of an entity.

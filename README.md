@@ -127,7 +127,7 @@ motionDetected
 
 > Aliases: `PersistOpenFor`/`PersistTrueFor`.
 
-### WhenTrueFor
+### WhenOnFor
 
 Returns an observable that emits `true` once `entity` does not emit `off` (`false`) for a minimum of the provided timespan.
 
@@ -144,7 +144,9 @@ washingMachineCurrentIsZero
     .SubscribeTrue(() => notificationEntity.Send("Washing machine is done!"));
 ```
 
-### LimitTrueDuration
+> Aliases: `WhenOpenFor`/`WhenTrueFor`.
+
+### LimitOnDuration
 
 Returns an observable that will automatically emit `false` if the `entity` does not emit an `off` (`false`) itself within the provided timespan after emitting `on` (`true`).
 
@@ -162,6 +164,8 @@ closetDoorOpen
         () => closetLightEntity.TurnOn(),
         () => closetLightEntity.TurnOff());
 ```
+
+> Aliases: `LimitOpenDuration`/`LimitCloseDuration`.
 
 ## Unavailability of entities
 

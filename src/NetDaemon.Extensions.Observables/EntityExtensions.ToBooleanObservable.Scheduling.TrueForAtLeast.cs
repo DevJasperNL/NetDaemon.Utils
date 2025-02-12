@@ -8,7 +8,7 @@ namespace NetDaemon.Extensions.Observables
     {
         /// <summary>
         /// Returns an observable that won't emit "false" for at least <paramref name="timeSpan"/> after an initial open (true) is emitted by <paramref name="entity"/>.
-        /// If a close (false) is emitted during the <paramref name="timeSpan"/>, it will be emitted immediately after the timer is completed.
+        /// If a closed (false) is emitted during the <paramref name="timeSpan"/>, it will be emitted immediately after the timer is completed.
         /// Resulting observable is distinct.
         /// </summary>
         public static IObservable<bool>
