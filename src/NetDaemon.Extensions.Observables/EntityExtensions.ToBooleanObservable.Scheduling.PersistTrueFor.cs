@@ -7,36 +7,27 @@ namespace NetDaemon.Extensions.Observables
     public static partial class EntityExtensions
     {
         /// <summary>
-        /// Returns an observable that stays true for a timeSpan once the entity closes (off).
+        /// Returns an observable that delays the first close (false) that is emitted after an open (true) by <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time true is held.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool>
             PersistOpenFor(
                 this Entity entity, TimeSpan timeSpan, IScheduler scheduler) =>
             entity.PersistTrueFor(timeSpan, scheduler);
 
         /// <summary>
-        /// Returns an observable that stays true for a timeSpan once the entity turns off.
+        /// Returns an observable that delays the first off (false) that is emitted after an on (true) by <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time true is held.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool>
             PersistOnFor(
                 this Entity entity, TimeSpan timeSpan, IScheduler scheduler) =>
             entity.PersistTrueFor(timeSpan, scheduler);
 
         /// <summary>
-        /// Returns an observable that stays true for a timeSpan once the entity turns off.
+        /// Returns an observable that delays the first off (false) that is emitted after an on (true) by <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time true is held.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> PersistTrueFor(this Entity entity, TimeSpan timeSpan,
             IScheduler scheduler)
         {
@@ -48,14 +39,10 @@ namespace NetDaemon.Extensions.Observables
         }
 
         /// <summary>
-        /// Returns an observable that stays true for a minimum timeSpan once the predicate applied on the entity state returns true.
+        /// Returns an observable that delays the first "false" that is emitted after a "true" by <paramref name="predicate"/> applied to the state of <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time true is held.</param>
-        /// <param name="predicate"></param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> PersistTrueFor(this Entity entity,
             TimeSpan timeSpan, Func<EntityState, bool> predicate, IScheduler scheduler)
         {
@@ -67,14 +54,10 @@ namespace NetDaemon.Extensions.Observables
         }
 
         /// <summary>
-        /// Returns an observable that stays true for a minimum timeSpan once the predicate applied on the entity state returns true.
+        /// Returns an observable that delays the first "false" that is emitted after a "true" by <paramref name="predicate"/> applied to the state of <paramref name="entity"/> for a duration of <paramref name="timeSpan"/>.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time true is held.</param>
-        /// <param name="predicate"></param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool>
             PersistTrueFor<TEntity, TEntityState, TAttributes>(
                 this Entity<TEntity, TEntityState, TAttributes> entity, TimeSpan timeSpan, Func<TEntityState, bool> predicate, IScheduler scheduler)
