@@ -9,7 +9,7 @@ namespace NetDaemon.Extensions.Observables
     {
         /// <summary>
         /// Returns an observable that will automatically emit "false" if <paramref name="entity"/> does not emit a closed (false) itself within <paramref name="timeSpan"/> after emitting open (true).
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit "false" even if the time did not pass during runtime.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "false" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
         public static IObservable<bool> LimitOpenDuration(this Entity entity, TimeSpan timeSpan,
@@ -17,7 +17,7 @@ namespace NetDaemon.Extensions.Observables
 
         /// <summary>
         /// Returns an observable that will automatically emit "false" if <paramref name="entity"/> does not emit an off (false) itself within <paramref name="timeSpan"/> after emitting on (true).
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit "false" even if the time did not pass during runtime.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "false" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
         public static IObservable<bool> LimitOnDuration(this Entity entity, TimeSpan timeSpan,
@@ -25,7 +25,7 @@ namespace NetDaemon.Extensions.Observables
 
         /// <summary>
         /// Returns an observable that will automatically emit "false" if <paramref name="entity"/> does not emit an off (false) itself within <paramref name="timeSpan"/> after emitting on (true).
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit "false" even if the time did not pass during runtime.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "false" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
         public static IObservable<bool> LimitTrueDuration(this Entity entity, TimeSpan timeSpan,
@@ -60,7 +60,7 @@ namespace NetDaemon.Extensions.Observables
 
         /// <summary>
         /// Returns an observable that will automatically emit "false" if <paramref name="predicate"/> applied to the state of <paramref name="entity"/> does not emit a "false" itself within <paramref name="timeSpan"/> after emitting "true".
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit "false" even if the time did not pass during runtime.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "false" even if the time did not pass during runtime.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
@@ -94,7 +94,7 @@ namespace NetDaemon.Extensions.Observables
 
         /// <summary>
         /// Returns an observable that will automatically emit "false" if <paramref name="predicate"/> applied to the state of <paramref name="entity"/> does not emit a "false" itself within <paramref name="timeSpan"/> after emitting "true".
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit "false" even if the time did not pass during runtime.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "false" even if the time did not pass during runtime.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
