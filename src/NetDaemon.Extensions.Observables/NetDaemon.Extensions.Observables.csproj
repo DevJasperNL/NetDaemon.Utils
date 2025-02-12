@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>NetDaemon.Extensions.Observables</Title>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
     <Description>Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.</Description>
