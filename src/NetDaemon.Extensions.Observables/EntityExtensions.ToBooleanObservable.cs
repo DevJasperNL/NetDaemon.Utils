@@ -11,7 +11,7 @@ namespace NetDaemon.Extensions.Observables
         /// The observable is distinct until changed. Other state changes are ignored.
         /// </para>
         /// <para>
-        /// State changes other than open or close (on or off on the entity) are ignored. This also includes a null entity state. This is typically received when an entity is removed. This will not be emitted in the observable.
+        /// State changes other than open or closed (on or off on the entity) are ignored. This also includes a null entity state. This is typically received when an entity is removed. This will not be emitted in the observable.
         /// </para>
         /// </summary>
         public static IObservable<bool> ToOpenClosedObservable(this Entity entity) => entity.ToBooleanObservable();

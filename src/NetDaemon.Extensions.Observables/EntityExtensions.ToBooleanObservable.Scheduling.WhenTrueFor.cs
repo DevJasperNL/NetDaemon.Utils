@@ -8,35 +8,26 @@ namespace NetDaemon.Extensions.Observables
     public static partial class EntityExtensions
     {
         /// <summary>
-        /// Returns an observable that emits true once the entity is open (on) for a minimum timeSpan.
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit true even if the time did not pass in the application.
+        /// Returns an observable that emits "true" once <paramref name="entity"/> does not emit closed (false) for a minimum of <paramref name="timeSpan"/>.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "true" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> WhenOpenFor(this Entity entity, TimeSpan timeSpan,
             IScheduler scheduler) => entity.WhenTrueFor(timeSpan, scheduler);
 
         /// <summary>
-        /// Returns an observable that emits true once the entity is on for a minimum timeSpan.
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit true even if the time did not pass in the application.
+        /// Returns an observable that emits "true" once <paramref name="entity"/> does not emit off (false) for a minimum of <paramref name="timeSpan"/>.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "true" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> WhenOnFor(this Entity entity, TimeSpan timeSpan,
             IScheduler scheduler) => entity.WhenTrueFor(timeSpan, scheduler);
 
         /// <summary>
-        /// Returns an observable that emits true once the entity is on for a minimum timeSpan.
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit true even if the time did not pass in the application.
+        /// Returns an observable that emits "true" once <paramref name="entity"/> does not emit off (false) for a minimum of <paramref name="timeSpan"/>.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "true" even if the time did not pass during runtime.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> WhenTrueFor(this Entity entity, TimeSpan timeSpan,
             IScheduler scheduler) => entity.WhenTrueFor(timeSpan, scheduler, () => DateTime.UtcNow);
 
@@ -64,15 +55,11 @@ namespace NetDaemon.Extensions.Observables
         }
 
         /// <summary>
-        /// Returns an observable that emits true once the predicate applied on the entity state returns true for a minimum timeSpan.
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit true even if the time did not pass in the application.
+        /// Returns an observable that emits "true" once <paramref name="predicate"/> applied to the state of <paramref name="entity"/> does not emit "false" for a minimum of <paramref name="timeSpan"/>.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "true" even if the time did not pass during runtime.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
-        /// <param name="predicate"></param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool> WhenTrueFor(this Entity entity,
             TimeSpan timeSpan, Func<EntityState, bool> predicate, IScheduler scheduler) =>
             entity.WhenTrueFor(timeSpan, predicate, scheduler, () => DateTime.UtcNow);
@@ -101,15 +88,11 @@ namespace NetDaemon.Extensions.Observables
         }
 
         /// <summary>
-        /// Returns an observable that emits true once the predicate applied on the entity state returns true for a minimum timeSpan.
-        /// This method takes into account EntityState.LastChanged, meaning the returned observable can emit true even if the time did not pass in the application.
+        /// Returns an observable that emits "true" once <paramref name="predicate"/> applied to the state of <paramref name="entity"/> does not emit "false" for a minimum of <paramref name="timeSpan"/>.
+        /// This method takes into account <c>EntityState.LastChanged</c>, meaning the returned observable can emit "true" even if the time did not pass during runtime.
         /// Predicate will be evaluated on all state changes, including attribute changes.
         /// Resulting observable is distinct.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="timeSpan">The minimum time the entity needs to be on before true is emitted in the resulting observable.</param>
-        /// <param name="predicate"></param>
-        /// <param name="scheduler"></param>
         public static IObservable<bool>
             WhenTrueFor<TEntity, TEntityState, TAttributes>(
                 this Entity<TEntity, TEntityState, TAttributes> entity,

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Title>NetDaemon.Extensions.Observables</Title>
-    <Version>0.1.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
     <Description>Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.</Description>
@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetDaemon.HassModel" Version="24.43.0" />
-    <PackageReference Include="Reactive.Boolean" Version="0.2.1" />
+    <PackageReference Include="NetDaemon.HassModel" Version="25.5.0" />
+    <PackageReference Include="Reactive.Boolean" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

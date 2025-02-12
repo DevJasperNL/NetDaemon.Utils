@@ -1,8 +1,9 @@
 # NetDaemon.Extensions.Observables
 
-Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.
+Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
 
-For more information on NetDaemon, click [here](https://netdaemon.xyz/).
+- For more information on NetDaemon, click [here](https://netdaemon.xyz/).
+- Article containing more examples and explanation about this library: [Article with examples](https://dev.to/devjaspernl/supercharging-home-assistant-automations-initial-states-and-boolean-logic-for-netdaemon-rx-3bd5).
 
 ## Example Usage
 
@@ -12,7 +13,7 @@ public Example(
     CoverEntities coverEntities)
 {
     const int curtainCloseSunElevation = 1;
-    var sunIsDown = sunEntities.Sun
+    sunEntities.Sun
             .ToBooleanObservable(e => e.Attributes?.Elevation <= curtainCloseSunElevation);
     
     sunIsDown.SubscribeTrueFalse(
@@ -34,7 +35,7 @@ public Example(
 ```cs
 sunEntities.Sun.ToBooleanObservable(e => e.Attributes?.Elevation <= curtainCloseSunElevation);
 ```
-Create a stateful `IObservable<bool>` from the sun entity `Sun` which emits true when `Elevation` is smaller than `curtainCloseSunElevation`, false otherwise. Stateful in this context means that the observable will immediately emit the current value returned from the predicate when an observer is subscribed.
+Create a stateful `IObservable<bool>` from the sun entity `Sun` which emits `true` when `Elevation` is smaller than `curtainCloseSunElevation`, `false` otherwise. Stateful in this context means that the observable will immediately emit the current value returned from the predicate when an observer is subscribed. (internally, the NetDaemon extension methods `StateChangesWithCurrent` and `StateAllChangesWithCurrent` are used for this.)
 
 ```cs
 sunIsDown.SubscribeTrueFalse(
@@ -50,25 +51,13 @@ sunIsDown.SubscribeTrueFalse(
         });
 ```
 
-SubscribeTrueFalse is an extension method on IObservable<bool> that assigns an Action for when true is emitted as well as when false is emitted.
+`SubscribeTrueFalse` is an extension method on `IObservable<bool>` that assigns an action for when `true` is emitted as well as when `false` is emitted.
 
 This implementation will immediately open or close the covers depending on the initial result of the predicate as well as update whenever the result of the predicate changes.
 
-## Stateful
-
-As an addition to the `StateChanges` and `StateAllChanges` methods provided by `NetDaemon`, this library provides the methods `Stateful` and `StatefulAll`. The observable resulting from these methods will emit the current state of the entity upon subscribing to the observable. This allows a single subscription for both initial state and state changes.
-
-**Example**
-```cs
-var frontWindowCurtainOpen = coverEntities.LivingRoomFrontWindowCurtain.ToOpenClosedObservable();
-
-frontWindowCurtainOpen.SubscribeTrue(() => lightEntities.LivingRoomLights.TurnOff());
-```
-When starting this automation, the living room lights will immediately turn off if the front window curtain is open. It will also turn off every time the front window curtain is opened after that.
-
 ## Boolean Observables
 
-This library also contains a set of extension methods to convert entities to implementations of `IObservable<bool>`. If no predicate is provided, the `On` state is mapped to true, the `Off` state is mapped to false.
+This library contains a set of extension methods to convert entities to implementations of `IObservable<bool>`. If no predicate is provided, the `On` state is mapped to true, the `Off` state is mapped to `false`.
 
 The usage of `ToBooleanObservable` (or one of the aliases `ToOnOffObservable` or `ToOpenClosedObservable`) on an entity will use `StateChanges` (or `StateAllChanges` when a predicate is provided) to result in a stateful `IObservable<bool>`.
 
@@ -94,6 +83,89 @@ noOneAsleep.And(closetDoorOpenShorterThanOneMin).SubscribeTrueFalse(
 ```
 
 Note that even though scheduling is mostly handled by the `Reactive.Boolean` library, knowledge of the `Entity` does improve some scheduling methods. In the cases of `WhenTrueFor` and `LimitTrueDuration` both `LastChanged` and the passing of time are used to evaluate whether a true is emitted.
+
+## Scheduling
+
+A breakdown of all scheduling extension methods this library enables for `Entity` and `IObservable<bool>`:
+
+### OnForAtLeast
+
+Returns an observable that won't emit `false` for at least the provided timespan after an initial `on` (`true`) is emitted by the `entity`.
+If a `false` is emitted during the provided timespan, it will be emitted immediately after the timer is completed.
+
+**Example Use Case**
+
+Turn on a light for at least 3 seconds after a button was pressed. If 3 seconds are passed, only keep it on if the button is still being pressed, but immediately turn if off if not.
+```cs
+// buttonPressed is a IObservable<bool>
+var buttonPressed = buttonEntity.ToBooleanObservable(s => s.State == "pressed");
+buttonPressed
+    .TrueForAtLeast(TimeSpan.FromSeconds(3), scheduler)
+    .SubscribeTrueFalse(
+        () => lightEntity.TurnOn(),
+        () => lightEntity.TurnOff());
+```
+
+> Aliases: `OpenForAtLeast`/`TrueForAtLeast`.
+
+### PersistOnFor
+
+Returns an observable that delays the first `off` (`false`) that is emitted after an `on` (`true`) by the `entity` for a duration of the provided timespan.
+
+**Example Use Case**
+
+Keep a light on for 3 more seconds after last motion was detected.
+```cs
+// motionDetected is a IObservable<bool>
+var motionDetected = motionSensorEntity.ToBooleanObservable(s => s.State == "motion");
+motionDetected
+    .PersistTrueFor(TimeSpan.FromSeconds(3), scheduler)
+    .SubscribeTrueFalse(
+        () => lightEntity.TurnOn(),
+        () => lightEntity.TurnOff());
+```
+
+> Aliases: `PersistOpenFor`/`PersistTrueFor`.
+
+### WhenOnFor
+
+Returns an observable that emits `true` once `entity` does not emit `off` (`false`) for a minimum of the provided timespan.
+
+When called on an `Entity`, this method takes into account `EntityState.LastChanged`, meaning the returned observable can emit `true` even if the time did not pass during runtime.
+
+**Example Use Case**
+
+Send notification when washing machine power has been 0 for at least 1 minute.
+```cs
+// washingMachineCurrentIsZero is a IObservable<bool>
+var washingMachineCurrentIsZero = washingMachineCurrentEntity.ToBooleanObservable(s => s.State == 0);
+washingMachineCurrentIsZero
+    .WhenTrueFor(TimeSpan.FromMinutes(1), scheduler)
+    .SubscribeTrue(() => notificationEntity.Send("Washing machine is done!"));
+```
+
+> Aliases: `WhenOpenFor`/`WhenTrueFor`.
+
+### LimitOnDuration
+
+Returns an observable that will automatically emit `false` if the `entity` does not emit an `off` (`false`) itself within the provided timespan after emitting `on` (`true`).
+
+When called on an `Entity`, this method takes into account `EntityState.LastChanged`, meaning the returned observable can emit `false` even if the time did not pass during runtime.
+
+**Example Use Case**
+
+Keep closet lights on for a maximum amount of time.
+```cs
+// closetDoorOpen is a IObservable<bool>
+var closetDoorOpen = closetDoorEntity.ToBooleanObservable(s => s.State == "open");
+closetDoorOpen
+    .LimitTrueDuration(TimeSpan.FromMinutes(2), scheduler)
+    .SubscribeTrueFalse(
+        () => closetLightEntity.TurnOn(),
+        () => closetLightEntity.TurnOff());
+```
+
+> Aliases: `LimitOpenDuration`/`LimitCloseDuration`.
 
 ## Unavailability of entities
 
