@@ -1,5 +1,9 @@
 # NetDaemon.Extensions.Observables
 
+[![GitHub license](https://img.shields.io/github/license/DevJasperNL/NetDaemon.Extensions.Observables?label=License)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables?tab=MIT-1-ov-file)
+[![GitHub release](https://img.shields.io/github/v/release/DevJasperNL/NetDaemon.Extensions.Observables?label=Release)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/releases/latest)
+[![Build Status](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/actions/workflows/ci-build-and-test.yml/badge.svg)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/actions/workflows/ci-build-and-test.yml)
+
 Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
 
 - For more information on NetDaemon, click [here](https://netdaemon.xyz/).
