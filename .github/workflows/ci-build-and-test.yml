@@ -1,0 +1,47 @@
+name: 🛠️ CI Build & Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 2 * * *" # run at 2 AM UTC
+jobs:
+  build:
+    name: 🔨 Build and Test (CI)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: 🗂️ Checkout the repository
+        uses: actions/checkout@main
+
+      - name: ⬇️ Install .NET 6
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+          
+      - name: ⬇️ Install .NET 7
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '7.0.x'
+          
+      - name: ⬇️ Install .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: ⬇️ Install .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: 🛠️ Build code
+        run: dotnet build --configuration Release -p:TreatWarningsAsErrors=true
+
+      - name: 🧪 Run tests
+        run: |
+          echo "## 📊 Unit test results" >> $GITHUB_STEP_SUMMARY
+          dotnet test --no-build --configuration Release tests/NetDaemon.Extensions.Observables.Tests/NetDaemon.Extensions.Observables.Tests.csproj -- RunConfiguration.CollectSourceInformation=true
