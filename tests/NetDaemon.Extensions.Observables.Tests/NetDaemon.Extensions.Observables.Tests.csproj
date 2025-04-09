@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetDaemon.Extensions.Observables\NetDaemon.Extensions.Observables.csproj" />
+    <ProjectReference Include="..\..\src\NetDaemon.Extensions.Observables\NetDaemon.Extensions.Observables.csproj" />
   </ItemGroup>
 
   <ItemGroup>
