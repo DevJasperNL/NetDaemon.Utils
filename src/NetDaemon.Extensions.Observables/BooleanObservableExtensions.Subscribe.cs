@@ -2,6 +2,9 @@
 
 namespace NetDaemon.Extensions.Observables
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="IObservable{Boolean}"/>.
+    /// </summary>
     public static class BooleanObservableExtensions
     {
         /// <summary>
