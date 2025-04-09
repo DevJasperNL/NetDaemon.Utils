@@ -3,6 +3,9 @@ using Reactive.Boolean;
 
 namespace NetDaemon.Extensions.Observables
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="Entity"/>.
+    /// </summary>
     public static partial class EntityExtensions
     {
         /// <summary>

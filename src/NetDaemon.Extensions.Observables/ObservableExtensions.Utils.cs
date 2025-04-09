@@ -3,6 +3,9 @@ using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.Extensions.Observables
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="IEnumerable{T}"/>.
+    /// </summary>
     public static class ObservableExtensions
     {
         /// <summary>
