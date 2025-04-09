@@ -32,6 +32,6 @@ namespace NetDaemon.Extensions.Observables
         /// <summary>
         /// Subscribes an action to be executed when the observable emits false (off).
         /// </summary>
-        public static IDisposable SubscribeOff(this IObservable<bool> observable, Action offAction) => observable.SubscribeTrue(offAction);
+        public static IDisposable SubscribeOff(this IObservable<bool> observable, Action offAction) => observable.SubscribeFalse(offAction);
     }
 }
