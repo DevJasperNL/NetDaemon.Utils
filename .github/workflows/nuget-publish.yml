@@ -33,11 +33,6 @@ jobs:
             exit 1
           fi
 
-      - name: 🧪 Output Tag Information (debugging)
-        run: |
-          echo "Library Name: ${{ steps.tag_info.outputs.library_name }}"
-          echo "Package Version: ${{ steps.tag_info.outputs.package_version }}"
-          
       - name: 📂 Determine project directory
         id: project_path
         run: |
@@ -54,16 +49,11 @@ jobs:
         with:
           dotnet-version: "9.0.x" # SDK Version
 
-      - name: 🧪 Output Tag Information (debugging)
+      - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
         run: |
-          echo "Project Path Name: ${{ steps.project_path.outputs.path }}"
-          
-      # - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
-      #   run: |
-      #     dotnet pack "${{ steps.project_path.outputs.path }}" --configuration Release -o ./nupkg -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
-      #   working-directory: ${{ steps.project_path.outputs.path }}
+          dotnet pack "${{ steps.project_path.outputs.path }}/*.csproj" --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
+        working-directory: ${{ steps.project_path.outputs.path }}
 
-      # - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
-      #   run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
-      #   working-directory: ${{ steps.project_path.outputs.path }}
+      - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
+        run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
         
