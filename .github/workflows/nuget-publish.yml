@@ -36,12 +36,17 @@ jobs:
         id: project_path
         run: |
           LIBRARY_NAME="${{ steps.tag_info.outputs.library_name }}"
-          PROJECT_PATH="src/$LIBRARY_NAME/$LIBRARY_NAME.csproj"
-          echo "path=$PROJECT_PATH" >> "$GITHUB_OUTPUT"
-          if [ ! -d "$PROJECT_PATH" ]; then
-            echo "::error::Project directory '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
+          PROJECT_DIR="src/$LIBRARY_NAME"
+          if [ ! -d "$PROJECT_DIR" ]; then
+            echo "::error::Project directory '$PROJECT_DIR' not found for library '$LIBRARY_NAME'"
             exit 1
           fi
+          PROJECT_PATH="src/$LIBRARY_NAME/$LIBRARY_NAME.csproj"
+          if [ ! -f "$PROJECT_PATH" ]; then
+            echo "::error::Project '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
+            exit 1
+          fi
+          echo "path=$PROJECT_PATH" >> "$GITHUB_OUTPUT"
 
       - name: ⬇️ Install .NET 9
         uses: actions/setup-dotnet@v4
