@@ -36,7 +36,7 @@ jobs:
         id: project_path
         run: |
           LIBRARY_NAME="${{ steps.tag_info.outputs.library_name }}"
-          PROJECT_PATH="src/$LIBRARY_NAME"
+          PROJECT_PATH="src/$LIBRARY_NAME/$LIBRARY_NAME.csproj"
           echo "path=$PROJECT_PATH" >> "$GITHUB_OUTPUT"
           if [ ! -d "$PROJECT_PATH" ]; then
             echo "::error::Project directory '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
@@ -49,7 +49,7 @@ jobs:
           dotnet-version: "9.0.x" # SDK Version
 
       - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
-        run: dotnet pack "${{ steps.project_path.outputs.path }}/*.csproj" --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
+        run: dotnet pack ${{ steps.project_path.outputs.path }} --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
 
       - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
         run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
