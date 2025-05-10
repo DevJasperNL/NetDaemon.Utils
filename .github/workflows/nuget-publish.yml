@@ -4,7 +4,6 @@ on:
     types:
       - released
       - prereleased
-  workflow_dispatch:
 jobs:
   deploy_nuget:
     name: 📦 Publish NuGet Packages
@@ -51,7 +50,7 @@ jobs:
 
       - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
         run: |
-          dotnet pack "${{ steps.project_path.outputs.path }}/*.csproj" --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
+          dotnet pack ${{ steps.project_path.outputs.path }} --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
         working-directory: ${{ steps.project_path.outputs.path }}
 
       - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
