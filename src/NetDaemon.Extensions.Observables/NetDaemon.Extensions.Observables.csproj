@@ -16,6 +16,7 @@
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<PackageIcon>icon.png</PackageIcon>
 	<PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/releases</PackageReleaseNotes>
+	<Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

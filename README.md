@@ -1,15 +1,19 @@
-# NetDaemon.Extensions.Observables
+# CodeCasa.Libraries
 
 [![GitHub license](https://img.shields.io/github/license/DevJasperNL/NetDaemon.Extensions.Observables?label=License)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables?tab=MIT-1-ov-file)
 [![GitHub release](https://img.shields.io/github/v/release/DevJasperNL/NetDaemon.Extensions.Observables?label=Release)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/releases/latest)
 [![Build Status](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/actions/workflows/ci-build-and-test.yml/badge.svg)](https://github.com/DevJasperNL/NetDaemon.Extensions.Observables/actions/workflows/ci-build-and-test.yml)
+
+A collection of reusable .NET libraries focused on smart home automation, Home Assistant integration, NetDaemon extensions, and general-purpose utilities.
+
+## NetDaemon.Extensions.Observables
 
 Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
 
 - For more information on NetDaemon, click [here](https://netdaemon.xyz/).
 - Article containing more examples and explanation about this library: [Article with examples](https://dev.to/devjaspernl/supercharging-home-assistant-automations-initial-states-and-boolean-logic-for-netdaemon-rx-3bd5).
 
-## Example Usage
+### Example Usage
 
 ```cs
 public Example(
@@ -59,7 +63,7 @@ sunIsDown.SubscribeTrueFalse(
 
 This implementation will immediately open or close the covers depending on the initial result of the predicate as well as update whenever the result of the predicate changes.
 
-## Boolean Observables
+### Boolean Observables
 
 This library contains a set of extension methods to convert entities to implementations of `IObservable<bool>`. If no predicate is provided, the `On` state is mapped to true, the `Off` state is mapped to `false`.
 
@@ -88,11 +92,11 @@ noOneAsleep.And(closetDoorOpenShorterThanOneMin).SubscribeTrueFalse(
 
 Note that even though scheduling is mostly handled by the `Reactive.Boolean` library, knowledge of the `Entity` does improve some scheduling methods. In the cases of `WhenTrueFor` and `LimitTrueDuration` both `LastChanged` and the passing of time are used to evaluate whether a true is emitted.
 
-## Scheduling
+### Scheduling
 
 A breakdown of all scheduling extension methods this library enables for `Entity` and `IObservable<bool>`:
 
-### OnForAtLeast
+#### OnForAtLeast
 
 Returns an observable that won't emit `false` for at least the provided timespan after an initial `on` (`true`) is emitted by the `entity`.
 If a `false` is emitted during the provided timespan, it will be emitted immediately after the timer is completed.
@@ -112,7 +116,7 @@ buttonPressed
 
 > Aliases: `OpenForAtLeast`/`TrueForAtLeast`.
 
-### PersistOnFor
+#### PersistOnFor
 
 Returns an observable that delays the first `off` (`false`) that is emitted after an `on` (`true`) by the `entity` for a duration of the provided timespan.
 
@@ -131,7 +135,7 @@ motionDetected
 
 > Aliases: `PersistOpenFor`/`PersistTrueFor`.
 
-### WhenOnFor
+#### WhenOnFor
 
 Returns an observable that emits `true` once `entity` does not emit `off` (`false`) for a minimum of the provided timespan.
 
@@ -150,7 +154,7 @@ washingMachineCurrentIsZero
 
 > Aliases: `WhenOpenFor`/`WhenTrueFor`.
 
-### LimitOnDuration
+#### LimitOnDuration
 
 Returns an observable that will automatically emit `false` if the `entity` does not emit an `off` (`false`) itself within the provided timespan after emitting `on` (`true`).
 
@@ -171,7 +175,7 @@ closetDoorOpen
 
 > Aliases: `LimitOpenDuration`/`LimitCloseDuration`.
 
-## Unavailability of entities
+### Unavailability of entities
 
 This library also implements the utility method `RepeatWhenEntitiesBecomeAvailable<T>`. This method can be called on a `IObservable<T>` to repeat a value when one of the provided entities become available.
 

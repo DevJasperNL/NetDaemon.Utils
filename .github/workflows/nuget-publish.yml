@@ -15,20 +15,50 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🔖 Get version from latest tag
-        id: version
+      - name: 🏷️ Get library name and version from tag
+        id: tag_info
         run: |
-          latest=$(git describe --tags $(git rev-list --tags --max-count=1))
-          echo Current version:    $latest
-          echo "::set-output name=version::$latest"
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          echo "Current tag: $TAG_NAME"
+
+          # Extract library name and version using regex
+          if [[ "$TAG_NAME" =~ ^([^@]*)@(.*)$ ]]; then
+            LIBRARY_NAME="${BASH_REMATCH[1]}"
+            PACKAGE_VERSION="${BASH_REMATCH[2]}"
+            echo "::set-output name=library_name::$LIBRARY_NAME"
+            echo "::set-output name=package_version::$PACKAGE_VERSION"
+          else
+            echo "::error::Tag '$TAG_NAME' does not match the expected format 'library-name@version'"
+            exit 1
+          fi
+          
+      - name: 📂 Determine project directory
+        id: project_path
+        run: |
+          LIBRARY_NAME="${{ steps.tag_info.outputs.library_name }}"
+          PROJECT_PATH="$LIBRARY_NAME"
+          echo "::set-output name=path::$PROJECT_PATH"
+          if [ ! -d "$PROJECT_PATH" ]; then
+            echo "::error::Project directory '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
+            exit 1
+          fi
 
       - name: ⬇️ Install .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "9.0.x" # SDK Version
 
-      - name: 🎁 Pack
-        run: dotnet pack NetDaemon.Extensions.Observables.sln --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
+      - name: 🧪 Output Tag Information (debugging)
+        run: |
+          echo "Library Name: ${{ steps.tag_info.outputs.library_name }}"
+          echo "Package Version: ${{ steps.tag_info.outputs.package_version }}"
+          
+      # - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
+      #   run: |
+      #     dotnet pack "${{ steps.project_path.outputs.path }}" --configuration Release -o ./nupkg -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
+      #   working-directory: ${{ steps.project_path.outputs.path }}
+
+      # - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
+      #   run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      #   working-directory: ${{ steps.project_path.outputs.path }}
         
-      - name: 📨 Push to NuGet
-        run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
