@@ -49,9 +49,7 @@ jobs:
           dotnet-version: "9.0.x" # SDK Version
 
       - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
-        run: |
-          dotnet pack ${{ steps.project_path.outputs.path }} --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
-        working-directory: ${{ steps.project_path.outputs.path }}
+        run: dotnet pack "${{ steps.project_path.outputs.path }}/*.csproj" --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
 
       - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
         run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
