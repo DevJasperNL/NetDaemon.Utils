@@ -42,8 +42,8 @@ jobs:
         id: project_path
         run: |
           LIBRARY_NAME="${{ steps.tag_info.outputs.library_name }}"
-          PROJECT_PATH="$LIBRARY_NAME"
-          echo "::set-output name=path::$PROJECT_PATH"
+          PROJECT_PATH="src/$LIBRARY_NAME"
+          echo "{path}=$PROJECT_PATH" >> $GITHUB_OUTPUT
           if [ ! -d "$PROJECT_PATH" ]; then
             echo "::error::Project directory '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
             exit 1
@@ -54,7 +54,9 @@ jobs:
         with:
           dotnet-version: "9.0.x" # SDK Version
 
-      
+      - name: 🧪 Output Tag Information (debugging)
+        run: |
+          echo "Project Path Name: ${{ steps.project_path.outputs.path }}"
           
       # - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
       #   run: |
