@@ -4,6 +4,7 @@ on:
     types:
       - released
       - prereleased
+  workflow_dispatch:
 jobs:
   deploy_nuget:
     name: 📦 Publish NuGet Packages
