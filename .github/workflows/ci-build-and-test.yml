@@ -44,5 +44,5 @@ jobs:
       - name: 🧪 Run tests
         run: |
           echo "## 📊 Unit test results" >> $GITHUB_STEP_SUMMARY
-          dotnet test --no-build --configuration Release tests/NetDaemon.Extensions.Observables.Tests/NetDaemon.Extensions.Observables.Tests.csproj -- RunConfiguration.CollectSourceInformation=true
-          dotnet test --no-build --configuration Release tests/AutomationPipelines.Tests/AutomationPipelines.Tests.csproj -- RunConfiguration.CollectSourceInformation=true
+          dotnet test --no-build --configuration Release tests/NetDaemon.Extensions.Observables.Tests/NetDaemon.Extensions.Observables.Tests.csproj
+          dotnet test --no-build --configuration Release tests/AutomationPipelines.Tests/AutomationPipelines.Tests.csproj
