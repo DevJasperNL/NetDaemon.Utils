@@ -8,13 +8,13 @@
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
     <Description>Composable, reactive, and layered logic pipelines for automation.</Description>
-    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries/tree/main/src/AutomationPipelines</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
     <PackageTags>Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;Pipeline;Pipelines;Node;Nodes;C#;.NET;DotNet;Extension Methods</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageId>AutomationPipelines</PackageId>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases?q=AutomationPipelines</PackageReleaseNotes>
   </PropertyGroup>
   
   <ItemGroup>

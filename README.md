@@ -8,7 +8,7 @@ A collection of .NET libraries focused on smart home automation, Home Assistant 
 
 ## 📦 Libraries
 
-| Library | Description | |
+| Library | Description | Links |
 | --- | ---  | --- |
-| [NetDaemon.Extensions.Observables](./src/NetDaemon.Extensions.Observables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience. | [README](./src/NetDaemon.Extensions.Observables/README.md) |
-| [AutomationPipelines](./src/AutomationPipelines) | Composable, reactive, and layered logic pipelines for automation. | [README](./src/AutomationPipelines/README.md) |
+| [NetDaemon.Extensions.Observables](./src/NetDaemon.Extensions.Observables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience. | [README](./src/NetDaemon.Extensions.Observables/README.md) \| [NuGet](https://www.nuget.org/packages/DevJasper.NetDaemon.Extensions.Observables/) |
+| [AutomationPipelines](./src/AutomationPipelines) | Composable, reactive, and layered logic pipelines for automation. | [README](./src/AutomationPipelines/README.md) \| [NuGet](https://www.nuget.org/packages/AutomationPipelines/) |
