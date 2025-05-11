@@ -3,6 +3,7 @@ using System.Reactive.Subjects;
 
 namespace AutomationPipelines;
 
+/// <inheritdoc />
 public abstract class PipelineNode<TState> : IPipelineNode<TState>
 {
     private readonly Subject<TState?> _newOutputSubject = new();
@@ -10,8 +11,10 @@ public abstract class PipelineNode<TState> : IPipelineNode<TState>
     private TState? _output;
     private bool _enabled = true;
 
+    /// <inheritdoc />
     public IObservable<TState?> OnNewOutput => _newOutputSubject.AsObservable();
 
+    /// <inheritdoc />
     public TState? Input
     {
         get => _input;
@@ -58,6 +61,7 @@ public abstract class PipelineNode<TState> : IPipelineNode<TState>
         }
     }
 
+    /// <inheritdoc />
     public bool Enabled
     {
         get => _enabled;

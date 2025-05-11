@@ -1,5 +1,8 @@
 ﻿namespace AutomationPipelines;
 
+/// <summary>
+/// Represents a pipeline of nodes.
+/// </summary>
 public interface IPipeline<TState> : IPipelineNode<TState>
 {
     /// <summary>

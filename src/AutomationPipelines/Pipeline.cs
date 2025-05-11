@@ -2,6 +2,9 @@
 
 namespace AutomationPipelines;
 
+/// <summary>
+/// Represents a pipeline of nodes.
+/// </summary>
 public class Pipeline<TState>(IServiceProvider serviceProvider) : PipelineNode<TState>, IPipeline<TState>
 {
     private readonly List<IPipelineNode<TState>> _nodes = new();
@@ -10,17 +13,20 @@ public class Pipeline<TState>(IServiceProvider serviceProvider) : PipelineNode<T
     private Action<TState>? _action;
     private IDisposable? _subscription;
 
+    /// <inheritdoc />
     public IPipeline<TState> SetDefault(TState state)
     {
         Input = state;
         return this;
     }
 
+    /// <inheritdoc />
     public IPipeline<TState> RegisterNode<TNode>() where TNode : IPipelineNode<TState>
     {
         return RegisterNode(ActivatorUtilities.CreateInstance<TNode>(serviceProvider));
     }
 
+    /// <inheritdoc />
     public IPipeline<TState> RegisterNode<TNode>(TNode node) where TNode : IPipelineNode<TState>
     {
         _subscription?.Dispose(); // Dispose old subscription if any.
@@ -46,6 +52,7 @@ public class Pipeline<TState>(IServiceProvider serviceProvider) : PipelineNode<T
         return this;
     }
 
+    /// <inheritdoc />
     public IPipeline<TState> SetOutputHandler(Action<TState> action, bool callActionDistinct = true)
     {
         _callActionDistinct = callActionDistinct;
@@ -58,6 +65,7 @@ public class Pipeline<TState>(IServiceProvider serviceProvider) : PipelineNode<T
         return this;
     }
 
+    /// <inheritdoc />
     protected override void InputReceived(TState? state)
     {
         if (!_nodes.Any())
