@@ -23,10 +23,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include=".\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
 	<None Include="..\..\img\icon.png">
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
