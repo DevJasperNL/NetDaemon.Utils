@@ -15,47 +15,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🏷️ Get library name and version from tag
-        id: tag_info
+      - name: 🔖 Get version from latest tag
+        id: version
         run: |
-          TAG_NAME="${GITHUB_REF#refs/tags/}"
-          echo "Current tag: $TAG_NAME"
-
-          # Extract library name and version using regex
-          if [[ "$TAG_NAME" =~ ^([^@]*)@(.*)$ ]]; then
-            LIBRARY_NAME="${BASH_REMATCH[1]}"
-            PACKAGE_VERSION="${BASH_REMATCH[2]}"
-            echo "library_name=$LIBRARY_NAME" >> "$GITHUB_OUTPUT"
-            echo "package_version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
-          else
-            echo "::error::Tag '$TAG_NAME' does not match the expected format 'library-name@version'"
-            exit 1
-          fi
-
-      - name: 📂 Determine project directory
-        id: project_path
-        run: |
-          LIBRARY_NAME="${{ steps.tag_info.outputs.library_name }}"
-          PROJECT_DIR="src/$LIBRARY_NAME"
-          if [ ! -d "$PROJECT_DIR" ]; then
-            echo "::error::Project directory '$PROJECT_DIR' not found for library '$LIBRARY_NAME'"
-            exit 1
-          fi
-          PROJECT_PATH="src/$LIBRARY_NAME/$LIBRARY_NAME.csproj"
-          if [ ! -f "$PROJECT_PATH" ]; then
-            echo "::error::Project '$PROJECT_PATH' not found for library '$LIBRARY_NAME'"
-            exit 1
-          fi
-          echo "path=$PROJECT_PATH" >> "$GITHUB_OUTPUT"
+          latest=$(git describe --tags $(git rev-list --tags --max-count=1))
+          echo Current version:    $latest
+          echo "::set-output name=version::$latest"
 
       - name: ⬇️ Install .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "9.0.x" # SDK Version
 
-      - name: 🎁 Pack ${{ steps.tag_info.outputs.library_name }}
-        run: dotnet pack ${{ steps.project_path.outputs.path }} --configuration Release -p:PackageVersion=${{ steps.tag_info.outputs.package_version }} -p:Version=${{ steps.tag_info.outputs.package_version }}
-
-      - name: 📨 Push ${{ steps.tag_info.outputs.library_name }} to NuGet
-        run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: 🎁 Pack
+        run: dotnet pack NetDaemon.Utils.sln --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
         
+      - name: 📨 Push to NuGet
+        run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
