@@ -1,4 +1,4 @@
-# CodeCasa.Libraries
+# CodeCasa.NetDaemon.Utils
 
 [![GitHub license](https://img.shields.io/github/license/DevJasperNL/NetDaemon.Utils?label=License)](https://github.com/DevJasperNL/NetDaemon.Utils?tab=MIT-1-ov-file)
 [![GitHub release](https://img.shields.io/github/v/release/DevJasperNL/NetDaemon.Utils?label=Release)](https://github.com/DevJasperNL/NetDaemon.Utils/releases/latest)
@@ -6,7 +6,56 @@
 
 A collection of .NET libraries focused on NetDaemon extensions and utilities.
 
-## NetDaemon.Extensions.Observables
+## Available Libraries
+
+Package | Description
+--- |---
+[CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
+[CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
+
+## CodeCasa.NetDaemon.RuntimeState
+
+This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
+
+While this service isn’t necessary when using `NetDaemonApp` classes for automations, it can be useful in contexts where you access NetDaemon entities outside of that scope — for example, in a Blazor UI. In such cases, `NetDaemonRuntimeStateService` helps determine whether the NetDaemon runtime is initialized and connected.
+
+### Runtime States
+The service exposes three possible states:
+- **Initializing** – NetDaemon is still initializing and building its state cache. Entity access is not yet available.
+- **Connected** – NetDaemon is connected to Home Assistant.
+- **Disconnected** – NetDaemon is disconnected from Home Assistant. Cached entity states remain available, but no updates will be received until reconnected.
+
+### Usage
+
+Register the service:
+```cs
+builder.Services.AddNetDaemonRuntimeStateService();
+```
+
+Then use it, for example, in a Blazor component:
+
+```cs
+@inject NetDaemonRuntimeStateService NetDaemonRuntimeStateService
+
+@code {
+    private bool _netDaemonInitialized;
+    private bool _netDaemonConnected;
+
+    protected override void OnInitialized()
+    {
+        NetDaemonRuntimeStateService.ConnectedChangesWithCurrent().Subscribe(state =>
+        {
+            _netDaemonInitialized = state != NetDaemonStates.Initializing;
+            _netDaemonConnected = state == NetDaemonStates.Connected;
+            InvokeAsync(StateHasChanged);
+        });
+    }
+}
+```
+
+> Example Blazor implementation: https://github.com/DevJasperNL/CodeCasa
+
+## CodeCasa.NetDaemon.Extensions.Observables
 
 Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
 

@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Title>NetDaemon.RuntimeState</Title>
+    <Authors>Jasper Lammers</Authors>
+    <Company>DevJasper</Company>
+    <Description>This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.</Description>
+    <RepositoryUrl>https://github.com/DevJasperNL/NetDaemon.Utils</RepositoryUrl>
+    <PackageTags>NetDaemon;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;C#;.NET;DotNet;Extension Methods</PackageTags>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageId>CodeCasa.NetDaemon.RuntimeState</PackageId>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<PackageIcon>nd_icon.png</PackageIcon>
+	<PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Utils/releases</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+	<None Include="..\..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\..\img\nd_icon.png">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
+    <PackageReference Include="NetDaemon.Client" Version="25.18.1" />
+    <PackageReference Include="NetDaemon.Runtime" Version="25.18.1" />
+  </ItemGroup>
+
+</Project>
