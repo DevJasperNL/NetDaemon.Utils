@@ -14,6 +14,9 @@ public class NetDaemonRuntimeStateService : IDisposable
 
     private IDisposable? _connectionSubscription;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NetDaemonRuntimeStateService"/> class.
+    /// </summary>
     public NetDaemonRuntimeStateService(
         INetDaemonRuntime netDaemonRuntime,
         IHomeAssistantRunner homeAssistantRunner)
@@ -51,6 +54,7 @@ public class NetDaemonRuntimeStateService : IDisposable
     /// </summary>
     public IObservable<NetDaemonStates> ConnectedChanges() => _netDaemonConnected.Skip(1).AsObservable();
 
+    /// <inheritdoc />
     public void Dispose()
     {
         if (_connectionSubscription == null)

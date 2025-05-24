@@ -8,14 +8,14 @@
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
     <Description>Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.</Description>
-    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DevJasperNL/NetDaemon.Utils</RepositoryUrl>
     <PackageTags>NetDaemon;NetDaemon Extensions;Entity Extensions;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;Boolean;Boolean Logic;Boolean State;Boolean Observable;C#;.NET;DotNet;Extension Methods</PackageTags>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<PackageId>DevJasper.NetDaemon.Extensions.Observables</PackageId>
+	<PackageId>CodeCasa.NetDaemon.Extensions.Observables</PackageId>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<PackageIcon>icon.png</PackageIcon>
-	<PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases?q=NetDaemon.Extensions.Observables</PackageReleaseNotes>
+	<PackageIcon>nd_rx_icon.png</PackageIcon>
+	<PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Utils/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +23,11 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-	<None Include="..\..\img\icon.png">
+	<None Include="..\..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\..\img\nd_rx_icon.png">
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
 	</None>
