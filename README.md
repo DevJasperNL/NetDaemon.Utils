@@ -17,7 +17,7 @@ Package | Description
 
 This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
 
-While this service isn’t necessary when using `NetDaemonApp` classes for automations, it can be useful in contexts where you access NetDaemon entities outside of that scope — for example, in a Blazor UI. In such cases, `NetDaemonRuntimeStateService` helps determine whether the NetDaemon runtime is initialized and connected.
+While this service isn’t necessary when using `NetDaemonApp` classes for automations, it can be useful in contexts where you access NetDaemon entities outside of that scope — for example, in a (Blazor) UI or background service. In such cases, `NetDaemonRuntimeStateService` helps determine whether the NetDaemon runtime is initialized and connected.
 
 ### Runtime States
 The service exposes three possible states:
@@ -53,7 +53,32 @@ Then use it, for example, in a Blazor component:
 }
 ```
 
-> Example Blazor implementation: https://github.com/DevJasperNL/CodeCasa
+or in a `BackgroundService`:
+```cs
+internal class ExampleService : BackgroundService
+{
+    private readonly NetDaemonRuntimeStateService _netDaemonRuntimeStateService;
+
+    public ExampleService(NetDaemonRuntimeStateService netDaemonRuntimeStateService)
+    {
+        _netDaemonRuntimeStateService = netDaemonRuntimeStateService;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    {
+        // Wait for the NetDaemon runtime to be initialized.
+        await _netDaemonRuntimeStateService.WaitForInitializationAsync(cancellationToken);
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return;
+        }
+
+        // Implement code that works with NetDaemon entities here.
+    }
+}
+```
+
+> Example Blazor/BackgroundServices implementations: https://github.com/DevJasperNL/CodeCasa
 
 ## CodeCasa.NetDaemon.Extensions.Observables
 

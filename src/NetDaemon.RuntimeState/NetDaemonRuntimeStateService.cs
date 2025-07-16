@@ -2,6 +2,7 @@
 using NetDaemon.Runtime;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Reactive.Threading.Tasks;
 
 namespace NetDaemon.RuntimeState;
 
@@ -53,6 +54,19 @@ public class NetDaemonRuntimeStateService : IDisposable
     /// Returns an observable that emits changes in the connection state of NetDaemon.
     /// </summary>
     public IObservable<NetDaemonStates> ConnectedChanges() => _netDaemonConnected.Skip(1).AsObservable();
+
+    /// <summary>
+    /// Asynchronously waits until NetDaemon has finished initializing.
+    /// The task completes once NetDaemon transitions out of the <see cref="NetDaemonStates.Initializing"/> state.
+    /// This is useful when performing entity operations outside NetDaemonApps, for example in a <c>BackgroundService</c>.
+    /// </summary>
+    public async Task WaitForInitializationAsync(CancellationToken cancellationToken)
+    {
+        await ConnectedChangesWithCurrent()
+            .Where(connected => connected != NetDaemonStates.Initializing)
+            .FirstAsync()
+            .ToTask(cancellationToken);
+    }
 
     /// <inheritdoc />
     public void Dispose()
