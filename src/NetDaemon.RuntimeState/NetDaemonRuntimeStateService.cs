@@ -60,7 +60,7 @@ public class NetDaemonRuntimeStateService : IDisposable
     /// The task completes once NetDaemon transitions out of the <see cref="NetDaemonStates.Initializing"/> state.
     /// This is useful when performing entity operations outside NetDaemonApps, for example in a <c>BackgroundService</c>.
     /// </summary>
-    public async Task WaitForInitializationAsync(CancellationToken cancellationToken)
+    public async Task WaitForInitializationAsync(CancellationToken cancellationToken = default)
     {
         await ConnectedChangesWithCurrent()
             .Where(connected => connected != NetDaemonStates.Initializing)
