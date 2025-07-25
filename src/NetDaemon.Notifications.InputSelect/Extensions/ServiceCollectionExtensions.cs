@@ -10,8 +10,16 @@ using NetDaemon.RuntimeState.Extensions;
 
 namespace NetDaemon.Notifications.InputSelect.Extensions;
 
+/// <summary>
+/// Provides extension methods for registering input select notification services in an <see cref="IServiceCollection"/>.
+/// </summary>
 public static class ServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds input select notification services to the specified <see cref="IServiceCollection"/>,
+    /// configured from the specified <see cref="IConfiguration"/>.
+    /// Expects a configuration section named <c>"InputSelectNotificationEntities"</c> containing an array of <see cref="InputSelectNotificationItem"/>.
+    /// </summary>
     public static IServiceCollection AddInputSelectNotifications(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
         var inputSelectNotificationEntities = configuration
@@ -26,6 +34,10 @@ public static class ServiceCollectionExtensions
         return AddInputSelectNotifications(serviceCollection, inputSelectNotificationEntities);
     }
 
+    /// <summary>
+    /// Adds input select notification services to the specified <see cref="IServiceCollection"/>,
+    /// configured from the provided array of <see cref="InputSelectNotificationItem"/>.
+    /// </summary>
     public static IServiceCollection AddInputSelectNotifications(this IServiceCollection serviceCollection, InputSelectNotificationItem[] inputSelectNotificationEntities)
     {
         serviceCollection.VerifyNetDaemonDependencies();

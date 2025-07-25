@@ -3,37 +3,50 @@ using NetDaemon.Notifications.InputSelect.Config;
 
 namespace NetDaemon.Notifications.InputSelect.Interact
 {
+    /// <summary>
+    /// Abstract base class that acts as a convenient wrapper around <see cref="IInputSelectNotificationEntity"/>.
+    /// Intended to simplify creation of custom input select notification entities by delegating calls to an inner implementation.
+    /// </summary>
+    /// <param name="inner">The inner <see cref="IInputSelectNotificationEntity"/> instance to delegate to.</param>
     public abstract class InputSelectNotificationEntity(IInputSelectNotificationEntity inner)
         : IInputSelectNotificationEntity
     {
-        protected readonly IInputSelectNotificationEntity Inner = inner ?? throw new ArgumentNullException(nameof(inner));
+        private readonly IInputSelectNotificationEntity _inner = inner ?? throw new ArgumentNullException(nameof(inner));
 
-        public string InputSelectEntityId => Inner.InputSelectEntityId;
-        public string? InputNumberEntityId => Inner.InputNumberEntityId;
+        /// <inheritdoc />
+        public string InputSelectEntityId => _inner.InputSelectEntityId;
 
+        /// <inheritdoc />
+        public string? InputNumberEntityId => _inner.InputNumberEntityId;
+
+        /// <inheritdoc />
         public virtual InputSelectNotification Notify(IInputSelectNotificationConfig notification)
         {
-            return Inner.Notify(notification);
+            return _inner.Notify(notification);
         }
 
+        /// <inheritdoc />
         public virtual InputSelectNotification Notify(IInputSelectNotificationConfig notification, InputSelectNotification notificationToReplace)
         {
-            return Inner.Notify(notification, notificationToReplace);
+            return _inner.Notify(notification, notificationToReplace);
         }
 
+        /// <inheritdoc />
         public virtual InputSelectNotification Notify(IInputSelectNotificationConfig notification, string id)
         {
-            return Inner.Notify(notification, id);
+            return _inner.Notify(notification, id);
         }
 
+        /// <inheritdoc />
         public virtual void RemoveNotification(InputSelectNotification notificationToRemove)
         {
-            Inner.RemoveNotification(notificationToRemove);
+            _inner.RemoveNotification(notificationToRemove);
         }
 
+        /// <inheritdoc />
         public virtual void RemoveNotification(string id)
         {
-            Inner.RemoveNotification(id);
+            _inner.RemoveNotification(id);
         }
     }
 }

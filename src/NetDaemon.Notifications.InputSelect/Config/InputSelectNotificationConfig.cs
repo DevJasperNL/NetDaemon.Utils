@@ -5,26 +5,67 @@ using NetDaemon.Notifications.InputSelect.Helpers;
 
 namespace NetDaemon.Notifications.InputSelect.Config;
 
+/// <summary>
+/// Default implementation of <see cref="IInputSelectNotificationConfig"/> provided by the library.
+/// </summary>
+/// <param name="Message">The main message to display in the notification.</param>
 public record InputSelectNotificationConfig(string Message) : IInputSelectNotificationConfig
 {
     private const int MaxMessageLength = 255;
 
-    // Can be used for record copying
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InputSelectNotificationConfig"/> record with an empty message.
+    /// Useful for record copying or default construction.
+    /// </summary>
     public InputSelectNotificationConfig() : this(string.Empty)
     {
     }
 
+    /// <summary>
+    /// Gets or sets the main message displayed in the notification.
+    /// </summary>
     public string Message { get; set; } = Message;
+
+    /// <summary>
+    /// Gets or sets an optional secondary message to display alongside the main message.
+    /// </summary>
     public string? SecondaryMessage { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional icon name or URI to display with the notification.
+    /// </summary>
     public string? Icon { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional color to apply to the icon.
+    /// </summary>
     public Color? IconColor { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional badge icon name or URI.
+    /// </summary>
     public string? BadgeIcon { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional color to apply to the badge icon.
+    /// </summary>
     public Color? BadgeIconColor { get; set; }
+
+    /// <summary>
+    /// Gets or sets optional content text to display inside the badge.
+    /// </summary>
     public string? BadgeContent { get; set; }
+
+    /// <inheritdoc/>
     public TimeSpan? Timeout { get; set; }
+
+    /// <inheritdoc/>
     public Action? Action { get; set; }
+
+    /// <inheritdoc/>
     public int? Order { get; set; }
 
+    /// <inheritdoc />
     public string ToInputSelectOptionString()
     {
         var notificationInfo = new DashboardNotificationInfo(Message)

@@ -2,7 +2,7 @@
 
 namespace NetDaemon.Notifications.InputSelect.Config;
 
-public record DashboardNotificationInfo(string Message)
+internal record DashboardNotificationInfo(string Message)
 {
     // Note: we keep property names as short as possible as the limit of the whole json is 256 chars.
     [JsonPropertyName("m")]
