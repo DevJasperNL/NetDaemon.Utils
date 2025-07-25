@@ -6,8 +6,15 @@ using NetDaemon.Notifications.Phone.Config;
 
 namespace NetDaemon.Notifications.Phone;
 
+/// <summary>
+/// Class representing a phone notification entity for a specific phone implementation.
+/// Provides methods to create, update, and remove notifications.
+/// </summary>
 public class PhoneNotificationEntity : IDisposable
 {
+    /// <summary>
+    /// Delegate type for sending a notification message to the mobile app.
+    /// </summary>
     public delegate void MobileAppNotificationDelegate(string message, string? title = null, object? target = null, object? data = null);
 
     private readonly MobileAppNotificationDelegate _notify;
@@ -19,7 +26,11 @@ public class PhoneNotificationEntity : IDisposable
     private readonly Dictionary<string, Action[]> _actions = new();
     private readonly IDisposable _eventDisposable;
 
-    protected PhoneNotificationEntity(IHaContext haContext, MobileAppNotificationDelegate notifyMethod)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PhoneNotificationEntity"/> class.
+    /// Subscribes to notification action events and sets up the delegate for sending notifications.
+    /// </summary>
+    public PhoneNotificationEntity(IHaContext haContext, MobileAppNotificationDelegate notifyMethod)
     {
         _notify = notifyMethod;
         _eventDisposable = haContext.Events.Filter<PhoneActionEventData>(MobileAppNotificationAction)
@@ -44,16 +55,32 @@ public class PhoneNotificationEntity : IDisposable
             });
     }
 
+    /// <summary>
+    /// Creates and sends a new notification with a generated unique ID.
+    /// </summary>
+    /// <returns>A <see cref="PhoneNotification"/> handle to the created notification.</returns>
     public PhoneNotification Notify(PhoneNotificationConfig config)
     {
         return Notify(config, Guid.NewGuid().ToString());
     }
 
+    /// <summary>
+    /// Updates an existing notification by replacing it with the specified ID.
+    /// </summary>
+    /// <param name="config">The new notification configuration.</param>
+    /// <param name="notificationToReplace">The existing notification to replace.</param>
+    /// <returns>A <see cref="PhoneNotification"/> handle to the updated notification.</returns>
     public PhoneNotification Notify(PhoneNotificationConfig config, PhoneNotification notificationToReplace)
     {
         return Notify(config, notificationToReplace.Id);
     }
 
+    /// <summary>
+    /// Creates or updates a notification with the specified ID.
+    /// </summary>
+    /// <param name="config">The notification configuration.</param>
+    /// <param name="id">The unique identifier for the notification.</param>
+    /// <returns>A <see cref="PhoneNotification"/> handle to the notification.</returns>
     public PhoneNotification Notify(PhoneNotificationConfig config, string id)
     {
         lock (_lock)
@@ -74,11 +101,19 @@ public class PhoneNotificationEntity : IDisposable
         return new PhoneNotification(id, Disposable.Create(() => RemoveNotification(id)));
     }
 
+    /// <summary>
+    /// Removes a notification using the given <see cref="PhoneNotification"/> handle.
+    /// </summary>
+    /// <param name="notificationToRemove">The notification to remove.</param>
     public void RemoveNotification(PhoneNotification notificationToRemove)
     {
         RemoveNotification(notificationToRemove.Id);
     }
 
+    /// <summary>
+    /// Removes a notification by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the notification to remove.</param>
     public void RemoveNotification(string id)
     {
         _notify(ClearNotification, data: new { tag = id });
@@ -94,6 +129,7 @@ public class PhoneNotificationEntity : IDisposable
         [JsonPropertyName("action")] public string? Action { get; init; }
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
         _eventDisposable.Dispose();
