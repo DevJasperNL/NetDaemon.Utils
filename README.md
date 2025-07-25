@@ -10,8 +10,73 @@ A collection of .NET libraries focused on NetDaemon extensions and utilities.
 
 Package | Description
 --- |---
+[CodeCasa.NetDaemon.Notifications.Phone](#codecasanetdaemonnotificationsphone) | This library provides the `PhoneNotificationEntity` class, making it easy to create, update, and manage phone notifications in Home Assistant.
+[CodeCasa.NetDaemon.Notifications.InputSelect](#codecasanetdaemonnotificationsinputselect) | This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.
 [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
 [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
+
+## CodeCasa.NetDaemon.Notifications.Phone
+
+This library provides the `PhoneNotificationEntity` class, making it easy to create, update, and manage phone notifications in Home Assistant.
+
+**Features include:**
+
+- Easy notification creation and updating
+- Support for actionable notifications with customizable buttons.
+
+### Usage
+
+Define an entity for a specific phone:
+```cs
+public class JasperPhoneNotifications(NotifyServices notificationServices, IHaContext haContext)
+    : PhoneNotificationEntity(haContext, notificationServices.MobileAppPixel7);
+```
+
+Register the entity as a service:
+```cs
+serviceCollection..AddTransient<JasperPhoneNotifications>();
+```
+
+Use it to send notifications (with optional actions):
+```cs
+[NetDaemonApp]
+internal class Example
+{
+    public Example(
+        LightEntities lightEntities,
+        JasperPhoneNotifications jasperPhoneNotifications)
+    {
+        var notificationId = $"{nameof(Example)}_Notification"; // Note: Using an ID that is consistent between runs also ensures that old notifications are removed/replaced on phones when the app is reloaded.
+
+        lightEntities.OfficeLights.SubscribeOnOff(
+            () =>
+            {
+                jasperPhoneNotifications.Notify(new AndroidNotificationConfig
+                {
+                    Message = "Hey Jasper, the office lights are on!",
+                    StatusBarIcon = "mdi:lightbulb",
+                    Actions =
+                    [
+                        new(() => lightEntities.OfficeLights.TurnOff(), "Click here to turn them off.")
+                    ]
+                }, notificationId);
+            },
+            () => jasperPhoneNotifications.RemoveNotification(notificationId));
+    }
+}
+```
+
+This automation sends a notification to Jasper’s phone whenever the office lights are turned on. The notification includes a button that allows him to turn off the lights directly from the notification:
+
+![](img/phone_notification.png "Phone Notification")
+
+> Other example implementations: https://github.com/DevJasperNL/CodeCasa
+
+## CodeCasa.NetDaemon.Notifications.InputSelect
+
+This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.
+
+> Example implementations (including visualisation in Blazor): https://github.com/DevJasperNL/CodeCasa
 
 ## CodeCasa.NetDaemon.RuntimeState
 
