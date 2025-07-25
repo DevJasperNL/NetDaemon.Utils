@@ -9,15 +9,15 @@ namespace NetDaemon.Notifications.InputSelect.Config;
 /// Default implementation of <see cref="IInputSelectNotificationConfig"/> provided by the library.
 /// </summary>
 /// <param name="Message">The main message to display in the notification.</param>
-public record InputSelectNotificationConfig(string Message) : IInputSelectNotificationConfig
+public record InputSelectDashboardNotificationConfig(string Message) : IInputSelectNotificationConfig
 {
     private const int MaxMessageLength = 255;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InputSelectNotificationConfig"/> record with an empty message.
+    /// Initializes a new instance of the <see cref="InputSelectDashboardNotificationConfig"/> record with an empty message.
     /// Useful for record copying or default construction.
     /// </summary>
-    public InputSelectNotificationConfig() : this(string.Empty)
+    public InputSelectDashboardNotificationConfig() : this(string.Empty)
     {
     }
 
