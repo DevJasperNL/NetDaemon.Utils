@@ -23,6 +23,7 @@ This library provides the `PhoneNotificationEntity` class, making it easy to cre
 
 - Easy notification creation and updating
 - Support for actionable notifications with customizable buttons.
+- Support for Android and iPhone
 
 ### Usage
 
@@ -74,6 +75,85 @@ This automation sends a notification to Jasper’s phone whenever the office lig
 ## CodeCasa.NetDaemon.Notifications.InputSelect
 
 This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.
+
+I always liked Android’s dynamic notifications and wished for something similar in Home Assistant. While HA has a built‑in notification panel, it’s limited and somewhat hidden away. I wanted to display rich, actionable notifications directly on my own dashboard—without too much hassle.
+
+Originally built as a quick solution, this implementation worked so well that I decided to share it. It stores notifications as JSON entries in an `input_select` entity, including fields like message, icon, color, and actions. The library handles adding, updating, removing, and even executing actions for you.
+
+You can render these notifications in a custom UI (like my [Blazor dashboard](https://github.com/DevJasperNL/CodeCasa)) or even with native Home Assistant templating.
+By default, the library uses a standard JSON format for entries, but you can define your own if needed.
+
+### Usage
+
+First, update your `appsettings.json` with an `InputSelectNotificationEntities` array containing the input select entities you want to use as notification lists.
+Optionally, you can add an `InputNumberEntityId` to store the current notification count (handy for templating in dashboards):
+
+```json
+"InputSelectNotificationEntities": [
+  {
+    "InputSelectEntityId": "input_select.living_room_panel_notifications"
+  },
+  {
+    "InputSelectEntityId": "input_select.jasper_notifications",
+    "InputNumberEntityId": "input_number.jasper_notification_count"
+  }
+]
+```
+
+Register the service in your DI container:
+
+```cs
+serviceCollection.AddInputSelectNotifications(configuration);
+```
+
+> Note: As an alternative, you can also provide configuration directly in code when calling `AddInputSelectNotifications`.
+
+Inject the corresponding `IInputSelectNotificationEntity` service using the input select entity ID as the key, and use it to create, update, or remove notifications:
+
+```cs
+[NetDaemonApp]
+internal class Example
+{
+    public Example([FromKeyedServices("input_select.living_room_panel_notifications")] IInputSelectNotificationEntity livingRoomPanelDashboardNotifications)
+    {
+        var notificationId = $"{nameof(Example)}_Notification";
+        livingRoomPanelDashboardNotifications.Notify(new InputSelectDashboardNotificationConfig
+        {
+            Message = "This is a notification.",
+            SecondaryMessage = "Click me to delete me!.",
+            Icon = "mdi:lightbulb",
+            IconColor = Color.Yellow,
+            Action = () => livingRoomPanelDashboardNotifications.RemoveNotification(notificationId)
+        }, notificationId);
+    }
+}
+```
+
+Alternatively, you can wrap it in the provided `InputSelectNotificationEntity` class and register that instead:
+
+```cs
+public class LivingRoomPanelDashboardNotifications(
+    [FromKeyedServices("input_select.living_room_panel_notifications")] IInputSelectNotificationEntity inputSelectNotifications)
+    : InputSelectNotificationEntity(inputSelectNotifications);
+```
+```cs
+serviceCollection.AddTransient<LivingRoomPanelDashboardNotifications>();
+```
+
+Then inject and use it just like any other service:
+
+```cs
+[NetDaemonApp]
+internal class Example
+{
+    public Example(LivingRoomPanelDashboardNotifications livingRoomPanelDashboardNotifications)
+    {
+        ...
+    }
+}
+```
+
+> More details on visualisation in Home Assistent coming soon.
 
 > Example implementations (including visualisation in Blazor): https://github.com/DevJasperNL/CodeCasa
 
