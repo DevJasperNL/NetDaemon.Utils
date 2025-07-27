@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<Title>NetDaemon.Notifications.InputSelect</Title>
+    <Authors>Jasper Lammers</Authors>
+    <Company>DevJasper</Company>
+    <Description>This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.</Description>
+    <RepositoryUrl>https://github.com/DevJasperNL/NetDaemon.Utils</RepositoryUrl>
+    <PackageTags>NetDaemon;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Notifications;Dashboard;InputSelect;Dropdown;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;C#;.NET;DotNet;Extension Methods</PackageTags>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageId>CodeCasa.NetDaemon.Notifications.InputSelect</PackageId>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<PackageIcon>nd_icon.png</PackageIcon>
+	<PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Utils/releases</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\img\nd_icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetDaemon.RuntimeState\NetDaemon.RuntimeState.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>NetDaemon.Notifications.InputSelect.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
