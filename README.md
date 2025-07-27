@@ -47,7 +47,6 @@ internal class Example
         JasperPhoneNotifications jasperPhoneNotifications)
     {
         var notificationId = $"{nameof(Example)}_Notification"; // Note: Using an ID that is consistent between runs also ensures that old notifications are removed/replaced on phones when the app is reloaded.
-
         lightEntities.OfficeLights.SubscribeOnOff(
             () =>
             {

@@ -41,4 +41,10 @@
     <ProjectReference Include="..\NetDaemon.RuntimeState\NetDaemon.RuntimeState.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>NetDaemon.Notifications.InputSelect.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
 </Project>
