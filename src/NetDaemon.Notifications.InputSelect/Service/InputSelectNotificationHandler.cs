@@ -38,6 +38,7 @@ internal class InputSelectNotificationHandler : IDisposable
         haContext.Events.Filter<NotificationClickedEventData>(NotificationClicked)
             .Where(e =>
                 e.Data != null &&
+                e.Data.NotificationEntity != null &&
                 e.Data.NotificationEntity.Equals(inputSelectEntity.EntityId, StringComparison.OrdinalIgnoreCase) &&
                 e.Data.NotificationIndex < _notifications.Count)
             .Subscribe(e =>
@@ -156,7 +157,7 @@ internal class InputSelectNotificationHandler : IDisposable
     private record NotificationClickedEventData
     {
         [JsonPropertyName("notificationEntity")]
-        public string NotificationEntity { get; init; } = null!;
+        public string? NotificationEntity { get; init; }
 
         [JsonPropertyName("notificationIndex")]
         public int NotificationIndex { get; init; }
