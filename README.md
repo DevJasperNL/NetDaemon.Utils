@@ -35,7 +35,7 @@ public class JasperPhoneNotifications(NotifyServices notificationServices, IHaCo
 
 Register the entity as a service:
 ```cs
-serviceCollection..AddTransient<JasperPhoneNotifications>();
+serviceCollection.AddTransient<JasperPhoneNotifications>();
 ```
 
 Use it to send notifications (with optional actions):
@@ -79,6 +79,8 @@ This library helps you turn a Home Assistant Dropdown/InputSelect helper entity 
 I always liked Android’s dynamic notifications and wished for something similar in Home Assistant. While HA has a built‑in notification panel, it’s limited and somewhat hidden away. I wanted to display rich, actionable notifications directly on my own dashboard—without too much hassle.
 
 Originally built as a quick solution, this implementation worked so well that I decided to share it. It stores notifications as JSON entries in an `input_select` entity, including fields like message, icon, color, and actions. The library handles adding, updating, removing, and even executing actions for you.
+
+One of the biggest upsides of this approach is that it keeps everything inside Home Assistant itself: your notifications persist in the state of the `input_select entity`, surviving reboots or refreshes.
 
 You can render these notifications in a custom UI (like my [Blazor dashboard](https://github.com/DevJasperNL/CodeCasa)) or even with [native Home Assistant templating](docs/home-assistant-dashboard-setup.md).
 By default, the library uses a standard JSON format for entries, but you can define your own if needed.
