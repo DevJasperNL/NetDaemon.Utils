@@ -70,7 +70,7 @@ This automation sends a notification to Jasper’s phone whenever the office lig
 
 ![Screenshot of notification shown on phone](img/phone_notification.png "Phone Notification")
 
-> Other example implementations: https://github.com/DevJasperNL/CodeCasa
+> For a more advanced demo like the example below, check out: https://github.com/DevJasperNL/CodeCasa ![Gif demonstrating phone notifications](img/phone_notification_demo.gif "Phone Notifications")
 
 ## CodeCasa.NetDaemon.Notifications.InputSelect
 
