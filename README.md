@@ -68,7 +68,7 @@ internal class Example
 
 This automation sends a notification to Jasper’s phone whenever the office lights are turned on. The notification includes a button that allows him to turn off the lights directly from the notification:
 
-![](img/phone_notification.png "Phone Notification")
+![Screenshot of notification shown on phone](img/phone_notification.png "Phone Notification")
 
 > Other example implementations: https://github.com/DevJasperNL/CodeCasa
 
@@ -80,7 +80,7 @@ I always liked Android’s dynamic notifications and wished for something simila
 
 Originally built as a quick solution, this implementation worked so well that I decided to share it. It stores notifications as JSON entries in an `input_select` entity, including fields like message, icon, color, and actions. The library handles adding, updating, removing, and even executing actions for you.
 
-You can render these notifications in a custom UI (like my [Blazor dashboard](https://github.com/DevJasperNL/CodeCasa)) or even with native Home Assistant templating.
+You can render these notifications in a custom UI (like my [Blazor dashboard](https://github.com/DevJasperNL/CodeCasa)) or even with [native Home Assistant templating](docs/home-assistant-dashboard-setup.md).
 By default, the library uses a standard JSON format for entries, but you can define your own if needed.
 
 ### Usage
@@ -153,7 +153,13 @@ internal class Example
 }
 ```
 
-> More details on visualisation in Home Assistent coming soon.
+Finally, to trigger an action, make sure to raise the following event:
+
+```cs
+HaContext.SendEvent("notification_clicked", new { notificationEntity = InputSelectEntities.LivingRoomPanelNotifications.EntityId, notificationIndex = index });
+```
+
+> To display the notification using native Home Assistant templating, please follow [this setup guide](docs/home-assistant-dashboard-setup.md). Result: ![Gif of home assistant dashboard notifications](img/hass_notification_demo.gif "Home Assistant Dashboard Notifications")
 
 > Example implementations (including visualisation in Blazor): https://github.com/DevJasperNL/CodeCasa
 
