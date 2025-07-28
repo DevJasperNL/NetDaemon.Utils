@@ -16,7 +16,7 @@ The end result will look like this:
 
 ## Prerequisits
 
-- You have a running NetDaemon app configured as described in the [CodeCasa.NetDaemon.Notifications.InputSelect chapter of the README](https://github.com/DevJasperNL/NetDaemon.Utils/tree/doc/input_select_hass_demo?tab=readme-ov-file#codecasanetdaemonnotificationsinputselect).
+- You have a running NetDaemon app configured as described in the [CodeCasa.NetDaemon.Notifications.InputSelect chapter of the README](https://github.com/DevJasperNL/NetDaemon.Utils?tab=readme-ov-file#codecasanetdaemonnotificationsinputselect).
 - Make sure that both an `input_select` and an `input_number` entity is configured.
 
 ## Step 1: Configure appsettings.json
