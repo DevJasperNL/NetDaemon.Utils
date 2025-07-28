@@ -21,9 +21,9 @@ This library provides the `PhoneNotificationEntity` class, making it easy to cre
 
 **Features include:**
 
-- Easy notification creation and updating
+- Easy notification creation and updating.
 - Support for actionable notifications with customizable buttons.
-- Support for Android and iPhone
+- Support for Android and iOS.
 
 ### Usage
 

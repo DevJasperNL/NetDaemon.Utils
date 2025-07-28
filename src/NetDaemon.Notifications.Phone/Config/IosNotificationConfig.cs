@@ -38,6 +38,10 @@ public record IosNotificationConfig : PhoneNotificationConfig
             group = Group,
             tag,
             actions = Actions?.Select((a, index) => a.ToData(index)).ToArray(),
+            action_data = new // For iOS, data in this object is returned in the mobile_app_notification_action event.
+            {
+                tag
+            },
             image = Image,
             video = Video,
             audio = Audio,
