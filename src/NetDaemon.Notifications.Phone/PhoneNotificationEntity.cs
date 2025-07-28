@@ -39,7 +39,13 @@ public class PhoneNotificationEntity : IDisposable
             {
                 lock (_lock)
                 {
-                    if (e.Data?.Tag == null || !_actions.TryGetValue(e.Data.Tag, out var actions))
+                    if (e.Data == null)
+                    {
+                        return;
+                    }
+
+                    var tag = e.Data.Tag ?? e.Data.ActionData?.Tag;
+                    if (tag == null || !_actions.TryGetValue(tag, out var actions))
                     {
                         return;
                     }
@@ -125,8 +131,14 @@ public class PhoneNotificationEntity : IDisposable
 
     private record PhoneActionEventData
     {
-        [JsonPropertyName("tag")] public string? Tag { get; init; }
+        [JsonPropertyName("tag")] public string? Tag { get; init; } // Android only
+        [JsonPropertyName("action_data")] public iOSActionData? ActionData { get; init; } // iOS only
         [JsonPropertyName("action")] public string? Action { get; init; }
+    }
+
+    private record iOSActionData
+    {
+        [JsonPropertyName("tag")] public string? Tag { get; init; }
     }
 
     /// <inheritdoc />
