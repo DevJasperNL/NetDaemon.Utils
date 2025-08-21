@@ -404,9 +404,7 @@ var noOneAsleep = inputBooleanEntities.JasperAsleep.ToBooleanObservable()
 var closetDoorOpenShorterThanOneMin = binarySensorEntities.BedroomClosetDoorSensorContact
     .ToOpenClosedObservable().LimitTrueDuration(TimeSpan.FromMinutes(5), scheduler);
 
-noOneAsleep.And(closetDoorOpenShorterThanOneMin).SubscribeTrueFalse(
-    () => lightEntities.ClosetLight.TurnOn(),
-    () => lightEntities.ClosetLight.TurnOff());
+noOneAsleep.And(closetDoorOpenShorterThanOneMin).BindToOnOff(lightEntities.ClosetLight);
 ```
 
 Note that even though scheduling is mostly handled by the `Reactive.Boolean` library, knowledge of the `Entity` does improve some scheduling methods. In the cases of `WhenTrueFor` and `LimitTrueDuration` both `LastChanged` and the passing of time are used to evaluate whether a true is emitted.
@@ -428,9 +426,7 @@ Turn on a light for at least 3 seconds after a button was pressed. If 3 seconds 
 var buttonPressed = buttonEntity.ToBooleanObservable(s => s.State == "pressed");
 buttonPressed
     .TrueForAtLeast(TimeSpan.FromSeconds(3), scheduler)
-    .SubscribeTrueFalse(
-        () => lightEntity.TurnOn(),
-        () => lightEntity.TurnOff());
+    .BindToOnOff(lightEntity);
 ```
 
 > Aliases: `OpenForAtLeast`/`TrueForAtLeast`.
@@ -447,9 +443,7 @@ Keep a light on for 3 more seconds after last motion was detected.
 var motionDetected = motionSensorEntity.ToBooleanObservable(s => s.State == "motion");
 motionDetected
     .PersistTrueFor(TimeSpan.FromSeconds(3), scheduler)
-    .SubscribeTrueFalse(
-        () => lightEntity.TurnOn(),
-        () => lightEntity.TurnOff());
+    .BindToOnOff(lightEntity);
 ```
 
 > Aliases: `PersistOpenFor`/`PersistTrueFor`.
@@ -487,9 +481,7 @@ Keep closet lights on for a maximum amount of time.
 var closetDoorOpen = closetDoorEntity.ToBooleanObservable(s => s.State == "open");
 closetDoorOpen
     .LimitTrueDuration(TimeSpan.FromMinutes(2), scheduler)
-    .SubscribeTrueFalse(
-        () => closetLightEntity.TurnOn(),
-        () => closetLightEntity.TurnOff());
+    .BindToOnOff(closetLightEntity);
 ```
 
 > Aliases: `LimitOpenDuration`/`LimitCloseDuration`.
@@ -508,7 +500,5 @@ var nightTime = sunEntities.Sun
 
 nightTime
     .RepeatWhenEntitiesBecomeAvailable(switchEntities.LivingRoomChristmasTreeLights)
-    .SubscribeTrueFalse(
-        () => switchEntities.LivingRoomChristmasTreeLights.TurnOn(),
-        () => switchEntities.LivingRoomChristmasTreeLights.TurnOff());
+    .BindToOnOff(switchEntities.LivingRoomChristmasTreeLights);
 ```
