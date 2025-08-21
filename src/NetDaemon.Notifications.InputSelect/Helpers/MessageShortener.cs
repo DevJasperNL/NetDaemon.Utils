@@ -1,6 +1,6 @@
 ﻿namespace NetDaemon.Notifications.InputSelect.Helpers
 {
-    internal static class MessageShortener
+    public static class MessageShortener
     {
         /// <summary>
         /// Shortens one or two messages by a specified total amount of characters.
