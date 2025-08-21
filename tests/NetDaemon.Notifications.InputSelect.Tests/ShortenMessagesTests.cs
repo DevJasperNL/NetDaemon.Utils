@@ -50,7 +50,7 @@ namespace NetDaemon.Notifications.InputSelect.Tests
         [TestMethod]
         public void SingleMessage_TooMuchRemoved_ShouldReturnExceptionIfTooShort()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                 MessageShortener.ShortenMessages("Hi", null, 10)
             );
         }
@@ -58,7 +58,7 @@ namespace NetDaemon.Notifications.InputSelect.Tests
         [TestMethod]
         public void MultipleMessages_TooMuchRemoved_ShouldReturnExceptionIfTooShort()
         {
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.ThrowsExactly<ArgumentException>(() =>
                     MessageShortener.ShortenMessages("Hi", "This is a test", 13)
             );
         }
