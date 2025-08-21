@@ -48,17 +48,19 @@ namespace NetDaemon.Notifications.InputSelect.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void SingleMessage_TooMuchRemoved_ShouldReturnExceptionIfTooShort()
         {
-            MessageShortener.ShortenMessages("Hi", null, 10);
+            Assert.ThrowsException<ArgumentException>(() =>
+                MessageShortener.ShortenMessages("Hi", null, 10)
+            );
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void MultipleMessages_TooMuchRemoved_ShouldReturnExceptionIfTooShort()
         {
-            MessageShortener.ShortenMessages("Hi", "This is a test", 13);
+            Assert.ThrowsException<ArgumentException>(() =>
+                    MessageShortener.ShortenMessages("Hi", "This is a test", 13)
+            );
         }
     }
 }

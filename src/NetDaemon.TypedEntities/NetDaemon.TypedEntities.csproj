@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 	<Title>NetDaemon.TypedEntities</Title>
     <Authors>Jasper Lammers</Authors>
+	<Version>1.3.2</Version>
     <Company>DevJasper</Company>
     <Description>Strongly-typed wrappers for Home Assistant entities in `NetDaemon`.</Description>
     <RepositoryUrl>https://github.com/DevJasperNL/NetDaemon.Utils</RepositoryUrl>
