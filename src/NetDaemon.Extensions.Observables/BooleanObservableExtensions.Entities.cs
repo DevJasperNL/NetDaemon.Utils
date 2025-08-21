@@ -1,5 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 using Reactive.Boolean;
+using System.Reactive.Disposables;
 
 namespace NetDaemon.Extensions.Observables;
 
@@ -31,17 +32,15 @@ public static partial class BooleanObservableExtensions
         var entityArray = entities.ToArray();
         if (!entityArray.Any())
         {
-            throw new ArgumentException("No entities provided.", nameof(entities));
+            return Disposable.Empty;
         }
 
-        var entityIds = entityArray.Select(e => e.EntityId).ToArray();
-        var haContext = entityArray[0].HaContext;
         return observable.SubscribeTrueFalse(() =>
         {
-            haContext.CallService("homeassistant", "turn_on", ServiceTarget.FromEntities(entityIds));
+            entityArray.CallService("homeassistant.turn_on");
         }, () =>
         {
-            haContext.CallService("homeassistant", "turn_off", ServiceTarget.FromEntities(entityIds));
+            entityArray.CallService("homeassistant.turn_on");
         });
     }
 }
