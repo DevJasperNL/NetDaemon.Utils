@@ -8,7 +8,7 @@ using NetDaemon.Notifications.InputSelect.Interact;
 
 namespace NetDaemon.Notifications.InputSelect.Service;
 
-internal class InputSelectNotificationHandler : IDisposable
+internal class InputSelectNotificationHandler
 {
     private const int MaxMessageLength = 255;
     private const string NotificationClicked = "notification_clicked";
@@ -146,11 +146,6 @@ internal class InputSelectNotificationHandler : IDisposable
 
         _inputSelectEntity.CallService("set_options", new { options = _notifications.Select(n => n.InputSelectOption).ToArray() });
         _inputNumberEntity?.CallService("set_value", new { value = _notifications.Count });
-    }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
     }
 
     // ReSharper disable once ClassNeverInstantiated.Local

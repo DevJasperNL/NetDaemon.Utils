@@ -1,6 +1,14 @@
 ﻿namespace NetDaemon.Notifications.InputSelect.Helpers
 {
-    internal static class MessageShortener
+    /// <summary>
+    /// Provides helper methods for shortening text messages while preserving readability.
+    /// </summary>
+    /// <remarks>
+    /// The <see cref="MessageShortener"/> class is designed to truncate one or two strings
+    /// by a specified number of characters, ensuring each shortened message remains valid
+    /// and ends with an ellipsis ("..") to indicate truncation.
+    /// </remarks>
+    public static class MessageShortener
     {
         /// <summary>
         /// Shortens one or two messages by a specified total amount of characters.

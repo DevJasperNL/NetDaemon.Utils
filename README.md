@@ -13,6 +13,7 @@ Package | Description
 [CodeCasa.NetDaemon.Notifications.Phone](#codecasanetdaemonnotificationsphone) | This library provides the `PhoneNotificationEntity` class, making it easy to create, update, and manage phone notifications in Home Assistant.
 [CodeCasa.NetDaemon.Notifications.InputSelect](#codecasanetdaemonnotificationsinputselect) | This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.
 [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
+[CodeCasa.NetDaemon.TypedEntities](#codecasanetdaemontypedentities) | Strongly-typed wrappers for Home Assistant entities in `NetDaemon`.
 [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
 
 ## CodeCasa.NetDaemon.Notifications.Phone
@@ -231,6 +232,98 @@ internal class ExampleService : BackgroundService
 ```
 
 > Example Blazor/BackgroundServices implementations: https://github.com/DevJasperNL/CodeCasa
+
+## CodeCasa.NetDaemon.TypedEntities
+
+Strongly-typed wrappers for Home Assistant entities in **NetDaemon**.
+
+This library provides `EnumEntity`, which enables entities with enum-based states.  
+You can configure it by:
+
+- Supplying only the enum type (defaults to enum names as state values)
+- Providing an enum-to-string dictionary
+- Supplying custom `Func<TEnum, string>` and `Func<string, TEnum?>` conversion functions
+
+### Usage
+
+With auto-generated NetDaemon entities, you can create type-safe variants.  
+For example, here’s a type-safe `input_select` entity:
+
+#### Base Class (optional)
+```cs
+public record TypeSafeInputSelectEntity<T> : EnumEntity<T, TypeSafeInputSelectEntity<T>, EnumEntityState<T, InputSelectAttributes>, InputSelectAttributes>, IInputSelectEntityCore 
+    where T : struct, Enum
+{
+    public TypeSafeInputSelectEntity(IHaContext haContext, string entityId) : base(haContext, entityId)
+    {
+    }
+
+    public TypeSafeInputSelectEntity(IEntityCore entity) : base(entity)
+    {
+    }
+}
+```
+
+#### Concrete Wrapper Example
+```cs
+public record PersonStateEntity : TypeSafeInputSelectEntity<PersonStates>
+{
+    public PersonStateEntity(InputSelectEntity inputSelectEntity)
+        : base(inputSelectEntity)
+    {
+    }
+}
+
+public enum PersonStates
+{
+    Awake,
+    Asleep,
+    Away
+}
+```
+
+Now, `PersonStateEntity` can be used as a wrapper for any `InputSelectEntity` that has the states `Awake`, `Asleep` and `Away`.
+
+### Another Example: PersonEntity
+
+The person entity can be in states like `home`, `not_home`, or a zone name.
+If you don’t want to sync all zone names, you can use the `Func` constructor overload to fall back to `NotHome`:
+
+```cs
+public record TypeSafePersonEntity : EnumEntity<PersonEntityStates, TypeSafePersonEntity, EnumEntityState<PersonEntityStates, PersonAttributes>, PersonAttributes>, IPersonEntityCore
+{
+    private static readonly Dictionary<PersonEntityStates, string> PeopleEntityStatesToStateValues = new()
+    {
+        { PersonEntityStates.Home , "home" },
+        { PersonEntityStates.NotHome , "not_home" }
+        { PersonEntityStates.Store , "store" }
+    };
+    public static readonly Dictionary<string, PersonEntityStates> StateValuesToPeopleEntityStates = PeopleEntityStatesToStateValues.Inverse(StringComparer.OrdinalIgnoreCase);
+
+    public TypeSafePersonEntity(IHaContext haContext, string entityId) 
+        : base(haContext, entityId, 
+            e => PeopleEntityStatesToStateValues[e], 
+            v => StateValuesToPeopleEntityStates.GetValueOrDefault(v, PersonEntityStates.NotHome)) // By using GetValueOrDefault, any zone outside home will result in state NotHome.
+    {
+    }
+
+    public TypeSafePersonEntity(IEntityCore entity)
+        : base(entity,
+            e => PeopleEntityStatesToStateValues[e],
+            v => StateValuesToPeopleEntityStates.GetValueOrDefault(v, PersonEntityStates.NotHome))
+    {
+    }
+}
+
+public enum PersonEntityStates
+{
+    Home,
+    NotHome,
+    Store
+}
+```
+
+> 🔗 For more implementation examples, check out: [CodeCasa on GitHub](https://github.com/DevJasperNL/CodeCasa).
 
 ## CodeCasa.NetDaemon.Extensions.Observables
 
