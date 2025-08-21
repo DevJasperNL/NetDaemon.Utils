@@ -5,7 +5,7 @@ namespace NetDaemon.Extensions.Observables;
 /// <summary>
 /// Provides extension methods for <see cref="IObservable{Boolean}"/>.
 /// </summary>
-public static class BooleanObservableExtensions
+public static partial class BooleanObservableExtensions
 {
     /// <summary>
     /// Subscribes actions to be executed when the observable emits true (open) or false (closed).
