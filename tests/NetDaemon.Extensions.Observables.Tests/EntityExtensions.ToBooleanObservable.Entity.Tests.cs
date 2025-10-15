@@ -210,7 +210,7 @@ public class EntityExtensionsToBooleanObservableEntityTests
         _testEntity.ToChangesOnlyBooleanObservable().Subscribe(results.Add);
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     [TestMethod]
@@ -254,7 +254,7 @@ public class EntityExtensionsToBooleanObservableEntityTests
         ChangeEntityState("Something else");
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     [TestMethod]
@@ -268,7 +268,7 @@ public class EntityExtensionsToBooleanObservableEntityTests
         EntityStateNull();
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     [TestMethod]
@@ -281,7 +281,7 @@ public class EntityExtensionsToBooleanObservableEntityTests
         _testEntity.ToChangesOnlyBooleanObservable(s => s.IsOff()).Subscribe(results.Add);
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     [TestMethod]
@@ -325,6 +325,6 @@ public class EntityExtensionsToBooleanObservableEntityTests
         EntityStateNull();
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 }

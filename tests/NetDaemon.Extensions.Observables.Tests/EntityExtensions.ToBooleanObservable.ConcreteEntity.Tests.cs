@@ -126,7 +126,7 @@ public class EntityExtensionsToBooleanObservableConcreteEntityTests
         _testEntity.ToChangesOnlyBooleanObservable(s => s.IsOff()).Subscribe(results.Add);
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     [TestMethod]
@@ -170,7 +170,7 @@ public class EntityExtensionsToBooleanObservableConcreteEntityTests
         EntityStateNull();
 
         // Assert
-        Assert.AreEqual(0, results.Count);
+        Assert.IsEmpty(results);
     }
 
     public record TestEntity : Entity<TestEntity, EntityState<TestEntityAttributes>, TestEntityAttributes>
