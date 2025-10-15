@@ -17,7 +17,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
     }
 
     [TestMethod]
@@ -34,7 +34,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -49,7 +49,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -63,13 +63,13 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         bool? result = null;
         observable.Subscribe(b => result = b);
 
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -88,7 +88,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
     }
 
     [TestMethod]
@@ -107,7 +107,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -126,7 +126,7 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -142,12 +142,12 @@ public class EntityExtensionsToBooleanObservableSchedulingLimitTrueDurationEntit
         bool? result = null;
         observable.Subscribe(b => result = b);
 
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 }
