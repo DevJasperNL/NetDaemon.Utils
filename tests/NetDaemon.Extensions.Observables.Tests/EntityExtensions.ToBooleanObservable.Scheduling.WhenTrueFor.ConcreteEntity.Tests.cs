@@ -22,7 +22,7 @@ public class EntityExtensionsToBooleanObservableSchedulingWhenTrueForConcreteEnt
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
     }
 
     [TestMethod]
@@ -41,7 +41,7 @@ public class EntityExtensionsToBooleanObservableSchedulingWhenTrueForConcreteEnt
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
     }
 
     [TestMethod]
@@ -60,7 +60,7 @@ public class EntityExtensionsToBooleanObservableSchedulingWhenTrueForConcreteEnt
         observable.Subscribe(b => result = b);
 
         // Assert
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
     }
 
     [TestMethod]
@@ -76,12 +76,12 @@ public class EntityExtensionsToBooleanObservableSchedulingWhenTrueForConcreteEnt
         bool? result = null;
         observable.Subscribe(b => result = b);
 
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(false, result);
+        Assert.IsFalse(result);
 
         Scheduler.AdvanceBy(1);
-        Assert.AreEqual(true, result);
+        Assert.IsTrue(result);
     }
 }
