@@ -8,7 +8,7 @@ using NetDaemon.Notifications.InputSelect.Interact;
 
 namespace NetDaemon.Notifications.InputSelect.Service;
 
-internal class InputSelectNotificationHandler
+internal class InputSelectNotificationHandler : IDisposable
 {
     private const int MaxMessageLength = 255;
     private const string NotificationClicked = "notification_clicked";
@@ -17,6 +17,7 @@ internal class InputSelectNotificationHandler
     private readonly Lock _lock = new();
     private readonly IEntityCore _inputSelectEntity;
     private readonly IEntityCore? _inputNumberEntity;
+    private readonly IDisposable _eventSubscriptionDisposable;
 
     private readonly List<ManagedNotification> _notifications = [];
 
@@ -35,7 +36,8 @@ internal class InputSelectNotificationHandler
 
         inputSelectNotificationEntity.NotifyObservable.Subscribe(x => Notify(x.id, x.config));
         inputSelectNotificationEntity.RemoveNotificationObservable.Subscribe(RemoveNotification);
-        haContext.Events.Filter<NotificationClickedEventData>(NotificationClicked)
+
+        _eventSubscriptionDisposable = haContext.Events.Filter<NotificationClickedEventData>(NotificationClicked)
             .Where(e =>
                 e.Data != null &&
                 e.Data.NotificationEntity != null &&
@@ -146,6 +148,11 @@ internal class InputSelectNotificationHandler
 
         _inputSelectEntity.CallService("set_options", new { options = _notifications.Select(n => n.InputSelectOption).ToArray() });
         _inputNumberEntity?.CallService("set_value", new { value = _notifications.Count });
+    }
+
+    public void Dispose()
+    {
+        _eventSubscriptionDisposable.Dispose();
     }
 
     // ReSharper disable once ClassNeverInstantiated.Local
