@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Extensions.Observables", "src\NetDaemon.Extensions.Observables\NetDaemon.Extensions.Observables.csproj", "{30FF6178-7406-4310-BA17-E7D51B5D3FFD}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Notifications.InputSelect.Tests", "tests\NetDaemon.Notifications.InputSelect.Tests\NetDaemon.Notifications.InputSelect.Tests.csproj", "{E2FA49AB-BFC2-4DDD-B743-F5AAB96F3FEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.TypedEntities", "src\NetDaemon.TypedEntities\NetDaemon.TypedEntities.csproj", "{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Lights", "src\NetDaemon.Lights\NetDaemon.Lights.csproj", "{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
