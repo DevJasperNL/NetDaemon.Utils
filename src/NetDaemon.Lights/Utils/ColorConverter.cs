@@ -2,8 +2,17 @@
 
 namespace NetDaemon.Lights.Utils
 {
+    /// <summary>
+    /// Provides color conversion utilities for light entities.
+    /// </summary>
     internal static class ColorConverter
     {
+        /// <summary>
+        /// Converts a color temperature in Kelvin to an RGB color value.
+        /// This uses a standard algorithm to approximate the color appearance at different temperatures.
+        /// </summary>
+        /// <param name="kelvin">The color temperature in Kelvin (typically 1000-10000 for visible light).</param>
+        /// <returns>A <see cref="Color"/> object representing the approximate RGB color at the given temperature.</returns>
         public static Color KelvinToRgb(double kelvin)
         {
             var temp = kelvin / 100.0;

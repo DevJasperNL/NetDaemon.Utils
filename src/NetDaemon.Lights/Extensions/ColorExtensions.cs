@@ -4,9 +4,23 @@ namespace NetDaemon.Lights.Extensions;
 
 internal static class ColorExtensions
 {
+    /// <summary>
+    /// Converts a <see cref="Color"/> to a read-only collection of its RGB component values.
+    /// </summary>
+    /// <param name="color">The color to convert.</param>
+    /// <returns>A read-only collection containing the R, G, and B values in that order.</returns>
     public static IReadOnlyCollection<int> ToRgbCollection(this Color color)
         => new int[] { color.R, color.G, color.B }.AsReadOnly();
 
+    /// <summary>
+    /// Blends two colors together using gamma correction to create a smooth transition between them.
+    /// This is particularly useful for simulating color transitions as they appear on smart lights like Philips Hue.
+    /// </summary>
+    /// <param name="color1">The starting color.</param>
+    /// <param name="color2">The ending color.</param>
+    /// <param name="blendFactor">The blend factor between 0 and 1, where 0 returns color1 and 1 returns color2. Values outside this range will be clamped.</param>
+    /// <param name="gamma">The gamma value used for correction. Defaults to 2.8, which has been tested with Philips Hue lights. Higher values make the blend skew towards darker colors in the middle.</param>
+    /// <returns>A new <see cref="Color"/> that is the gamma-corrected blend of the two input colors.</returns>
     public static Color BlendWithGammaCorrection(
         this Color color1, 
         Color color2, 

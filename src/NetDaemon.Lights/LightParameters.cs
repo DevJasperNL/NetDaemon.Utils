@@ -9,21 +9,42 @@ namespace NetDaemon.Lights;
 /// </summary>
 public record LightParameters
 {
+    /// <summary>
+    /// Gets the brightness level of the light, ranging from 0 to 255. A value of 0 or null indicates the light is off.
+    /// </summary>
     public double? Brightness { get; init; }
+
+    /// <summary>
+    /// Gets the RGB color of the light, if applicable. This property is used when the light supports color modes.
+    /// </summary>
     public Color? RgbColor { get; init; }
+
+    /// <summary>
+    /// Gets the color temperature of the light in mireds, if applicable. This property is used when the light supports color temperature modes.
+    /// </summary>
     public int? ColorTemp { get; init; }
 
+    /// <summary>
+    /// Creates a <see cref="LightParameters"/> object representing an off state.
+    /// </summary>
+    /// <returns>A <see cref="LightParameters"/> object with brightness set to 0.</returns>
     public static LightParameters Off()
     {
         return new LightParameters { Brightness = 0 };
     }
 
+    /// <summary>
+    /// Creates a <see cref="LightParameters"/> object representing an on state with maximum brightness.
+    /// This is intended to be used for binary lights that only support on/off states.
+    /// </summary>
+    /// <returns>A <see cref="LightParameters"/> object with brightness set to maximum (255).</returns>
     public static LightParameters On()
     {
         // Note: this is meant to be used by binary lights.
         return new LightParameters { Brightness = byte.MaxValue };
     }
 
+    /// <inheritdoc/>
     public override string ToString()
     {
         StringBuilder sb = new StringBuilder();
