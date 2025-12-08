@@ -15,6 +15,7 @@ Package | Description
 [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
 [CodeCasa.NetDaemon.TypedEntities](#codecasanetdaemontypedentities) | Strongly-typed wrappers for Home Assistant entities in `NetDaemon`.
 [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
+[CodeCasa.NetDaemon.Lights](#codecasanetdaemonlights) | A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
 
 ## CodeCasa.NetDaemon.Notifications.Phone
 
@@ -139,6 +140,7 @@ public class LivingRoomPanelDashboardNotifications(
     [FromKeyedServices("input_select.living_room_panel_notifications")] IInputSelectNotificationEntity inputSelectNotifications)
     : InputSelectNotificationEntity(inputSelectNotifications);
 ```
+
 ```cs
 serviceCollection.AddTransient<LivingRoomPanelDashboardNotifications>();
 ```
@@ -502,3 +504,41 @@ nightTime
     .RepeatWhenEntitiesBecomeAvailable(switchEntities.LivingRoomChristmasTreeLights)
     .BindToOnOff(switchEntities.LivingRoomChristmasTreeLights);
 ```
+
+
+## CodeCasa.NetDaemon.Lights
+
+A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
+
+**Features include:**
+
+- Comprehensive light control extensions for NetDaemon light entities
+- Smooth transition support with customizable duration and brightness curves
+- Generic Light scene templates
+- Integration with NetDaemon's type-safe entity system
+
+This library enhances NetDaemon's native light entity support with additional helper methods and utilities to simplify complex lighting automation scenarios.
+
+### Usage
+
+#### Light Scene Templates
+
+Pre-defined light scene templates automatically adapt to each light's capabilities:
+
+```cs
+foreach (var light in lightEntities.EnumerateAll())
+{
+    // This will turn on the lights to a bright scene no matter its type.
+    light.TurnOn(LightSceneTemplates.Bright);
+}
+```
+
+**Available Scenes:**
+- **Relax** – Warm color temperature with medium brightness for relaxing environments
+- **NightLight** – Very warm color temperature with very low brightness for bedtime
+- **Concentrate** – Cool/neutral color temperature with high brightness for focus
+- **Bright** – Warm color temperature with maximum brightness for general illumination
+- **Dimmed** – Warm color temperature with low brightness for ambient lighting
+
+#### Light Transitions and Interpolation
+Todo

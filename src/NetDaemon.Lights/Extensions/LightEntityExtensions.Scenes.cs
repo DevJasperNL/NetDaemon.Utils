@@ -1,12 +1,18 @@
 ﻿using System.Drawing;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Lights.Generated;
+using NetDaemon.Lights.Scenes;
 using NetDaemon.Lights.Utils;
 
 namespace NetDaemon.Lights.Extensions;
 
 public static partial class LightEntityExtensions
 {
+    private const int RelaxTemp = 500;
+    private const int WarmTemp = 366;
+    private const int ConcentrateTemp = 233;
+    private const int WhiteTemp = 153;
+
     /// <summary>
     /// Will attempt to autogenerate the parameters for the relax scene of any given light entity.
     /// </summary>

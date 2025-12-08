@@ -1,16 +1,17 @@
-﻿using System.Drawing;
-using NetDaemon.HassModel.Entities;
+﻿using NetDaemon.HassModel.Entities;
 using NetDaemon.Lights.Generated;
+using NetDaemon.Lights.Scenes;
 using NetDaemon.Lights.Utils;
+using System.Drawing;
 
 namespace NetDaemon.Lights.Extensions;
 
 public static partial class LightEntityExtensions
 {
-    private const int RelaxTemp = 500;
-    private const int WarmTemp = 366;
-    private const int ConcentrateTemp = 233;
-    private const int WhiteTemp = 153;
+    public static void TurnOn(this ILightEntityCore lightEntity, LightSceneTemplate lightSceneTemplate)
+    {
+        lightEntity.ExecuteLightTransition(lightSceneTemplate(lightEntity).AsTransition());
+    }
 
     /// <summary>
     /// Determines whether a light entity is currently off.
