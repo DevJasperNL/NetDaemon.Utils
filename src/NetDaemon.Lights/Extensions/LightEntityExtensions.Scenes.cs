@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Lights.Generated;
-using NetDaemon.Lights.Scenes;
 using NetDaemon.Lights.Utils;
 
 namespace NetDaemon.Lights.Extensions;
