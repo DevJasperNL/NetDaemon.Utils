@@ -6,6 +6,9 @@ using NetDaemon.Lights.Utils;
 
 namespace NetDaemon.Lights.Extensions;
 
+/// <summary>
+/// Provides extension methods for light entities to support scene generation and light parameter operations.
+/// </summary>
 public static partial class LightEntityExtensions
 {
     private const int RelaxTemp = 500;
@@ -105,6 +108,13 @@ public static partial class LightEntityExtensions
         return LightParameters.Off();
     }
 
+    /// <summary>
+    /// Attempts to create light parameters using an RGB color and brightness level, if the light supports color mode.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to generate parameters for.</param>
+    /// <param name="color">The RGB color to use.</param>
+    /// <param name="brightness">The brightness level to set.</param>
+    /// <returns>Light parameters with the specified color and brightness, or <c>null</c> if the light does not support the color mode.</returns>
     private static LightParameters? TryGetColorParameters(this ILightEntityCore lightEntity, Color color,
         int brightness)
     {
@@ -116,6 +126,13 @@ public static partial class LightEntityExtensions
         return new() { RgbColor = color, Brightness = brightness };
     }
 
+    /// <summary>
+    /// Attempts to create light parameters using a color temperature and brightness level, if the light supports color temperature mode.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to generate parameters for.</param>
+    /// <param name="desiredTemp">The desired color temperature in Mireds.</param>
+    /// <param name="brightness">The brightness level to set.</param>
+    /// <returns>Light parameters with the color temperature clamped to the light's supported range and the specified brightness, or <c>null</c> if the light does not support color temperature mode.</returns>
     private static LightParameters? TryGetColorTempParameters(this ILightEntityCore lightEntity, int desiredTemp,
         int brightness)
     {
@@ -133,6 +150,12 @@ public static partial class LightEntityExtensions
         return new() { ColorTemp = colorTemp, Brightness = brightness };
     }
 
+    /// <summary>
+    /// Determines whether the light entity supports a specific color mode.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to check.</param>
+    /// <param name="colorMode">The color mode to check for.</param>
+    /// <returns><c>true</c> if the light supports the specified color mode; otherwise, <c>false</c>.</returns>
     private static bool SupportsColorMode(this ILightEntityCore lightEntity, string colorMode)
     {
         var entity = new LightEntity(lightEntity);
@@ -146,6 +169,12 @@ public static partial class LightEntityExtensions
             string.Equals(mode, colorMode, StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Attempts to create light parameters using only brightness level, if the light supports brightness mode.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to generate parameters for.</param>
+    /// <param name="brightness">The brightness level to set.</param>
+    /// <returns>Light parameters with the specified brightness, or <c>null</c> if the light does not support brightness mode.</returns>
     private static LightParameters? TryGetBrightnessParameters(this ILightEntityCore lightEntity, int brightness)
     {
         if (!lightEntity.SupportsColorMode(ColorModes.Brightness))
@@ -156,6 +185,11 @@ public static partial class LightEntityExtensions
         return new() { Brightness = brightness };
     }
 
+    /// <summary>
+    /// Attempts to create light parameters for on/off mode with maximum brightness, if the light supports on/off mode.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to generate parameters for.</param>
+    /// <returns>Light parameters with maximum brightness set for on/off mode, or <c>null</c> if the light does not support on/off mode.</returns>
     private static LightParameters? TryGetOnOffOnParameters(this ILightEntityCore lightEntity)
     {
         if (!lightEntity.SupportsColorMode(ColorModes.OnOff))
@@ -166,6 +200,12 @@ public static partial class LightEntityExtensions
         return new() { Brightness = byte.MaxValue };
     }
 
+    /// <summary>
+    /// Gets a color temperature value clamped to the light's minimum and maximum supported color temperature range.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to check color temperature range for.</param>
+    /// <param name="desiredMireds">The desired color temperature in Mireds.</param>
+    /// <returns>The color temperature clamped to the light's supported range, or <c>null</c> if the light does not have a color temperature range defined.</returns>
     private static int? GetColorTempWithinRange(this ILightEntityCore lightEntity, int desiredMireds)
     {
         var entity = new LightEntity(lightEntity);

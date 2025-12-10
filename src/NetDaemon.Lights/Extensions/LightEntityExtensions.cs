@@ -8,6 +8,11 @@ namespace NetDaemon.Lights.Extensions;
 
 public static partial class LightEntityExtensions
 {
+    /// <summary>
+    /// Turns on a light entity using the specified light scene template to generate the light parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightSceneTemplate">A delegate that generates light parameters based on the light entity's capabilities.</param>
     public static void TurnOn(this ILightEntityCore lightEntity, LightSceneTemplate lightSceneTemplate)
     {
         lightEntity.ExecuteLightTransition(lightSceneTemplate(lightEntity).AsTransition());

@@ -3,6 +3,9 @@ using NetDaemon.Lights.Generated;
 
 namespace NetDaemon.Lights.Extensions
 {
+    /// <summary>
+    /// Provides extension methods for <see cref="IHaContext"/> to support light entity operations.
+    /// </summary>
     public static class HaContextExtensions
     {
         /// <summary>
