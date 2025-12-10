@@ -15,6 +15,7 @@ Package | Description
 [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
 [CodeCasa.NetDaemon.TypedEntities](#codecasanetdaemontypedentities) | Strongly-typed wrappers for Home Assistant entities in `NetDaemon`.
 [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
+[CodeCasa.NetDaemon.Lights](#codecasanetdaemonlights) | A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
 
 ## CodeCasa.NetDaemon.Notifications.Phone
 
@@ -139,6 +140,7 @@ public class LivingRoomPanelDashboardNotifications(
     [FromKeyedServices("input_select.living_room_panel_notifications")] IInputSelectNotificationEntity inputSelectNotifications)
     : InputSelectNotificationEntity(inputSelectNotifications);
 ```
+
 ```cs
 serviceCollection.AddTransient<LivingRoomPanelDashboardNotifications>();
 ```
@@ -502,3 +504,129 @@ nightTime
     .RepeatWhenEntitiesBecomeAvailable(switchEntities.LivingRoomChristmasTreeLights)
     .BindToOnOff(switchEntities.LivingRoomChristmasTreeLights);
 ```
+
+## CodeCasa.NetDaemon.Lights
+
+A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
+
+**Features include:**
+
+- **LightParameters** – A simple, state-focused representation of light configuration (brightness, RGB color, color temperature) instead of low-level turn-on parameters.
+- **LightTransition** – Combines `LightParameters` with optional transition duration for smooth color or brightness changes.
+- **Automatic Color Mode Detection** – Intelligently translates `LightParameters` to the correct underlying Home Assistant API calls based on each light's actual capabilities.
+- **Light Scene Templates** – Pre-built scenes (Relax, NightLight, Concentrate, Bright, Dimmed) that automatically adapt to any light's supported features.
+- **Light Flattening & Inspection** – Utilities to inspect light state and flatten light groups into individual entities.
+
+> Please note that this library is primarily designed for my own use. It may contain untested edge cases and might not work with all types of light devices.
+
+### Overview
+
+The main goal of this library is to abstract away the complexity of Home Assistant's light entity API. Instead of dealing with device-specific capabilities and conditional logic in your automations, you work with `LightParameters` that describe *what* state you want—and the library handles *how* to achieve it.
+
+For example, you can apply the same "Relax" scene to any light—whether it supports color temperature, RGB colors, or only brightness—and get appropriate results for each device. Similarly, you can create a transition from one set of parameters to another without worrying about whether the light supports color modes or requires fallback brightness handling.
+
+### Usage
+
+#### Working with Light Parameters
+
+Create light parameters to represent desired states:
+
+```cs
+var brightParams = new LightParameters { Brightness = 255 };
+var warmDimmed = new LightParameters { ColorTemp = 366, Brightness = 100 };
+var colorful = new LightParameters { RgbColor = Color.Red, Brightness = 200 };
+```
+
+Use predefined states for off and on:
+
+```cs
+var off = LightParameters.Off(); // Brightness = 0
+var on = LightParameters.On();   // Useful for binary lights
+```
+
+#### Light Transitions
+
+Convert parameters to transitions and apply them:
+
+```cs
+var transition = brightParams.AsTransition(); // Uses default transition.
+lightEntities.KitchenLight.ExecuteLightTransition(transition);
+
+// With a custom transition duration:
+var smoothTransition = warmDimmed.AsTransition(TimeSpan.FromSeconds(3));
+lightEntities.BedroomLight.ExecuteLightTransition(smoothTransition);
+```
+
+#### Blending Parameters
+
+Blend two sets of parameters together for smooth transitions or animations:
+
+```cs
+var morning = new LightParameters { ColorTemp = 366, Brightness = 100 };
+var evening = new LightParameters { RgbColor = Color.Red, Brightness = 200 }; // Blending is possible between different parameter types.
+
+var transitionPercent = 0.7; // 70% towards evening
+var blended = morning.Interpolate(evening, transitionPercent);
+lightEntities.LivingRoomLight.ExecuteLightTransition(blended.AsTransition());
+```
+
+#### Using Light Scenes
+
+Apply pre-built scene templates that adapt to each light's capabilities:
+
+```cs
+lightEntities.OfficeLight.TurnOn(LightSceneTemplates.Bright);
+lightEntities.BedroomLight.TurnOn(LightSceneTemplates.NightLight);
+lightEntities.LivingRoomLight.TurnOn(LightSceneTemplates.Relax);
+```
+
+Apply a scene to all lights in a collection:
+
+```cs
+foreach (var light in lightEntities.EnumerateAll())
+{
+    light.TurnOn(LightSceneTemplates.Concentrate);
+}
+```
+
+#### Inspecting Light State
+
+Get the current parameters of a light:
+
+```cs
+var currentState = lightEntities.KitchenLight.GetLightParameters();
+Console.WriteLine($"Brightness: {currentState.Brightness}, Color Temp: {currentState.ColorTemp}");
+
+var brightness = lightEntities.BedroomLight.GetBrightness();
+```
+
+Check if a light matches expected parameters:
+
+```cs
+if (lightEntities.OfficeLight.SceneEquals(LightSceneTemplates.Bright(lightEntities.OfficeLight)))
+{
+    Console.WriteLine("Office light is in Bright scene!");
+}
+```
+
+#### Working with Light Groups
+
+Flatten light groups to get individual entities:
+
+```cs
+var groupLight = lightEntities.AllLights; // A light group entity
+var individualLights = groupLight.Flatten();
+
+// Now apply transitions to each light separately
+foreach (var light in individualLights)
+{
+    light.ExecuteLightTransition(warmDimmed.AsTransition());
+}
+```
+
+**Available Scenes:**
+- **Relax** – Warm color temperature with medium brightness for relaxing environments
+- **NightLight** – Very warm color temperature with very low brightness for bedtime
+- **Concentrate** – Cool/neutral color temperature with high brightness for focus
+- **Bright** – Warm color temperature with maximum brightness for general illumination
+- **Dimmed** – Warm color temperature with low brightness for ambient lighting
