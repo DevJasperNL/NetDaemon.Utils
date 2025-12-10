@@ -517,6 +517,8 @@ A collection of extensions and utilities for managing Home Assistant light entit
 - **Light Scene Templates** – Pre-built scenes (Relax, NightLight, Concentrate, Bright, Dimmed) that automatically adapt to any light's supported features.
 - **Light Flattening & Inspection** – Utilities to inspect light state and flatten light groups into individual entities.
 
+> Please note that this library is primarily designed for my own use. It may contain untested edge cases and might not work with all types of light devices.
+
 ### Overview
 
 The main goal of this library is to abstract away the complexity of Home Assistant's light entity API. Instead of dealing with device-specific capabilities and conditional logic in your automations, you work with `LightParameters` that describe *what* state you want—and the library handles *how* to achieve it.

@@ -17,6 +17,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>nd_icon.png</PackageIcon>
     <PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Utils/releases</PackageReleaseNotes>
+    <Version>1.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

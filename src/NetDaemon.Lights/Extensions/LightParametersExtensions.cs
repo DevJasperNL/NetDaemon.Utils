@@ -3,6 +3,9 @@ using ColorConverter = NetDaemon.Lights.Utils.ColorConverter;
 
 namespace NetDaemon.Lights.Extensions;
 
+/// <summary>
+/// Provides extension methods for <see cref="LightParameters"/> to support light transitions and interpolation.
+/// </summary>
 public static class LightParametersExtensions
 {
     /// <summary>
@@ -115,6 +118,13 @@ public static class LightParametersExtensions
         };
     }
 
+    /// <summary>
+    /// Interpolates the brightness value between two brightness values based on the specified progress.
+    /// </summary>
+    /// <param name="from">The starting brightness value, or <c>null</c> if not specified.</param>
+    /// <param name="to">The ending brightness value, or <c>null</c> if not specified.</param>
+    /// <param name="progress">The interpolation progress between 0 and 1.</param>
+    /// <returns>The interpolated brightness value, or <c>null</c> if both values are <c>null</c>.</returns>
     private static double? InterpolateBrightness(double? from, double? to, double progress)
     {
         if (from != null && to != null)
@@ -124,6 +134,13 @@ public static class LightParametersExtensions
         return from ?? to;
     }
 
+    /// <summary>
+    /// Retrieves the RGB color from the specified <see cref="LightParameters"/>.
+    /// If an RGB color is directly specified, it is returned. Otherwise, the RGB color is derived from the color temperature.
+    /// </summary>
+    /// <param name="lightParameters">The light parameters from which to extract the RGB color.</param>
+    /// <returns>The RGB color as a <see cref="Color"/> object.</returns>
+    /// <exception cref="ArgumentException">Thrown when neither RGB color nor color temperature is specified.</exception>
     private static Color GetRgbColor(LightParameters lightParameters)
     {
         if (lightParameters.RgbColor != null)
