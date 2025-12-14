@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Lights", "src\Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Devices.Abstractions", "src\NetDaemon.Devices.Abstractions\NetDaemon.Devices.Abstractions.csproj", "{29D3F724-99AB-4DD4-AB6F-239E3841F77A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Lights.Tests", "NetDaemon.Lights.Tests\NetDaemon.Lights.Tests.csproj", "{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Lights.Tests", "test\NetDaemon.Lights.Tests\NetDaemon.Lights.Tests.csproj", "{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Lights", "src\CodeCasa.Lights\CodeCasa.Lights.csproj", "{0170AD13-CF43-4533-A9AB-59DCC571AB50}"
 EndProject
