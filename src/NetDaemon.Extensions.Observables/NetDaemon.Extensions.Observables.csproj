@@ -14,7 +14,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageId>CodeCasa.NetDaemon.Extensions.Observables</PackageId>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<PackageIcon>nd_rx_icon.png</PackageIcon>
+	<PackageIcon>nd_icon.png</PackageIcon>
 	<PackageReleaseNotes>https://github.com/DevJasperNL/NetDaemon.Utils/releases</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -27,7 +27,7 @@
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
 	</None>
-	<None Include="..\..\img\nd_rx_icon.png">
+	<None Include="..\..\img\nd_icon.png">
 	  <Pack>True</Pack>
 	  <PackagePath>\</PackagePath>
 	</None>
