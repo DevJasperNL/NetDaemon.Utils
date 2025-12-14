@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NetDaemon.Notifications.InputSelect\NetDaemon.Notifications.InputSelect.csproj" />
+    <ProjectReference Include="..\..\src\CodeCasa.Lights\CodeCasa.Lights.csproj" />
   </ItemGroup>
 
   <ItemGroup>

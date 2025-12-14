@@ -29,4 +29,6 @@ jobs:
       - name: 🧪 Run tests
         run: |
           echo "## 📊 Unit test results" >> $GITHUB_STEP_SUMMARY
-          dotnet test --no-build --configuration Release tests/NetDaemon.Extensions.Observables.Tests/NetDaemon.Extensions.Observables.Tests.csproj
+          for proj in $(find tests -name '*.csproj'); do
+            dotnet test --no-build --configuration Release "$proj"
+          done

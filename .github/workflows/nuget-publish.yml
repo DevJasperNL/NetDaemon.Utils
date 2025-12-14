@@ -29,6 +29,7 @@ jobs:
           
       - name: 🎁 Pack
         run: |
+          dotnet pack ./src/CodeCasa.Lights/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
           dotnet pack ./src/NetDaemon.Extensions.Observables/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
           dotnet pack ./src/NetDaemon.RuntimeState/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
           dotnet pack ./src/NetDaemon.Notifications.Phone/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
