@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Devices.Abstracti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetDaemon.Lights.Tests", "NetDaemon.Lights.Tests\NetDaemon.Lights.Tests.csproj", "{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Lights", "src\CodeCasa.Lights\CodeCasa.Lights.csproj", "{0170AD13-CF43-4533-A9AB-59DCC571AB50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BBE9DA9-5841-40CE-BDF6-BD5C65521FD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0170AD13-CF43-4533-A9AB-59DCC571AB50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0170AD13-CF43-4533-A9AB-59DCC571AB50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0170AD13-CF43-4533-A9AB-59DCC571AB50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0170AD13-CF43-4533-A9AB-59DCC571AB50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
