@@ -5,10 +5,21 @@
 /// </summary>
 public static class LightExtensions
 {
+    /// <summary>
+    /// Determines whether the light is on by checking if brightness is greater than zero.
+    /// </summary>
+    /// <param name="light">The light to check.</param>
+    /// <returns><c>true</c> if the light's brightness is greater than zero; otherwise, <c>false</c>.</returns>
     public static bool IsOn(this ILight light)
     {
         return (light.GetParameters().Brightness ?? 0) != 0;
     }
+
+    /// <summary>
+    /// Determines whether the light is off by checking if brightness is zero.
+    /// </summary>
+    /// <param name="light">The light to check.</param>
+    /// <returns><c>true</c> if the light's brightness is zero; otherwise, <c>false</c>.</returns>
     public static bool IsOff(this ILight light)
     {
         return (light.GetParameters().Brightness ?? 0) == 0;
