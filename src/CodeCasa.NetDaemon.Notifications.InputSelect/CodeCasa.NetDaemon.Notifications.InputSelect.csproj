@@ -38,13 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NetDaemon.RuntimeState\NetDaemon.RuntimeState.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>NetDaemon.Notifications.InputSelect.Tests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeCasa.NetDaemon.RuntimeState\CodeCasa.NetDaemon.RuntimeState.csproj" />
   </ItemGroup>
 
 </Project>
