@@ -1,5 +1,5 @@
 ﻿
-namespace AutomationPipelines.Tests
+namespace CodeCasa.AutomationPipelines.Tests
 {
     internal class TestablePipelineNode<TState> : PipelineNode<TState>
     {
