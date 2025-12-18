@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace AutomationPipelines.Extensions;
+namespace CodeCasa.AutomationPipelines.Extensions;
 
 /// <summary>
 /// Extension methods for <see cref="IServiceCollection"/>.

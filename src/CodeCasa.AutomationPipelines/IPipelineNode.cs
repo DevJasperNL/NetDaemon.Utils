@@ -1,4 +1,4 @@
-﻿namespace AutomationPipelines;
+﻿namespace CodeCasa.AutomationPipelines;
 
 /// <summary>
 /// Represents a node in a pipeline.

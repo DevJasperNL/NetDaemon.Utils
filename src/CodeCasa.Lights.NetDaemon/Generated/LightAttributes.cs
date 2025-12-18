@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CodeCasa.NetDaemon.Lights.Generated;
+namespace CodeCasa.Lights.NetDaemon.Generated;
 
 internal record LightAttributes
 {

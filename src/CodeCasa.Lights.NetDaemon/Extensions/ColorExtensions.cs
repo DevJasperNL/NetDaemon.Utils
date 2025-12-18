@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace CodeCasa.NetDaemon.Lights.Extensions;
+namespace CodeCasa.Lights.NetDaemon.Extensions;
 
 internal static class ColorExtensions
 {

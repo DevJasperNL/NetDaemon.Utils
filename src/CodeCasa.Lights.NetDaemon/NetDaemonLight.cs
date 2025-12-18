@@ -1,5 +1,5 @@
-﻿using NetDaemon.HassModel.Entities;
-using CodeCasa.NetDaemon.Lights.Extensions;
+﻿using CodeCasa.Lights.NetDaemon.Extensions;
+using NetDaemon.HassModel.Entities;
 
 namespace CodeCasa.Lights.NetDaemon
 {

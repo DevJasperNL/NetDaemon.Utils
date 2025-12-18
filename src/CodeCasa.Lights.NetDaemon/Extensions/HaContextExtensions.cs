@@ -1,7 +1,7 @@
-﻿using CodeCasa.NetDaemon.Lights.Generated;
+﻿using CodeCasa.Lights.NetDaemon.Generated;
 using NetDaemon.HassModel;
 
-namespace CodeCasa.NetDaemon.Lights.Extensions
+namespace CodeCasa.Lights.NetDaemon.Extensions
 {
     /// <summary>
     /// Provides extension methods for <see cref="IHaContext"/> to support light entity operations.
