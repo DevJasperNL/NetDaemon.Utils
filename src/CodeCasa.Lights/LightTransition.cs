@@ -1,6 +1,4 @@
-﻿using CodeCasa.Lights.Extensions;
-
-namespace CodeCasa.Lights;
+﻿namespace CodeCasa.Lights;
 
 /// <summary>
 /// Represents a light transition with specific light parameters and an optional transition duration.
