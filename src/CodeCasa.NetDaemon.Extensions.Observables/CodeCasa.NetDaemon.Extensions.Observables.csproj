@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>NetDaemon.Extensions.Observables</Title>
+    <Authors>Jasper Lammers</Authors>
+    <Company>DevJasper</Company>
+    <Description>Collection of extension methods meant to enhance NetDaemon entities with stateful and boolean observables allowing for more robust implementations and a more intuitive coding experience.</Description>
+    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
+    <PackageTags>NetDaemon;NetDaemon Extensions;Entity Extensions;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Reactive Programming;Rx;Rx.NET;Reactive Extensions;Reactive;ReactiveX;Reactive Streams;Reactive Patterns;Reactive Utils;Observables;Boolean;Boolean Logic;Boolean State;Boolean Observable;C#;.NET;DotNet;Extension Methods</PackageTags>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageId>CodeCasa.NetDaemon.Extensions.Observables</PackageId>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<PackageIcon>ccnd_icon.png</PackageIcon>
+	<PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+	<None Include="..\..\README.md">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+	<None Include="..\..\img\ccnd_icon.png">
+	  <Pack>True</Pack>
+	  <PackagePath>\</PackagePath>
+	</None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetDaemon.HassModel" Version="25.48.0" />
+    <PackageReference Include="Reactive.Boolean" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="6.1.0" />
+    <InternalsVisibleTo Include="CodeCasa.NetDaemon.Extensions.Observables.Tests" />
+  </ItemGroup>
+</Project>
