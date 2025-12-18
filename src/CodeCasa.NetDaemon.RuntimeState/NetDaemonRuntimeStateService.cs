@@ -1,10 +1,10 @@
-﻿using NetDaemon.Client;
-using NetDaemon.Runtime;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Reactive.Threading.Tasks;
+using NetDaemon.Client;
+using NetDaemon.Runtime;
 
-namespace NetDaemon.RuntimeState;
+namespace CodeCasa.NetDaemon.RuntimeState;
 
 /// <summary>
 /// Service to monitor the runtime state of NetDaemon.

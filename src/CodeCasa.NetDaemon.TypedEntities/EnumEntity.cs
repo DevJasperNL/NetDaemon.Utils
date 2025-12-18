@@ -1,9 +1,9 @@
-﻿using NetDaemon.HassModel;
+﻿using System.Reactive.Linq;
+using CodeCasa.NetDaemon.TypedEntities.Extensions;
+using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using System.Reactive.Linq;
-using NetDaemon.TypedEntities.Extensions;
 
-namespace NetDaemon.TypedEntities
+namespace CodeCasa.NetDaemon.TypedEntities
 {
     /// <summary>
     /// Entity that has a strongly typed (enum) State value

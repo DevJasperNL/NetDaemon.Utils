@@ -2,7 +2,7 @@
 using NetDaemon.Client;
 using NetDaemon.Runtime;
 
-namespace NetDaemon.RuntimeState.Extensions;
+namespace CodeCasa.NetDaemon.RuntimeState.Extensions;
 
 /// <summary>
 /// Extension methods for registering the <see cref="NetDaemonRuntimeStateService"/> in the service collection.

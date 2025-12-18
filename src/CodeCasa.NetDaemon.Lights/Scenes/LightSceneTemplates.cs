@@ -1,6 +1,6 @@
-﻿using NetDaemon.Lights.Extensions;
+﻿using CodeCasa.NetDaemon.Lights.Extensions;
 
-namespace NetDaemon.Lights.Scenes
+namespace CodeCasa.NetDaemon.Lights.Scenes
 {
     /// <summary>
     /// Provides predefined light scene templates that can be applied to any light entity.

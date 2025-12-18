@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CodeCasa.NetDaemon.Notifications.InputSelect.Config;
+using CodeCasa.NetDaemon.Notifications.InputSelect.Interact;
+using CodeCasa.NetDaemon.Notifications.InputSelect.Service;
+using CodeCasa.NetDaemon.RuntimeState.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetDaemon.HassModel;
-using NetDaemon.Notifications.InputSelect.Config;
-using NetDaemon.Notifications.InputSelect.Interact;
-using NetDaemon.Notifications.InputSelect.Service;
 using NetDaemon.Runtime;
-using NetDaemon.RuntimeState.Extensions;
 
-namespace NetDaemon.Notifications.InputSelect.Extensions;
+namespace CodeCasa.NetDaemon.Notifications.InputSelect.Extensions;
 
 /// <summary>
 /// Provides extension methods for registering input select notification services in an <see cref="IServiceCollection"/>.

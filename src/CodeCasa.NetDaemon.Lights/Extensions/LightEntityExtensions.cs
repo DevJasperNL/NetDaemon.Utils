@@ -1,8 +1,8 @@
-﻿using NetDaemon.HassModel.Entities;
-using NetDaemon.Lights.Generated;
-using NetDaemon.Lights.Scenes;
+﻿using CodeCasa.NetDaemon.Lights.Generated;
+using CodeCasa.NetDaemon.Lights.Scenes;
+using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Lights.Extensions;
+namespace CodeCasa.NetDaemon.Lights.Extensions;
 
 public static partial class LightEntityExtensions
 {

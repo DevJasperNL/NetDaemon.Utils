@@ -1,7 +1,7 @@
 ﻿using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Lights.Generated;
+namespace CodeCasa.NetDaemon.Lights.Generated;
 
 internal record LightEntity : Entity<LightEntity, EntityState<LightAttributes>, LightAttributes>, ILightEntityCore
 {

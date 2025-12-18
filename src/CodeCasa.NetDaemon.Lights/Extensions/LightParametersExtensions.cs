@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using ColorConverter = NetDaemon.Lights.Utils.ColorConverter;
+using ColorConverter = CodeCasa.NetDaemon.Lights.Utils.ColorConverter;
 
-namespace NetDaemon.Lights.Extensions;
+namespace CodeCasa.NetDaemon.Lights.Extensions;
 
 /// <summary>
 /// Provides extension methods for <see cref="LightParameters"/> to support light transitions and interpolation.

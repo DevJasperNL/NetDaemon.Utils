@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Linq;
 using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 /// <summary>
 /// Provides extension methods for <see cref="IEnumerable{T}"/>.

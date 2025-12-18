@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Notifications.Phone;
+﻿namespace CodeCasa.NetDaemon.Notifications.Phone;
 
 /// <summary>
 /// Represents a handle to a phone notification that has been created.

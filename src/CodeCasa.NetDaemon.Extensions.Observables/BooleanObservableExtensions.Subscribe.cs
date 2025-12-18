@@ -1,6 +1,6 @@
 ﻿using Reactive.Boolean;
 
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 /// <summary>
 /// Provides extension methods for <see cref="IObservable{Boolean}"/>.

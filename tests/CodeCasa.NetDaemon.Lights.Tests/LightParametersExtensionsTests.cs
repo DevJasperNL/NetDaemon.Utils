@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using NetDaemon.Lights.Extensions;
+using CodeCasa.NetDaemon.Lights.Extensions;
 
-namespace NetDaemon.Lights.Tests
+namespace CodeCasa.NetDaemon.Lights.Tests
 {
     [TestClass]
     public sealed class LightParametersExtensionsTests

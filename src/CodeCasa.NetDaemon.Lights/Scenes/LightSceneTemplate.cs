@@ -1,6 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Lights.Scenes;
+namespace CodeCasa.NetDaemon.Lights.Scenes;
 
 /// <summary>
 /// A delegate that generates light parameters for a specific light entity.

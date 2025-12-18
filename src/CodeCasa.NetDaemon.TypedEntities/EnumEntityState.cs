@@ -1,6 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.TypedEntities
+namespace CodeCasa.NetDaemon.TypedEntities
 {
     /// <summary>
     /// State for an Enum Entity with specific types of Attributes

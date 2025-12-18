@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
-using NetDaemon.Lights.Generated;
-using NetDaemon.Lights.Utils;
+using CodeCasa.NetDaemon.Lights.Generated;
+using CodeCasa.NetDaemon.Lights.Utils;
 
-namespace NetDaemon.Lights.Extensions
+namespace CodeCasa.NetDaemon.Lights.Extensions
 {
     internal static class LightAttributesExtensions
     {

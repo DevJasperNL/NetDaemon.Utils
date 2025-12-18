@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.RuntimeState;
+﻿namespace CodeCasa.NetDaemon.RuntimeState;
 
 /// <summary>
 /// Represents the possible states of NetDaemon.

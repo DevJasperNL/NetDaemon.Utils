@@ -1,8 +1,8 @@
-﻿using NetDaemon.HassModel.Entities;
+﻿using System.Reactive.Disposables;
+using NetDaemon.HassModel.Entities;
 using Reactive.Boolean;
-using System.Reactive.Disposables;
 
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 public static partial class BooleanObservableExtensions
 {

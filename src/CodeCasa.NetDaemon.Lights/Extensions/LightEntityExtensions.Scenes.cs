@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
+using CodeCasa.NetDaemon.Lights.Generated;
+using CodeCasa.NetDaemon.Lights.Utils;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Lights.Generated;
-using NetDaemon.Lights.Utils;
 
-namespace NetDaemon.Lights.Extensions;
+namespace CodeCasa.NetDaemon.Lights.Extensions;
 
 /// <summary>
 /// Provides extension methods for light entities to support scene generation and light parameter operations.

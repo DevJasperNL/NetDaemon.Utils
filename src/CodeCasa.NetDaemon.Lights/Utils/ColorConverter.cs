@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace NetDaemon.Lights.Utils
+namespace CodeCasa.NetDaemon.Lights.Utils
 {
     /// <summary>
     /// Provides color conversion utilities for light entities.

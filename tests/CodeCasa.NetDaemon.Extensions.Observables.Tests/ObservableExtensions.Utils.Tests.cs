@@ -1,9 +1,9 @@
+using System.Reactive.Subjects;
 using Moq;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using System.Reactive.Subjects;
 
-namespace NetDaemon.Extensions.Observables.Tests;
+namespace CodeCasa.NetDaemon.Extensions.Observables.Tests;
 
 [TestClass]
 public class ObservableExtensionsUtilsTests

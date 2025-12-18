@@ -1,10 +1,10 @@
+using System.Reactive.Subjects;
+using Microsoft.Reactive.Testing;
 using Moq;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using System.Reactive.Subjects;
-using Microsoft.Reactive.Testing;
 
-namespace NetDaemon.Extensions.Observables.Tests;
+namespace CodeCasa.NetDaemon.Extensions.Observables.Tests;
 
 [TestClass]
 public abstract class EntityExtensionsToBooleanObservableSchedulingConcreteEntityTestsSetup

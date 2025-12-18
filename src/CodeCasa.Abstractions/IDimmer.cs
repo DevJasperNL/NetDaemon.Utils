@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Devices.Abstractions;
+﻿namespace CodeCasa.Abstractions;
 
 /// <summary>
 /// Provides an interface for dimmer devices that can dim or brighten light intensity.

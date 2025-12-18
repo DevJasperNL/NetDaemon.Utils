@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace NetDaemon.Notifications.InputSelect.Config;
+namespace CodeCasa.NetDaemon.Notifications.InputSelect.Config;
 
 /// <summary>
 /// Represents a dashboard notification information structure to be serialized as JSON.

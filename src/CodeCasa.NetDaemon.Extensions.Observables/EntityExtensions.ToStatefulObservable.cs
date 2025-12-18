@@ -1,6 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 public static partial class EntityExtensions
 {

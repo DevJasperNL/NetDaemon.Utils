@@ -3,7 +3,7 @@ using System.Reactive.Linq;
 using NetDaemon.HassModel.Entities;
 using Reactive.Boolean;
 
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 public static partial class EntityExtensions
 {

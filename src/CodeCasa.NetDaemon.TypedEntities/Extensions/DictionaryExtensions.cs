@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.TypedEntities.Extensions
+﻿namespace CodeCasa.NetDaemon.TypedEntities.Extensions
 {
     internal static class DictionaryExtensions
     {

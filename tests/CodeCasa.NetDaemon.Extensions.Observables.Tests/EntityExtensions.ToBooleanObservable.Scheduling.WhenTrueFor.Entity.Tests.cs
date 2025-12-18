@@ -1,6 +1,6 @@
 using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Extensions.Observables.Tests;
+namespace CodeCasa.NetDaemon.Extensions.Observables.Tests;
 
 [TestClass]
 public class EntityExtensionsToBooleanObservableSchedulingWhenTrueForEntityTests : EntityExtensionsToBooleanObservableSchedulingEntityTestsSetup

@@ -1,6 +1,6 @@
-﻿using NetDaemon.Notifications.InputSelect.Helpers;
+﻿using CodeCasa.NetDaemon.Notifications.InputSelect.Helpers;
 
-namespace NetDaemon.Notifications.InputSelect.Tests
+namespace CodeCasa.NetDaemon.Notifications.InputSelect.Tests
 {
     [TestClass]
     public class ShortenMessagesTests

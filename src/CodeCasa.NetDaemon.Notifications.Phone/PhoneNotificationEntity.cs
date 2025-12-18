@@ -1,10 +1,10 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text.Json.Serialization;
+using CodeCasa.NetDaemon.Notifications.Phone.Config;
 using NetDaemon.HassModel;
-using NetDaemon.Notifications.Phone.Config;
 
-namespace NetDaemon.Notifications.Phone;
+namespace CodeCasa.NetDaemon.Notifications.Phone;
 
 /// <summary>
 /// Class representing a phone notification entity for a specific phone implementation.

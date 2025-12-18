@@ -1,8 +1,8 @@
 ﻿using System.Drawing;
 using System.Globalization;
-using NetDaemon.Notifications.Phone.Extensions;
+using CodeCasa.NetDaemon.Notifications.Phone.Extensions;
 
-namespace NetDaemon.Notifications.Phone.Config;
+namespace CodeCasa.NetDaemon.Notifications.Phone.Config;
 
 /// <summary>
 /// Configuration options specific to Android notifications.

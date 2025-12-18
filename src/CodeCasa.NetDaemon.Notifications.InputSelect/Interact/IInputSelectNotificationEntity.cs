@@ -1,7 +1,7 @@
 ﻿
-using NetDaemon.Notifications.InputSelect.Config;
+using CodeCasa.NetDaemon.Notifications.InputSelect.Config;
 
-namespace NetDaemon.Notifications.InputSelect.Interact;
+namespace CodeCasa.NetDaemon.Notifications.InputSelect.Interact;
 
 /// <summary>
 /// Represents an entity that manages input select notifications.

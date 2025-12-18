@@ -1,5 +1,5 @@
 ﻿
-namespace NetDaemon.Extensions.Observables;
+namespace CodeCasa.NetDaemon.Extensions.Observables;
 
 internal static class Constants
 {

@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Notifications.InputSelect.Config;
+﻿namespace CodeCasa.NetDaemon.Notifications.InputSelect.Config;
 
 /// <summary>
 /// Defines configuration options for an input select notification list.

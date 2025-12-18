@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace NetDaemon.Lights.Generated;
+namespace CodeCasa.NetDaemon.Lights.Generated;
 
 internal record LightTurnOffParameters
 {

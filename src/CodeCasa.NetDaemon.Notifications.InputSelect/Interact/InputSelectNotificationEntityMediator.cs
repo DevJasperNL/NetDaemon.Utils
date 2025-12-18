@@ -1,9 +1,9 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using NetDaemon.Notifications.InputSelect.Config;
+using CodeCasa.NetDaemon.Notifications.InputSelect.Config;
 
-namespace NetDaemon.Notifications.InputSelect.Interact;
+namespace CodeCasa.NetDaemon.Notifications.InputSelect.Interact;
 
 internal class InputSelectNotificationEntityMediator(string inputSelectEntityId, string? inputNumberEntityId)
     : IInputSelectNotificationEntity

@@ -1,6 +1,6 @@
-﻿using NetDaemon.Lights.Extensions;
+﻿using CodeCasa.NetDaemon.Lights.Extensions;
 
-namespace NetDaemon.Lights;
+namespace CodeCasa.NetDaemon.Lights;
 
 /// <summary>
 /// Represents a light transition with specific light parameters and an optional transition duration.

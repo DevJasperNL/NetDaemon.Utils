@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace NetDaemon.Notifications.Phone.Extensions;
+namespace CodeCasa.NetDaemon.Notifications.Phone.Extensions;
 
 internal static class ColorExtensions
 {

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Text;
 
-namespace NetDaemon.Lights;
+namespace CodeCasa.NetDaemon.Lights;
 
 /// <summary>
 /// This record represents the state of a light entity.

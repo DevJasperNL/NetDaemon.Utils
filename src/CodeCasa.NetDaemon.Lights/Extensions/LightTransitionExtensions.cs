@@ -1,6 +1,6 @@
-﻿using NetDaemon.Lights.Generated;
+﻿using CodeCasa.NetDaemon.Lights.Generated;
 
-namespace NetDaemon.Lights.Extensions;
+namespace CodeCasa.NetDaemon.Lights.Extensions;
 
 internal static class LightTransitionExtensions
 {

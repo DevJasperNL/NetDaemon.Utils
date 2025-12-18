@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Notifications.Phone.Config;
+﻿namespace CodeCasa.NetDaemon.Notifications.Phone.Config;
 
 /// <summary>
 /// Abstract base class for phone notification config implementations
