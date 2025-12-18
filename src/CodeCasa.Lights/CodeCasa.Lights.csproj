@@ -7,7 +7,7 @@
 	<Title>CodeCasa.Lights</Title>
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
-    <Description>A collection of extensions and utilities for managing lights, providing advanced color handling and simple state representation.</Description>
+    <Description>Core library providing platform-agnostic light management abstractions, advanced color handling, state representation, and scene templates.</Description>
     <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
     <PackageTags>Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Lights;Light;Color;Colors;RGB;RGBW;RGBWW;XY;Parameters;Transitions;Scenes;C#;.NET;DotNet;Extension Methods</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

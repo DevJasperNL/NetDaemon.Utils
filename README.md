@@ -10,13 +10,18 @@ A collection of .NET libraries providing NetDaemon extensions alongside general 
 
 Package | Description
 --- |---
+[CodeCasa.Lights](#codecasalights) | Core light management library providing advanced color handling, simpler state representation, and generic scenes—platform agnostic.
 [CodeCasa.AutomationPipelines](#codecasaautomationpipelines) | Composable, reactive, and layered logic pipelines for automation.
+
+#### NetDaemon
+Package | Description
+--- |---
+[CodeCasa.Lights.NetDaemon](#codecasalightsnetdaemon) | NetDaemon integration for light entities, enabling Home Assistant light control with `CodeCasa.Lights` abstractions.
 [CodeCasa.NetDaemon.Notifications.Phone](#codecasanetdaemonnotificationsphone) | This library provides the `PhoneNotificationEntity` class, making it easy to create, update, and manage phone notifications in Home Assistant.
 [CodeCasa.NetDaemon.Notifications.InputSelect](#codecasanetdaemonnotificationsinputselect) | This library helps you turn a Home Assistant Dropdown/InputSelect helper entity into a dynamic notifications list.
 [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate) | This library provides the `NetDaemonRuntimeStateService`, which allows you to check and subscribe to the runtime state of `NetDaemon`.
 [CodeCasa.NetDaemon.TypedEntities](#codecasanetdaemontypedentities) | Strongly-typed wrappers for Home Assistant entities in `NetDaemon`.
 [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables) | Collection of extension methods meant to enhance NetDaemon entities with boolean observables allowing for a more intuitive coding experience.
-[CodeCasa.NetDaemon.Lights](#codecasanetdaemonlights) | A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
 
 ## CodeCasa.AutomationPipelines
 
@@ -586,7 +591,7 @@ nightTime
     .BindToOnOff(switchEntities.LivingRoomChristmasTreeLights);
 ```
 
-## CodeCasa.NetDaemon.Lights
+## CodeCasa.Lights
 
 A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.
 
@@ -711,3 +716,157 @@ foreach (var light in individualLights)
 - **Concentrate** – Cool/neutral color temperature with high brightness for focus
 - **Bright** – Warm color temperature with maximum brightness for general illumination
 - **Dimmed** – Warm color temperature with low brightness for ambient lighting
+
+## CodeCasa.Lights
+
+Core library providing platform-agnostic light management abstractions.
+
+**Features include:**
+
+- **ILight Interface** – Platform-agnostic abstraction for light entities, enabling code that works with any light implementation.
+- **LightParameters** – A simple, state-focused representation of light configuration (brightness, RGB color, color temperature).
+- **LightTransition** – Combines `LightParameters` with optional transition duration for smooth color or brightness changes.
+- **Light Scene Templates** – Pre-built scenes (Relax, NightLight, Concentrate, Bright, Dimmed) that adapt to any light's capabilities.
+- **Light Utilities** – Extension methods for inspecting and manipulating light state, including flattening light hierarchies.
+
+### Overview
+
+This library provides the core abstractions and utilities for working with lights in a platform-agnostic way. By implementing the `ILight` interface, you can write automation logic that works independently of the underlying smart home platform (NetDaemon, direct API, etc.).
+
+### Usage
+
+#### Working with Light Parameters
+
+Create light parameters to represent desired states:
+
+```cs
+var brightParams = new LightParameters { Brightness = 255 };
+var warmDimmed = new LightParameters { ColorTemp = 366, Brightness = 100 };
+var colorful = new LightParameters { RgbColor = Color.Red, Brightness = 200 };
+```
+
+#### Using Light Scenes
+
+Apply pre-built scene templates:
+
+```cs
+var relaxScene = LightSceneTemplates.Relax;
+var nightLight = LightSceneTemplates.NightLight;
+```
+
+#### Blending Parameters
+
+Interpolate between two sets of parameters for smooth transitions:
+
+```cs
+var morning = new LightParameters { ColorTemp = 366, Brightness = 100 };
+var evening = new LightParameters { RgbColor = Color.Red, Brightness = 200 };
+
+var transitionPercent = 0.7; // 70% towards evening
+var blended = morning.Interpolate(evening, transitionPercent);
+```
+
+#### Working with Light Hierarchies
+
+Flatten light groups to get individual entities:
+
+```cs
+var lights = light.Flatten(); // Gets all leaf lights from a hierarchy
+
+foreach (var leafLight in lights)
+{
+    // Process each light individually
+}
+```
+
+#### Checking Light State
+
+```cs
+if (light.IsOn())
+{
+    // Light is on
+}
+
+if (light.IsOff())
+{
+    // Light is off
+}
+
+var params = light.GetParameters();
+```
+## CodeCasa.Lights.NetDaemon
+
+NetDaemon integration for light entities, enabling Home Assistant light control with `CodeCasa.Lights` abstractions.
+
+**Features include:**
+
+- **NetDaemonLight** – Adapter implementing `ILight` for NetDaemon light entities.
+- **LightEntityExtensions** – Extension methods for Home Assistant light entities enabling parameter-based control.
+- **ColorMode Handling** – Automatic translation of `LightParameters` to appropriate Home Assistant light API calls.
+- **Transition Support** – Smooth transitions between light states with optional duration.
+
+### Overview
+
+This library bridges `CodeCasa.Lights` abstractions with NetDaemon's Home Assistant light entities. It handles the complexity of Home Assistant's color modes and provides a simpler interface for controlling lights in NetDaemon automations.
+
+### Usage
+
+#### Converting NetDaemon Light Entities to ILight
+
+Wrap a NetDaemon light entity to use the `ILight` abstraction:
+
+```cs
+ILight light = new NetDaemonLight(lightEntity);
+
+// Now use platform-agnostic logic
+if (light.IsOn())
+{
+    light.ApplyTransition(LightSceneTemplates.Relax.AsTransition());
+}
+```
+
+#### Applying Transitions to NetDaemon Lights
+
+Use extension methods to apply transitions directly:
+
+```cs
+var transition = new LightParameters 
+{ 
+    ColorTemp = 366, 
+    Brightness = 100 
+}.AsTransition(TimeSpan.FromSeconds(2));
+
+lightEntity.ApplyTransition(transition);
+```
+
+#### Automatic Color Mode Detection
+
+The library automatically selects the appropriate Home Assistant API based on light capabilities:
+
+```cs
+var params = new LightParameters { RgbColor = Color.Red, Brightness = 200 };
+lightEntity.ApplyTransition(params.AsTransition());
+
+// For RGB lights, uses color mode. For temperature-only lights, falls back to color_temp.
+```
+
+#### Getting Current Light State
+
+Retrieve the current parameters of a light:
+
+```cs
+var currentState = lightEntity.GetLightParameters();
+Console.WriteLine($"Brightness: {currentState.Brightness}");
+Console.WriteLine($"Color Temp: {currentState.ColorTemp}");
+```
+
+#### Working with Light Groups
+
+Flatten and process light groups:
+
+```cs
+var flattened = lightEntity.Flatten();
+foreach (var light in flattened)
+{
+    light.ApplyTransition(LightSceneTemplates.Bright.AsTransition());
+}

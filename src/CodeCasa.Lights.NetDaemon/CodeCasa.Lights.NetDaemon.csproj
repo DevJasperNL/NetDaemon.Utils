@@ -7,7 +7,7 @@
     <Title>CodeCasa.Lights.NetDaemon</Title>
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
-    <Description>A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.</Description>
+    <Description>NetDaemon integration for Home Assistant light entities, enabling advanced light control with CodeCasa.Lights abstractions and automatic color mode detection.</Description>
     <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
     <PackageTags>
       NetDaemon;Light Control;Lights;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Color;Colors;RGB;RGBW;RGBWW;XY;Transitions;Scenes;C#;.NET;DotNet;Extension Methods</PackageTags>
@@ -17,7 +17,6 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>ccnd_icon.png</PackageIcon>
     <PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases</PackageReleaseNotes>
-	<Version>1.6.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
