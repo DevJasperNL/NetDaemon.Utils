@@ -1,6 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 
-namespace CodeCasa.NetDaemon.Lights.Generated
+namespace CodeCasa.Lights.NetDaemon.Generated
 {
     internal static class LightEntityCoreExtensions
     {

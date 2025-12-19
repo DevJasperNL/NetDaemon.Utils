@@ -1,4 +1,4 @@
-﻿namespace CodeCasa.NetDaemon.Lights.Utils;
+﻿namespace CodeCasa.Lights.NetDaemon;
 
 internal static class ColorModes
 {

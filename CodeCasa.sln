@@ -19,19 +19,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.NetDaemon.Notifica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.NetDaemon.TypedEntities", "src\CodeCasa.NetDaemon.TypedEntities\CodeCasa.NetDaemon.TypedEntities.csproj", "{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.NetDaemon.Lights", "src\CodeCasa.NetDaemon.Lights\CodeCasa.NetDaemon.Lights.csproj", "{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Abstractions", "src\CodeCasa.Abstractions\CodeCasa.Abstractions.csproj", "{29D3F724-99AB-4DD4-AB6F-239E3841F77A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Lights", "src\CodeCasa.Lights\CodeCasa.Lights.csproj", "{0170AD13-CF43-4533-A9AB-59DCC571AB50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Lights.Tests", "tests\CodeCasa.Lights.Tests\CodeCasa.Lights.Tests.csproj", "{FA26C18B-24D0-4F3D-958C-A9BA61861C65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.NetDaemon.Lights.Tests", "tests\CodeCasa.NetDaemon.Lights.Tests\CodeCasa.NetDaemon.Lights.Tests.csproj", "{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.AutomationPipelines.Tests", "tests\CodeCasa.AutomationPipelines.Tests\CodeCasa.AutomationPipelines.Tests.csproj", "{5C7FB111-095B-F881-7268-4284370C8AAA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.AutomationPipelines", "src\CodeCasa.AutomationPipelines\CodeCasa.AutomationPipelines.csproj", "{591C8820-5CD9-2912-882E-7C211526C0D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCasa.Lights.NetDaemon", "src\CodeCasa.Lights.NetDaemon\CodeCasa.Lights.NetDaemon.csproj", "{FA32051C-0DFF-4FDE-9D9D-60F4ABA4D1A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +65,6 @@ Global
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C413AAD-B55A-4C14-AA7D-1EB538695DA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3E302C5-7884-4A0F-AED3-37C121B9D5D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29D3F724-99AB-4DD4-AB6F-239E3841F77A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29D3F724-99AB-4DD4-AB6F-239E3841F77A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29D3F724-99AB-4DD4-AB6F-239E3841F77A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,10 +77,6 @@ Global
 		{FA26C18B-24D0-4F3D-958C-A9BA61861C65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA26C18B-24D0-4F3D-958C-A9BA61861C65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA26C18B-24D0-4F3D-958C-A9BA61861C65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C7FB111-095B-F881-7268-4284370C8AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5C7FB111-095B-F881-7268-4284370C8AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C7FB111-095B-F881-7268-4284370C8AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -95,6 +85,10 @@ Global
 		{591C8820-5CD9-2912-882E-7C211526C0D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{591C8820-5CD9-2912-882E-7C211526C0D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{591C8820-5CD9-2912-882E-7C211526C0D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA32051C-0DFF-4FDE-9D9D-60F4ABA4D1A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA32051C-0DFF-4FDE-9D9D-60F4ABA4D1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA32051C-0DFF-4FDE-9D9D-60F4ABA4D1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA32051C-0DFF-4FDE-9D9D-60F4ABA4D1A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,7 +97,6 @@ Global
 		{75A7C6C5-8CD3-4D2F-8F77-DF201AD6BE97} = {5BCD08C3-3034-4D08-AC01-2AB6DFD67C33}
 		{E2FA49AB-BFC2-4DDD-B743-F5AAB96F3FEC} = {5BCD08C3-3034-4D08-AC01-2AB6DFD67C33}
 		{FA26C18B-24D0-4F3D-958C-A9BA61861C65} = {5BCD08C3-3034-4D08-AC01-2AB6DFD67C33}
-		{47CBAD47-9D5C-840B-DA25-B7F1FCB6F73E} = {5BCD08C3-3034-4D08-AC01-2AB6DFD67C33}
 		{5C7FB111-095B-F881-7268-4284370C8AAA} = {5BCD08C3-3034-4D08-AC01-2AB6DFD67C33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

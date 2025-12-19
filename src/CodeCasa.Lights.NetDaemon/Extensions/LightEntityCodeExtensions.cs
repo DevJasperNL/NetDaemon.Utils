@@ -1,27 +1,86 @@
-﻿using CodeCasa.NetDaemon.Lights.Generated;
-using CodeCasa.NetDaemon.Lights.Scenes;
+﻿using CodeCasa.Lights.NetDaemon.Generated;
 using NetDaemon.HassModel.Entities;
 
-namespace CodeCasa.NetDaemon.Lights.Extensions;
+namespace CodeCasa.Lights.NetDaemon.Extensions;
 
-public static partial class LightEntityExtensions
+/// <summary>
+/// Provides extension methods for controlling and querying light entities in NetDaemon.
+/// </summary>
+/// <remarks>
+/// This class contains a collection of utility methods to simplify light entity operations,
+/// including turning lights on/off, applying transitions, retrieving parameters, and checking state.
+/// All methods are extension methods on <see cref="ILightEntityCore"/>, allowing for a fluent API.
+/// </remarks>
+public static class LightEntityCodeExtensions
 {
     /// <summary>
-    /// Turns on a light entity using the specified light scene template to generate the light parameters.
+    /// Turns on a light entity with the specified light parameters.
     /// </summary>
     /// <param name="lightEntity">The light entity to turn on.</param>
-    /// <param name="lightSceneTemplate">A delegate that generates light parameters based on the light entity's capabilities.</param>
-    public static void TurnOn(this ILightEntityCore lightEntity, LightSceneTemplate lightSceneTemplate)
+    /// <param name="lightParameters">The light parameters (brightness, color, etc.) to apply.</param>
+    public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters)
     {
-        lightEntity.ExecuteLightTransition(lightSceneTemplate(lightEntity).AsTransition());
+        lightEntity.ApplyTransition(lightParameters.AsTransition());
     }
 
     /// <summary>
-    /// Determines whether a light entity is currently off.
+    /// Turns on a light entity with the specified light parameters and a custom transition time.
     /// </summary>
-    /// <param name="lightEntity">The light entity to check.</param>
-    /// <returns>True if the light is off; otherwise, false.</returns>
-    public static bool IsOff(this ILightEntityCore lightEntity) => EntityExtensions.IsOff(new LightEntity(lightEntity));
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightParameters">The light parameters (brightness, color, etc.) to apply.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
+    public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(lightParameters.AsTransition(transitionTime));
+    }
+
+    /// <summary>
+    /// Turns on a light entity with the specified light transition.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightTransition">The transition parameters to apply.</param>
+    public static void TurnOn(this ILightEntityCore lightEntity, LightTransition lightTransition)
+    {
+        lightEntity.ApplyTransition(lightTransition);
+    }
+
+    /// <summary>
+    /// Turns on a light entity with default parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    public static void TurnOn(this ILightEntityCore lightEntity)
+    {
+        lightEntity.ApplyTransition(LightTransition.On());
+    }
+
+    /// <summary>
+    /// Turns on a light entity with a custom transition time.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
+    public static void TurnOn(this ILightEntityCore lightEntity, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(LightTransition.On(transitionTime));
+    }
+
+    /// <summary>
+    /// Turns off a light entity with a custom transition time.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn off.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
+    public static void TurnOff(this ILightEntityCore lightEntity, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(LightTransition.Off(transitionTime));
+    }
+
+    /// <summary>
+    /// Turns off a light entity with default parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn off.</param>
+    public static void TurnOff(this ILightEntityCore lightEntity)
+    {
+        lightEntity.ApplyTransition(LightTransition.Off());
+    }
 
     /// <summary>
     /// Determines whether a light entity is currently on.
@@ -29,6 +88,13 @@ public static partial class LightEntityExtensions
     /// <param name="lightEntity">The light entity to check.</param>
     /// <returns>True if the light is on; otherwise, false.</returns>
     public static bool IsOn(this ILightEntityCore lightEntity) => EntityExtensions.IsOn(new LightEntity(lightEntity));
+
+    /// <summary>
+    /// Determines whether a light entity is currently off.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to check.</param>
+    /// <returns>True if the light is off; otherwise, false.</returns>
+    public static bool IsOff(this ILightEntityCore lightEntity) => EntityExtensions.IsOff(new LightEntity(lightEntity));
 
     /// <summary>
     /// Turns a light entity on or off based on the provided boolean value.
@@ -48,12 +114,12 @@ public static partial class LightEntityExtensions
     }
 
     /// <summary>
-    /// Executes a light transition on the specified light entity.
+    /// Applies a light transition on the specified light entity.
     /// If the transition results in brightness 0, the light is turned off; otherwise, it is turned on with the specified parameters.
     /// </summary>
     /// <param name="lightEntity">The light entity to apply the transition to.</param>
     /// <param name="lightTransition">The transition parameters to apply.</param>
-    public static void ExecuteLightTransition(this ILightEntityCore lightEntity, LightTransition lightTransition)
+    public static void ApplyTransition(this ILightEntityCore lightEntity, LightTransition lightTransition)
     {
         if (lightTransition.LightParameters.Brightness == 0)
         {
@@ -143,12 +209,6 @@ public static partial class LightEntityExtensions
             actualParameters.ColorTemp == lightParameters.ColorTemp;
     }
 
-    /// <summary>
-    /// Actual brightness can deviate 1 from the set brightness. This method allows for that deviation.
-    /// </summary>
-    /// <param name="brightness1"></param>
-    /// <param name="brightness2"></param>
-    /// <returns></returns>
     private static bool BrightnessEquals(double? brightness1, double? brightness2)
     {
         if (brightness1 == null && brightness2 == null)

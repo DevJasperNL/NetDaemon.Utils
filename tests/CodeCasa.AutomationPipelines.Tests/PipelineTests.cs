@@ -1,4 +1,4 @@
-﻿namespace AutomationPipelines.Tests;
+﻿namespace CodeCasa.AutomationPipelines.Tests;
 
 [TestClass]
 public sealed class PipelineTests

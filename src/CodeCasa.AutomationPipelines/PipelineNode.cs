@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
-namespace AutomationPipelines;
+namespace CodeCasa.AutomationPipelines;
 
 /// <summary>
 /// Implementation of <see cref="IPipelineNode{TState}"/> meant to manage its own output.

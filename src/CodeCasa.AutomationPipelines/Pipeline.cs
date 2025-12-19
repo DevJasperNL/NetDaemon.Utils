@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace AutomationPipelines;
+namespace CodeCasa.AutomationPipelines;
 
 /// <summary>
 /// Represents a pipeline of nodes.

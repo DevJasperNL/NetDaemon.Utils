@@ -4,19 +4,19 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Title>CodeCasa.NetDaemon.Lights</Title>
+    <Title>CodeCasa.Lights.NetDaemon</Title>
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
-    <Description>A collection of extensions and utilities for managing Home Assistant light entities, providing advanced color handling, simpler state representation, and generic scenes.</Description>
-    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
+    <Description>NetDaemon integration for Home Assistant light entities, enabling advanced light control with CodeCasa.Lights abstractions and automatic color mode detection.</Description>
+    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa</RepositoryUrl>
     <PackageTags>
       NetDaemon;Light Control;Lights;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Color;Colors;RGB;RGBW;RGBWW;XY;Transitions;Scenes;C#;.NET;DotNet;Extension Methods</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageId>CodeCasa.NetDaemon.Lights</PackageId>
+    <PackageId>CodeCasa.Lights.NetDaemon</PackageId>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageIcon>ccnd_icon.png</PackageIcon>
-    <PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +36,10 @@
 
   <ItemGroup>
     <PackageReference Include="NetDaemon.HassModel" Version="25.48.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeCasa.Lights\CodeCasa.Lights.csproj" />
   </ItemGroup>
 
 </Project>
