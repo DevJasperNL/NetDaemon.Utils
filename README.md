@@ -1,8 +1,8 @@
-# CodeCasa.Libraries
+# CodeCasa
 
-[![GitHub license](https://img.shields.io/github/license/DevJasperNL/CodeCasa.Libraries?label=License)](https://github.com/DevJasperNL/CodeCasa.Libraries?tab=MIT-1-ov-file)
-[![GitHub release](https://img.shields.io/github/v/release/DevJasperNL/CodeCasa.Libraries?label=Release)](https://github.com/DevJasperNL/CodeCasa.Libraries/releases/latest)
-[![Build Status](https://github.com/DevJasperNL/CodeCasa.Libraries/actions/workflows/ci-build-and-test.yml/badge.svg)](https://github.com/DevJasperNL/CodeCasa.Libraries/actions/workflows/ci-build-and-test.yml)
+[![GitHub license](https://img.shields.io/github/license/DevJasperNL/CodeCasa?label=License)](https://github.com/DevJasperNL/CodeCasa?tab=MIT-1-ov-file)
+[![GitHub release](https://img.shields.io/github/v/release/DevJasperNL/CodeCasa?label=Release)](https://github.com/DevJasperNL/CodeCasa/releases/latest)
+[![Build Status](https://github.com/DevJasperNL/CodeCasa/actions/workflows/ci-build-and-test.yml/badge.svg)](https://github.com/DevJasperNL/CodeCasa/actions/workflows/ci-build-and-test.yml)
 
 A collection of .NET libraries providing NetDaemon extensions alongside general purpose smart home automation utilities.
 

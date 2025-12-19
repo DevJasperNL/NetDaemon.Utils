@@ -8,14 +8,14 @@
     <Authors>Jasper Lammers</Authors>
     <Company>DevJasper</Company>
     <Description>This library provides abstractions for CodeCasa.</Description>
-    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa.Libraries</RepositoryUrl>
+    <RepositoryUrl>https://github.com/DevJasperNL/CodeCasa</RepositoryUrl>
     <PackageTags>NetDaemon;Home Automation;Home Assistant;HA Integration;Smart Home;Automation;Abstractions;Dimmer;C#;.NET;DotNet;Extension Methods</PackageTags>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageId>CodeCasa.Abstractions</PackageId>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<PackageIcon>cc_icon.png</PackageIcon>
-	<PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa.Libraries/releases</PackageReleaseNotes>
+	<PackageReleaseNotes>https://github.com/DevJasperNL/CodeCasa/releases</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
