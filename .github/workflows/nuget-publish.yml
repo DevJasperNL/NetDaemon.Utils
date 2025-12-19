@@ -29,12 +29,7 @@ jobs:
           
       - name: 🎁 Pack
         run: |
-          dotnet pack ./src/CodeCasa.Lights/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
-          dotnet pack ./src/NetDaemon.Extensions.Observables/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
-          dotnet pack ./src/NetDaemon.RuntimeState/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
-          dotnet pack ./src/NetDaemon.Notifications.Phone/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
-          dotnet pack ./src/NetDaemon.Notifications.InputSelect/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
-          dotnet pack ./src/NetDaemon.TypedEntities/ --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
+          run: dotnet pack ./src/**/*.csproj --configuration Release -p:PackageVersion=${{ steps.version.outputs.version }} -p:Version=${{ steps.version.outputs.version }}
         
       - name: 📨 Push to NuGet
         run: dotnet nuget push **/*.nupkg --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json

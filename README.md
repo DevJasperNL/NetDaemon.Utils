@@ -6,6 +6,51 @@
 
 A collection of .NET libraries providing NetDaemon extensions alongside general purpose smart home automation utilities.
 
+## 📖 Table of Contents
+
+- [Available Libraries](#available-libraries)
+- [CodeCasa.Lights](#codecasalights)
+  - [Overview](#overview)
+  - [Usage](#usage)
+    - [Working with Light Parameters](#working-with-light-parameters)
+    - [Light Transitions](#light-transitions)
+    - [Blending Parameters](#blending-parameters)
+    - [Using Light Scenes](#using-light-scenes)
+    - [Inspecting Light State](#inspecting-light-state)
+    - [Working with Light Groups](#working-with-light-groups)
+- [CodeCasa.AutomationPipelines](#codecasaautomationpipelines)
+  - [Why use AutomationPipelines?](#why-use-automationpipelines)
+  - [Real-World Usage](#real-world-usage)
+  - [Example](#example)
+- [CodeCasa.Lights.NetDaemon](#codecasalightsnetdaemon)
+  - [Overview](#overview-1)
+  - [Usage](#usage-1)
+    - [Applying Transitions to NetDaemon Lights](#applying-transitions-to-netdaemon-lights)
+    - [Automatic Color Mode Detection](#automatic-color-mode-detection)
+    - [Getting Current Light State](#getting-current-light-state)
+    - [Working with Light Groups](#working-with-light-groups-1)
+- [CodeCasa.NetDaemon.Notifications.Phone](#codecasanetdaemonnotificationsphone)
+  - [Usage](#usage-2)
+- [CodeCasa.NetDaemon.Notifications.InputSelect](#codecasanetdaemonnotificationsinputselect)
+  - [Usage](#usage-3)
+- [CodeCasa.NetDaemon.RuntimeState](#codecasanetdaemonruntimestate)
+  - [Runtime States](#runtime-states)
+  - [Usage](#usage-4)
+- [CodeCasa.NetDaemon.TypedEntities](#codecasanetdaemontypedentities)
+  - [Usage](#usage-5)
+    - [Base Class (optional)](#base-class-optional)
+    - [Concrete Wrapper Example](#concrete-wrapper-example)
+    - [Another Example: PersonEntity](#another-example-personentity)
+- [CodeCasa.NetDaemon.Extensions.Observables](#codecasanetdaemonextensionsobservables)
+  - [Example Usage](#example-usage)
+  - [Boolean Observables](#boolean-observables)
+  - [Scheduling](#scheduling)
+    - [OnForAtLeast](#onforatleast)
+    - [PersistOnFor](#persistonfor)
+    - [WhenOnFor](#whenonfor)
+    - [LimitOnDuration](#limitonduration)
+  - [Unavailability of entities](#unavailability-of-entities)
+
 ## Available Libraries
 
 Package | Description
@@ -770,4 +815,3 @@ var nightTime = sunEntities.Sun
 nightTime
     .RepeatWhenEntitiesBecomeAvailable(switchEntities.LivingRoomChristmasTreeLights)
     .BindToOnOff(switchEntities.LivingRoomChristmasTreeLights);
-```
