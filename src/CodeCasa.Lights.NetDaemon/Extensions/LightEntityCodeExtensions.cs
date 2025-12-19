@@ -3,38 +3,80 @@ using NetDaemon.HassModel.Entities;
 
 namespace CodeCasa.Lights.NetDaemon.Extensions;
 
+/// <summary>
+/// Provides extension methods for controlling and querying light entities in NetDaemon.
+/// </summary>
+/// <remarks>
+/// This class contains a collection of utility methods to simplify light entity operations,
+/// including turning lights on/off, applying transitions, retrieving parameters, and checking state.
+/// All methods are extension methods on <see cref="ILightEntityCore"/>, allowing for a fluent API.
+/// </remarks>
 public static class LightEntityCodeExtensions
 {
+    /// <summary>
+    /// Turns on a light entity with the specified light parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightParameters">The light parameters (brightness, color, etc.) to apply.</param>
     public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters)
     {
         lightEntity.ApplyTransition(lightParameters.AsTransition());
     }
 
+    /// <summary>
+    /// Turns on a light entity with the specified light parameters and a custom transition time.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightParameters">The light parameters (brightness, color, etc.) to apply.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
     public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters, TimeSpan transitionTime)
     {
         lightEntity.ApplyTransition(lightParameters.AsTransition(transitionTime));
     }
 
+    /// <summary>
+    /// Turns on a light entity with the specified light transition.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="lightTransition">The transition parameters to apply.</param>
     public static void TurnOn(this ILightEntityCore lightEntity, LightTransition lightTransition)
     {
         lightEntity.ApplyTransition(lightTransition);
     }
 
+    /// <summary>
+    /// Turns on a light entity with default parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
     public static void TurnOn(this ILightEntityCore lightEntity)
     {
         lightEntity.ApplyTransition(LightTransition.On());
     }
 
+    /// <summary>
+    /// Turns on a light entity with a custom transition time.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn on.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
     public static void TurnOn(this ILightEntityCore lightEntity, TimeSpan transitionTime)
     {
         lightEntity.ApplyTransition(LightTransition.On(transitionTime));
     }
 
+    /// <summary>
+    /// Turns off a light entity with a custom transition time.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn off.</param>
+    /// <param name="transitionTime">The duration of the transition.</param>
     public static void TurnOff(this ILightEntityCore lightEntity, TimeSpan transitionTime)
     {
         lightEntity.ApplyTransition(LightTransition.Off(transitionTime));
     }
 
+    /// <summary>
+    /// Turns off a light entity with default parameters.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to turn off.</param>
     public static void TurnOff(this ILightEntityCore lightEntity)
     {
         lightEntity.ApplyTransition(LightTransition.Off());
@@ -167,12 +209,6 @@ public static class LightEntityCodeExtensions
             actualParameters.ColorTemp == lightParameters.ColorTemp;
     }
 
-    /// <summary>
-    /// Actual brightness can deviate 1 from the set brightness. This method allows for that deviation.
-    /// </summary>
-    /// <param name="brightness1"></param>
-    /// <param name="brightness2"></param>
-    /// <returns></returns>
     private static bool BrightnessEquals(double? brightness1, double? brightness2)
     {
         if (brightness1 == null && brightness2 == null)
