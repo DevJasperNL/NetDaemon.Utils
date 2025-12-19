@@ -3,14 +3,42 @@ using NetDaemon.HassModel.Entities;
 
 namespace CodeCasa.Lights.NetDaemon.Extensions;
 
-public static class LightEntityExtensions
+public static class LightEntityCodeExtensions
 {
-    /// <summary>
-    /// Determines whether a light entity is currently off.
-    /// </summary>
-    /// <param name="lightEntity">The light entity to check.</param>
-    /// <returns>True if the light is off; otherwise, false.</returns>
-    public static bool IsOff(this ILightEntityCore lightEntity) => EntityExtensions.IsOff(new LightEntity(lightEntity));
+    public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters)
+    {
+        lightEntity.ApplyTransition(lightParameters.AsTransition());
+    }
+
+    public static void TurnOn(this ILightEntityCore lightEntity, LightParameters lightParameters, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(lightParameters.AsTransition(transitionTime));
+    }
+
+    public static void TurnOn(this ILightEntityCore lightEntity, LightTransition lightTransition)
+    {
+        lightEntity.ApplyTransition(lightTransition);
+    }
+
+    public static void TurnOn(this ILightEntityCore lightEntity)
+    {
+        lightEntity.ApplyTransition(LightTransition.On());
+    }
+
+    public static void TurnOn(this ILightEntityCore lightEntity, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(LightTransition.On(transitionTime));
+    }
+
+    public static void TurnOff(this ILightEntityCore lightEntity, TimeSpan transitionTime)
+    {
+        lightEntity.ApplyTransition(LightTransition.Off(transitionTime));
+    }
+
+    public static void TurnOff(this ILightEntityCore lightEntity)
+    {
+        lightEntity.ApplyTransition(LightTransition.Off());
+    }
 
     /// <summary>
     /// Determines whether a light entity is currently on.
@@ -18,6 +46,13 @@ public static class LightEntityExtensions
     /// <param name="lightEntity">The light entity to check.</param>
     /// <returns>True if the light is on; otherwise, false.</returns>
     public static bool IsOn(this ILightEntityCore lightEntity) => EntityExtensions.IsOn(new LightEntity(lightEntity));
+
+    /// <summary>
+    /// Determines whether a light entity is currently off.
+    /// </summary>
+    /// <param name="lightEntity">The light entity to check.</param>
+    /// <returns>True if the light is off; otherwise, false.</returns>
+    public static bool IsOff(this ILightEntityCore lightEntity) => EntityExtensions.IsOff(new LightEntity(lightEntity));
 
     /// <summary>
     /// Turns a light entity on or off based on the provided boolean value.
