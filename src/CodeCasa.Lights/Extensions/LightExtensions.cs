@@ -5,6 +5,41 @@
 /// </summary>
 public static class LightExtensions
 {
+    public static void TurnOn(this ILight light, LightParameters lightParameters)
+    {
+        light.ApplyTransition(lightParameters.AsTransition());
+    }
+
+    public static void TurnOn(this ILight light, LightParameters lightParameters, TimeSpan transitionTime)
+    {
+        light.ApplyTransition(lightParameters.AsTransition(transitionTime));
+    }
+
+    public static void TurnOn(this ILight light, LightTransition lightTransition)
+    {
+        light.ApplyTransition(lightTransition);
+    }
+
+    public static void TurnOn(this ILight light)
+    {
+        light.ApplyTransition(LightTransition.On());
+    }
+
+    public static void TurnOn(this ILight light, TimeSpan transitionTime)
+    {
+        light.ApplyTransition(LightTransition.On(transitionTime));
+    }
+
+    public static void TurnOff(this ILight light, TimeSpan transitionTime)
+    {
+        light.ApplyTransition(LightTransition.Off(transitionTime));
+    }
+
+    public static void TurnOff(this ILight light)
+    {
+        light.ApplyTransition(LightTransition.Off());
+    }
+
     /// <summary>
     /// Determines whether the light is on by checking if brightness is greater than zero.
     /// </summary>
@@ -24,6 +59,8 @@ public static class LightExtensions
     {
         return (light.GetParameters().Brightness ?? 0) == 0;
     }
+
+    public static double GetBrightness(this ILight light) => light.GetParameters().Brightness ?? 0;
 
     /// <summary>
     /// Flattens a light hierarchy into a single-dimensional array of leaf lights.
