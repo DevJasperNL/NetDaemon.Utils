@@ -5,65 +5,56 @@ namespace CodeCasa.AutomationPipelines.Lights
 {
     internal static class CompositeHelper
     {
-        // todo: check and filter without errors.
-        public static string[] ResolveAndValidateLightEntities(IEnumerable<ILight> lightEntityIds, IEnumerable<string> supportedLightIds)
+        public static string[] ValidateLightsSupported(IEnumerable<string> lightIds, IEnumerable<string> supportedLightIds)
         {
             var supportedLightIdsArray = supportedLightIds.ToArray();
-            var lightLeafs = lightEntityIds.SelectMany(le => le.Flatten()).DistinctBy(l => l.Id).ToArray();
-            if (!lightLeafs.Any())
+            var lightIdsArray = lightIds.ToArray();
+            if (!lightIdsArray.Any())
             {
-                throw new ArgumentException("At least one entity id should be provided.", nameof(lightLeafs));
+                throw new ArgumentException("At least one id should be provided.", nameof(lightIdsArray));
             }
 
-            var missingLights = lightLeafs
-                .Where(id => !supportedLightIdsArray.Contains(id.Id))
+            var unsupportedLightIds = lightIdsArray
+                .Where(id => !supportedLightIdsArray.Contains(id))
                 .ToArray();
 
-            if (missingLights.Any())
+            if (unsupportedLightIds.Any())
             {
                 throw new InvalidOperationException(
-                    $"The following light entities are not supported: {string.Join(", ", missingLights)}.");
+                    $"The following lights are not supported: {string.Join(", ", unsupportedLightIds)}.");
             }
 
-            return lightLeafs.Select(l => l.Id).ToArray();
+            return lightIdsArray.ToArray();
         }
 
-        public static void ValidateLightEntities(IEnumerable<ILight> lights, string supportedLightId)
-        {
-            var lightLeafs = lights.SelectMany(le => le.Flatten()).DistinctBy(l => l.Id).ToArray();
-            if (!lightLeafs.Any())
-            {
-                throw new ArgumentException("At least one entity id should be provided.", nameof(lightLeafs));
-            }
-
-            var missingLights = lightLeafs
-                .Where(l => l.Id != supportedLightId)
-                .ToArray();
-
-            if (missingLights.Any())
-            {
-                throw new InvalidOperationException(
-                    $"The following light entities are not supported: {string.Join(", ", missingLights)}.");
-            }
-        }
-
-        public static void ValidateLightEntities(IEnumerable<string> lights, string supportedLightId)
+        public static void ValidateLightSupported(IEnumerable<string> lights, string supportedLightId)
         {
             var lightsArray = lights.ToArray();
             if (!lightsArray.Any())
             {
-                throw new ArgumentException("At least one entity id should be provided.", nameof(lightsArray));
+                throw new ArgumentException("At least one id should be provided.", nameof(lightsArray));
             }
 
-            var missingLights = lightsArray
+            var unsupportedLightIds = lightsArray
                 .Where(id => id != supportedLightId)
                 .ToArray();
 
-            if (missingLights.Any())
+            if (unsupportedLightIds.Any())
             {
                 throw new InvalidOperationException(
-                    $"The following light entities are not supported: {string.Join(", ", missingLights)}.");
+                    $"The following lights are not supported: {string.Join(", ", unsupportedLightIds)}.");
             }
+        }
+
+        public static string[] ResolveGroupsAndValidateLightsSupported(IEnumerable<ILight> lights, IEnumerable<string> supportedLightIds)
+        {
+            return ValidateLightsSupported(lights.SelectMany(le => le.Flatten()).Select(l => l.Id).Distinct(), supportedLightIds);
+        }
+
+
+        public static void ResolveGroupsAndValidateLightSupported(IEnumerable<ILight> lights, string supportedLightId)
+        {
+            ValidateLightSupported(lights.SelectMany(le => le.Flatten()).Select(l => l.Id).Distinct(), supportedLightId);
         }
     }
 }

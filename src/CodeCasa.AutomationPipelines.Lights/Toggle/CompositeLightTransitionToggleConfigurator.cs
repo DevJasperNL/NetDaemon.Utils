@@ -102,7 +102,7 @@ namespace CodeCasa.AutomationPipelines.Lights.Toggle
             ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
         {
             var lightEntityIdsArray =
-                CompositeHelper.ResolveAndValidateLightEntities(lightEntityIds, activeConfigurators.Keys);
+                CompositeHelper.ValidateLightsSupported(lightEntityIds, activeConfigurators.Keys);
 
             if (lightEntityIdsArray.Length == activeConfigurators.Count)
             {

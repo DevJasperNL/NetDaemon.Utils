@@ -93,14 +93,14 @@ public partial class LightTransitionReactiveNodeConfigurator(
     public ILightTransitionReactiveNodeConfigurator ForLights(IEnumerable<string> lightEntityIds,
         Action<ILightTransitionReactiveNodeConfigurator> configure)
     {
-        CompositeHelper.ValidateLightEntities(lightEntityIds, LightEntity.Id);
+        CompositeHelper.ValidateLightSupported(lightEntityIds, LightEntity.Id);
         return this;
     }
 
     public ILightTransitionReactiveNodeConfigurator ForLights(IEnumerable<ILight> lightEntities,
         Action<ILightTransitionReactiveNodeConfigurator> configure)
     {
-        CompositeHelper.ValidateLightEntities(lightEntities, LightEntity.Id);
+        CompositeHelper.ResolveGroupsAndValidateLightSupported(lightEntities, LightEntity.Id);
         return this;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Concurrency;
+using CodeCasa.Abstractions;
 using CodeCasa.AutomationPipelines.Lights.Context;
 using CodeCasa.AutomationPipelines.Lights.Extensions;
 using CodeCasa.AutomationPipelines.Lights.Pipeline;
@@ -75,7 +76,7 @@ public partial class CompositeLightTransitionReactiveNodeConfigurator(
     public ILightTransitionReactiveNodeConfigurator ForLights(IEnumerable<string> lightEntityIds, Action<ILightTransitionReactiveNodeConfigurator> configure)
     {
         var lightEntityIdsArray =
-            CompositeHelper.ResolveAndValidateLightEntities(lightEntityIds, configurators.Keys);
+            CompositeHelper.ValidateLightsSupported(lightEntityIds, configurators.Keys);
 
         if (lightEntityIdsArray.Length == configurators.Count)
         {
@@ -97,5 +98,9 @@ public partial class CompositeLightTransitionReactiveNodeConfigurator(
         return this;
     }
 
-    public ILightTransitionReactiveNodeConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionReactiveNodeConfigurator> configure) => ForLights(lightEntities.Select(e => e.EntityId), configure);
+    public ILightTransitionReactiveNodeConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionReactiveNodeConfigurator> configure)
+    {
+        var lightIds = CompositeHelper.ResolveGroupsAndValidateLightsSupported(lightEntities, configurators.Keys);
+        return ForLights(lightIds, configure);
+    }
 }

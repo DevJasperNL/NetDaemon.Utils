@@ -1,4 +1,5 @@
-﻿using CodeCasa.AutomationPipelines.Lights.Context;
+﻿using CodeCasa.Abstractions;
+using CodeCasa.AutomationPipelines.Lights.Context;
 using CodeCasa.Lights;
 
 namespace CodeCasa.AutomationPipelines.Lights.ReactiveNode;

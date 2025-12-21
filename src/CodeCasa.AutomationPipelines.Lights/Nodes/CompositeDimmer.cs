@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Linq;
+using CodeCasa.Abstractions;
 
 
 namespace CodeCasa.AutomationPipelines.Lights.Nodes

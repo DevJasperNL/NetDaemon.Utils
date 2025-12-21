@@ -83,9 +83,13 @@ internal class LightTransitionCycleConfigurator(ILight lightEntity, IScheduler s
 
     public ILightTransitionCycleConfigurator ForLights(IEnumerable<string> lightEntityIds, Action<ILightTransitionCycleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
     {
-        CompositeHelper.ValidateLightEntities(lightEntityIds, LightEntity.Id);
+        CompositeHelper.ValidateLightSupported(lightEntityIds, LightEntity.Id);
         return this;
     }
 
-    public ILightTransitionCycleConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionCycleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None) => ForLights(lightEntities.Select(e => e.EntityId), configure, excludedLightBehaviour);
+    public ILightTransitionCycleConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionCycleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
+    {
+        CompositeHelper.ResolveGroupsAndValidateLightSupported(lightEntities, LightEntity.Id);
+        return this;
+    }
 }

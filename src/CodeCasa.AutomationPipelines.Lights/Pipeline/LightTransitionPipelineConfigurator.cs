@@ -2,6 +2,7 @@
 using CodeCasa.AutomationPipelines.Lights.Extensions;
 using CodeCasa.AutomationPipelines.Lights.ReactiveNode;
 using System.Reactive.Concurrency;
+using CodeCasa.Abstractions;
 using CodeCasa.Lights;
 
 namespace CodeCasa.AutomationPipelines.Lights.Pipeline
@@ -80,12 +81,16 @@ namespace CodeCasa.AutomationPipelines.Lights.Pipeline
         public ILightTransitionPipelineConfigurator ForLights(IEnumerable<string> lightEntityIds,
             Action<ILightTransitionPipelineConfigurator> compositeNodeBuilder)
         {
-            CompositeHelper.ValidateLightEntities(LightEntity.HaContext, lightEntityIds, LightEntity.EntityId);
+            CompositeHelper.ValidateLightSupported(lightEntityIds, LightEntity.Id);
             return this;
         }
 
         public ILightTransitionPipelineConfigurator ForLights(IEnumerable<ILight> lightEntities,
-            Action<ILightTransitionPipelineConfigurator> compositeNodeBuilder) => ForLights(lightEntities.Select(e => e.EntityId), compositeNodeBuilder);
+            Action<ILightTransitionPipelineConfigurator> compositeNodeBuilder)
+        {
+            CompositeHelper.ResolveGroupsAndValidateLightSupported(lightEntities, LightEntity.Id);
+            return this;
+        }
 
         public ILightTransitionPipelineConfigurator AddPipeline(Action<ILightTransitionPipelineConfigurator> pipelineNodeOptions) => AddNode(lightPipelineFactory.CreateLightPipeline(LightEntity, pipelineNodeOptions));
     }

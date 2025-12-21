@@ -103,7 +103,7 @@ namespace CodeCasa.AutomationPipelines.Lights.Toggle
 
         public ILightTransitionToggleConfigurator ForLights(IEnumerable<string> lightEntityIds, Action<ILightTransitionToggleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
         {
-            CompositeHelper.ValidateLightEntities(LightEntity.HaContext, lightEntityIds, LightEntity.EntityId);
+            CompositeHelper.ValidateLightSupported(LightEntity.HaContext, lightEntityIds, LightEntity.EntityId);
             return this;
         }
 

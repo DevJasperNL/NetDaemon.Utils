@@ -85,10 +85,10 @@ internal class CompositeLightTransitionCycleConfigurator(
         Action<ILightTransitionCycleConfigurator> configure,
         ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
     {
-        var lightEntityIdsArray =
-            CompositeHelper.ResolveAndValidateLightEntities(lightEntityIds, activeConfigurators.Keys);
+        var lightIds =
+            CompositeHelper.ValidateLightsSupported(lightEntityIds, activeConfigurators.Keys);
 
-        if (lightEntityIdsArray.Length == activeConfigurators.Count)
+        if (lightIds.Length == activeConfigurators.Count)
         {
             configure(this);
             return this;
@@ -96,25 +96,29 @@ internal class CompositeLightTransitionCycleConfigurator(
 
         if (excludedLightBehaviour == ExcludedLightBehaviours.None)
         {
-            if (lightEntityIdsArray.Length == 1)
+            if (lightIds.Length == 1)
             {
-                configure(activeConfigurators[lightEntityIdsArray.First()]);
+                configure(activeConfigurators[lightIds.First()]);
                 return this;
             }
 
             configure(new CompositeLightTransitionCycleConfigurator(
-                activeConfigurators.Where(kvp => lightEntityIdsArray.Contains(kvp.Key))
+                activeConfigurators.Where(kvp => lightIds.Contains(kvp.Key))
                     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value), []));
             return this;
         }
 
         configure(new CompositeLightTransitionCycleConfigurator(
-            activeConfigurators.Where(kvp => lightEntityIdsArray.Contains(kvp.Key))
+            activeConfigurators.Where(kvp => lightIds.Contains(kvp.Key))
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-            activeConfigurators.Where(kvp => !lightEntityIdsArray.Contains(kvp.Key))
+            activeConfigurators.Where(kvp => !lightIds.Contains(kvp.Key))
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value)));
         return this;
     }
 
-    public ILightTransitionCycleConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionCycleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None) => ForLights(lightEntities.Select(e => e.Id), configure, excludedLightBehaviour);
+    public ILightTransitionCycleConfigurator ForLights(IEnumerable<ILight> lightEntities, Action<ILightTransitionCycleConfigurator> configure, ExcludedLightBehaviours excludedLightBehaviour = ExcludedLightBehaviours.None)
+    {
+        var lightIds = CompositeHelper.ResolveGroupsAndValidateLightsSupported(lightEntities, activeConfigurators.Keys);
+        return ForLights(lightIds, configure, excludedLightBehaviour);
+    }
 }
