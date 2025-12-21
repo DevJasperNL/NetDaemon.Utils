@@ -27,7 +27,7 @@ namespace CodeCasa.AutomationPipelines.Lights.Cycle
         /// </summary>
         /// <param name="lightParameters">The light parameters to add to the cycle.</param>
         /// <returns>The configurator instance for method chaining.</returns>
-        ILightTransitionCycleConfigurator Add(LightParameters lightParameters);
+        ILightTransitionCycleConfigurator Add(LightParameters lightParameters, IEqualityComparer<LightParameters>? comparer = null);
 
         /// <summary>
         /// Adds light parameters created by a factory to the cycle, with a custom state matching function.
@@ -53,7 +53,7 @@ namespace CodeCasa.AutomationPipelines.Lights.Cycle
         /// </summary>
         /// <param name="lightTransition">The light transition to add to the cycle.</param>
         /// <returns>The configurator instance for method chaining.</returns>
-        ILightTransitionCycleConfigurator Add(LightTransition lightTransition);
+        ILightTransitionCycleConfigurator Add(LightTransition lightTransition, IEqualityComparer<LightParameters>? comparer = null);
 
         /// <summary>
         /// Adds a light transition created by a factory to the cycle, with a custom state matching function.

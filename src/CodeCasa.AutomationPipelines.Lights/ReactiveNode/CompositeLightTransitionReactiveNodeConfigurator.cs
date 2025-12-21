@@ -52,12 +52,12 @@ public partial class CompositeLightTransitionReactiveNodeConfigurator(
         var dimPulses = dimmer.Dimming.ToPulsesWhenTrue(options.TimeBetweenSteps, scheduler);
         var brightenPulses = dimmer.Brightening.ToPulsesWhenTrue(options.TimeBetweenSteps, scheduler);
 
-        var configuratorsWithLightEntity = options.ValidateAndOrderMultipleLightEntityTypes(configurators).Values.ToArray();
-        var lightEntitiesInDimOrder = configuratorsWithLightEntity.Select(t => t.LightEntity).ToArray();
+        var configuratorsWithLightEntity = options.ValidateAndOrderMultipleLightEntityTypes(configurators).Select(kvp => (configurator: kvp.Value, lightId: kvp.Key)).ToArray();
+        var lightEntitiesInDimOrder = configuratorsWithLightEntity.Select(t => t.lightId).ToArray();
         foreach (var containerAndLight in configuratorsWithLightEntity)
         {
             // Note: this is not strictly required, but I think it's neater and might prevent issues.
-            var lightEntitiesInDimOrderWithContainerInstance = lightEntitiesInDimOrder.Select(l => l.EntityId == containerAndLight.lightEntity.EntityId ? containerAndLight.lightEntity : l);
+            var lightEntitiesInDimOrderWithContainerInstance = lightEntitiesInDimOrder.Select(l => l == containerAndLight.lightId ? containerAndLight.lightId : l);
             containerAndLight.configurator.AddDimPulses(options, lightEntitiesInDimOrderWithContainerInstance, dimPulses, brightenPulses);
         }
         return this;

@@ -26,9 +26,9 @@ internal class CompositeLightTransitionCycleConfigurator(
         return Add(LightTransition.On());
     }
 
-    public ILightTransitionCycleConfigurator Add(LightParameters lightParameters)
+    public ILightTransitionCycleConfigurator Add(LightParameters lightParameters, IEqualityComparer<LightParameters>? comparer = null)
     {
-        return Add(lightParameters.AsTransition());
+        return Add(lightParameters.AsTransition(), comparer);
     }
 
     public ILightTransitionCycleConfigurator Add(Func<ILightPipelineContext, LightParameters?> lightParametersFactory, Func<ILightPipelineContext, bool> matchesNodeState)
@@ -41,9 +41,14 @@ internal class CompositeLightTransitionCycleConfigurator(
         return Add((c, t) => lightParametersFactory(c, t)?.AsTransition(), matchesNodeState);
     }
 
-    public ILightTransitionCycleConfigurator Add(LightTransition lightTransition)
+    public ILightTransitionCycleConfigurator Add(LightTransition lightTransition, IEqualityComparer<LightParameters>? comparer = null)
     {
-        return Add(_ => lightTransition, _ => activeConfigurators.Values.All(c => c.LightEntity.SceneEquals(lightTransition.LightParameters)));
+        comparer ??= EqualityComparer<LightParameters>.Default;
+        return Add(
+            _ => lightTransition,
+            _ => activeConfigurators.Values.All(c => comparer.Equals(
+                c.LightEntity.GetParameters(),
+                lightTransition.LightParameters)));
     }
 
     public ILightTransitionCycleConfigurator Add(Func<ILightPipelineContext, LightTransition?> lightTransitionFactory, Func<ILightPipelineContext, bool> matchesNodeState)

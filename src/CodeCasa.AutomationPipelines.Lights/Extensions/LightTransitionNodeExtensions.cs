@@ -10,13 +10,13 @@ namespace CodeCasa.AutomationPipelines.Lights.Extensions
 {
     public static class LightTransitionNodeExtensions
     {
-        public static IPipelineNode<LightTransition> LightSceneThatTurnsOffAfter<T>(this ILightPipelineContext context,
-            LightSceneTemplate lightSceneTemplate,
+        public static IPipelineNode<LightTransition> LightParametersThatTurnsOffAfter<T>(this ILightPipelineContext context,
+            LightParameters lightParameters,
             TimeSpan timeSpan, IObservable<T> resetTimerObservable)
         {
             // todo: move to diferent project
             var scheduler = context.ServiceProvider.GetRequiredService<IScheduler>();
-            var innerNode = new StaticLightTransitionNode(lightSceneTemplate(context.LightEntity).AsTransition(), scheduler);
+            var innerNode = new StaticLightTransitionNode(lightParameters.AsTransition(), scheduler);
             return innerNode.TurnOffAfter(timeSpan, resetTimerObservable, scheduler);
         }
 
